@@ -1,0 +1,110 @@
+<div
+  class="background-sign-up full-background h-100"
+  fxLayout="column"
+  fxLayoutAlign="center end"
+>
+  <div fxLayout="row" fxLayoutAlign="space-around" fxLayoutGap="10">
+    <div fxLayout="row" class="text-white" fxFlex="35">
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+        <p fxFlex="30" class="title">VISUM Music</p>
+        <p fxFlex="30" class="text-justify description">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
+          blanditiis doloremque libero quibusdam inventore eveniet fuga
+          necessitatibus in quisquam tenetur, quam placeat, delectus magnam
+          accusamus aperiam dignissimos eos fugit totam.
+        </p>
+        <div fxFlex="30">
+          <a mat-raised-button href="home">Show more</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="form" fxLayout="column" fxLayoutAlign="center center">
+      <div style="width: 350px" fxLayout="column" fxLayoutGap="30px">
+        <form
+          [formGroup]="formGroup"
+          fxLayout="column"
+          fxLayoutGap="15px"
+          class="text-white"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>User name</mat-label>
+            <input formControlName="userName" matInput />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" type="password" matInput />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm password</mat-label>
+            <input formControlName="cf_password" type="password" matInput />
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50" appearance="outline">
+              <mat-label>First name</mat-label>
+              <input formControlName="firstName" matInput />
+            </mat-form-field>
+
+            <mat-form-field fxFlex="47" appearance="outline">
+              <mat-label>Last name</mat-label>
+              <input formControlName="lastName" matInput />
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row">
+            <label fxFlex="30">Gender:</label>
+            <mat-radio-group
+              formControlName="gender"
+              fxFlex="70"
+              fxLayout="row wrap"
+              fxLayoutAlign="space-between"
+              aria-label="Select an option"
+            >
+              <mat-radio-button value="MALE">Male</mat-radio-button>
+              <mat-radio-button value="FEMALE">Female</mat-radio-button>
+              <mat-radio-button value="OTHER">Other</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Birth day:</mat-label>
+            <input type="date" matInput formControlName="birthOfDate" />
+            <!--            <mat-error *ngIf="formGroup.controls['birthOfDate'].errors">-->
+            <!--              Ngày tháng năm sinh không được để trống-->
+            <!--            </mat-error>-->
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email:</mat-label>
+            <input formControlName="email" matInput />
+          </mat-form-field>
+
+          <button mat-raised-button>Sign up</button>
+        </form>
+
+        <div fxLayoutAlign="center center" fxLayout="row" class="text-white">
+          <p>Already have an account ?<a href="auth/log-in"> Log in here</a></p>
+        </div>
+        <!-- <div fxLayoutAlign="center center" fxLayout="row" class="text-white">
+          <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="column" fxLayoutAlign="center center">OR</div>
+            <div fxLayout="row" fxLayoutGap="10px">
+              <button mat-mini-fab>
+                <mat-icon>home</mat-icon>
+              </button>
+              <button mat-mini-fab>
+                <mat-icon>home</mat-icon>
+              </button>
+              <button mat-mini-fab>
+                <mat-icon>home</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

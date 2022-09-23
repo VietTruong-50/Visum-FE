@@ -1,0 +1,112 @@
+<!-- <swiper
+          [loop]="true"
+          [autoHeight]="true"
+          [autoplay]="{ delay: 1000 }"
+          [pagination]="{ clickable: true }"
+          [navigation]="false"
+          style="width: 100%"
+        >
+          <ng-template data-swiper-autoplay="6000" swiperSlide>
+            Slide 1
+          </ng-template>
+
+          <ng-template
+            data-swiper-autoplay="10000"
+            class="swiper-slide"
+            swiperSlide
+          >
+            Slide 2
+          </ng-template>
+
+          <ng-template data-swiper-autoplay="60000" swiperSlide>
+            Slide 3
+          </ng-template>
+        </swiper> -->
+<div fxLayout="column" fxLayoutAlign="center none">
+  <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
+            <div fxLayout="row"  style="width: 90%"
+              class="align-self-center">
+              <div fxLayout="column" class="recently-play-item">
+                <img
+                  src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+                  width="108px"
+                  height="100px"
+                  style="border-radius: 12px"
+                />
+                <div fxLayout="column">
+                  <h5>aaa</h5>
+                  <small>This is some</small>
+                </div>
+              </div>
+            </div> -->
+  <p class="content-title topic-title">MOST POPULAR</p>
+  <div
+    fxLayout="row wrap"
+    fxLayoutAlign="space-between"
+    style="width: 92%"
+    class="align-self-center"
+    fxLayoutGap="15px grid"
+  >
+  <div fxLayout="row">
+    <img
+      width="80px"
+      height="80px"
+      class="popular-item-img"
+      src="../../../../../assets/images/artists/nicky-youre.jpg"
+      alt=""
+    />
+    <div
+      fxLayout="row"
+      class="popular-item-content"
+      fxLayoutAlign="space-between center"
+    >
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <strong>Sunroof</strong>
+        <small>This is some</small>
+      </div>
+      <button (click)="playMusic('Sunroof', 'sunroof')" mat-mini-fab class="text-white">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+    </div>
+  </div>
+    <div fxLayout="row">
+      <img
+        width="80px"
+        height="80px"
+        class="popular-item-img"
+        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+        alt=""
+      />
+      <div
+        fxLayout="row"
+        class="popular-item-content"
+        fxLayoutAlign="space-between center"
+      >
+        <div fxLayout="column" fxLayoutAlign="center start">
+          <strong>Until I Found You</strong>
+          <small>This is some</small>
+        </div>
+        <button (click)="playMusic('UntilIFoundYou', 'UntilIFoundYou')" mat-mini-fab class="text-white">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <img
+        width="80px"
+        height="80px"
+        class="popular-item-img"
+        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+        alt=""
+      />
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center start"
+        class="popular-item-content"
+      >
+        <strong>aaa</strong>
+        <small>This is some</small>
+      </div>
+    </div>
+  </div>
+</div>

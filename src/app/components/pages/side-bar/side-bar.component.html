@@ -1,0 +1,60 @@
+<mat-nav-list>
+  <ng-container>
+    <div fxLayout="row" class="menu-title">
+      <label for="">Menu</label>
+    </div>
+    <mat-list role="list">
+      <mat-list-item
+        [routerLink]="[{ outlets: { child: ['discover'] } }]"
+        role="listitem"
+        fxLayout="row"
+        fxLayoutGap="5px"
+      >
+        <mat-icon>explore</mat-icon> Discover
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayout="row" fxLayoutGap="5px"
+        ><mat-icon>poll</mat-icon>Trending</mat-list-item
+      >
+      <mat-list-item
+        [routerLink]="[{ outlets: { child: ['genres'] } }]"
+        role="listitem"
+        fxLayout="row"
+        fxLayoutGap="5px"
+        ><mat-icon>listAlt</mat-icon>Genre</mat-list-item
+      >
+      <mat-list-item role="listitem" fxLayout="row" fxLayoutGap="5px"
+        ><mat-icon>album</mat-icon>Album</mat-list-item
+      >
+    </mat-list>
+    <div fxLayout="row" class="menu-title">
+      <label for="">Library</label>
+    </div>
+    <mat-list role="list">
+      <mat-list-item role="listitem" fxLayout="row" fxLayoutGap="5px">
+        <mat-icon>slideshow</mat-icon> Playlist
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayout="row" fxLayoutGap="5px">
+        <mat-icon>favorite</mat-icon>Favorite
+      </mat-list-item>
+    </mat-list>
+    <div fxLayout="row" class="menu-title">
+      <label for="">Customize</label>
+    </div>
+    <mat-list role="list">
+      <mat-list-item
+        (click)="openUserProfile()"
+        role="listitem"
+        fxLayout="row"
+        fxLayoutGap="5px"
+      >
+        <mat-icon>person</mat-icon>Account
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayout="row" fxLayoutGap="5px">
+        <mat-icon>settings</mat-icon>Setting
+      </mat-list-item>
+    </mat-list>
+    <div fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px">
+      <mat-slide-toggle>Dark</mat-slide-toggle>
+    </div>
+  </ng-container>
+</mat-nav-list>

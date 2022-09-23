@@ -1,0 +1,32 @@
+.mat-list-option:hover, 
+.mat-list-option:focus, 
+.mat-nav-list .mat-list-item:hover, 
+.mat-nav-list .mat-list-item:focus, 
+.mat-action-list .mat-list-item:hover, 
+.mat-action-list .mat-list-item:focus{
+    background: none; 
+    border-right: #007aff solid;
+    color: #007aff;
+}
+
+.mat-nav-list .mat-list-item, .mat-nav-list{
+    font-size: 15px;
+    height: 42px;
+    color: #9eaab4;
+}
+
+.mat-list{
+    margin-left: 34px;
+}
+
+.menu-title{
+    margin-left: 48px;
+}
+
+.mat-icon{
+    margin-right: 10px;
+}
+
+::ng-deep .mat-list-base .mat-list-item .mat-list-item-content{
+    width: inherit;
+}

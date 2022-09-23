@@ -1,0 +1,90 @@
+<div
+  class="dialog"
+  fxLayout="row"
+  fxLayoutGap="15px"
+  class="w-100"
+  fxLayoutAlign="center center"
+>
+  <div fxFlex="40">
+    <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center">
+      <img
+        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+        alt=""
+        width="200px"
+        height="200px"
+      />
+      <h5>Stephen Sanchez</h5>
+      <p
+        style="text-decoration: underline; color: #007aff; cursor: pointer;"
+        [hidden]="!isChangePassword"
+        (click)="changePassword('password')"
+      >
+        Change password
+      </p>
+      <p
+        style="text-decoration: underline; color: #007aff; cursor: pointer;"
+        [hidden]="isChangePassword"
+        (click)="changePassword('profile')"
+      >
+        Change profile
+      </p>
+    </div>
+  </div>
+  <div fxFlex="50">
+    <form action="" fxLayout="column" [hidden]="!isChangePassword">
+      <div fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field fxFlex="50" appearance="outline">
+          <mat-label>First name</mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" appearance="outline">
+          <mat-label>Last name</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Birth day:</mat-label>
+        <input type="date" matInput formControlName="birthOfDate" />
+        <!--            <mat-error *ngIf="formGroup.controls['birthOfDate'].errors">-->
+        <!--              Ngày tháng năm sinh không được để trống-->
+        <!--            </mat-error>-->
+      </mat-form-field>
+      <mat-form-field fxFlex="50" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field fxFlex="60" appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <mat-form-field style="max-width: 58%" appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let g of gender" [value]="g.value">
+              {{ g.viewValue }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <form fxLayout="column" [hidden]="isChangePassword">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm password</mat-label>
+        <input matInput />
+      </mat-form-field>
+    </form>
+
+    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end end">
+      <button mat-raised-button>Save</button>
+      <button mat-raised-button mat-dialog-close>Cancle</button>
+    </div>
+  </div>
+</div>

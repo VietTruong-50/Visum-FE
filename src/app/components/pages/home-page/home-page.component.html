@@ -1,0 +1,40 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav class="sidenav" #sidenav mode="side" opened="true">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="10px"
+      class="w-100"
+      style="height: 100px"
+    >
+      <img
+        src="../../../../../assets/images/pngwing.com.png"
+        alt=""
+        width="35%"
+        height="60%"
+      />
+      <!-- <img
+          style="cursor: pointer"
+          src="../../../../../assets/images/logo.a27cfc72.svg"
+          height="75%"
+          width="75%"
+          alt="Visum"
+        /> -->
+      <a href="" class="text-white logo">Visum</a>
+    </div>
+    <app-side-bar></app-side-bar>
+  </mat-sidenav>
+
+  <mat-sidenav-content style="background-color: #16191e">
+    <app-header></app-header>
+    <div fxLayout="row" class="w-100 h-100">
+      <div fxFlex="70" fxLayout="column" style="height: 44%;
+      overflow: auto;">
+        <router-outlet name='child'></router-outlet>
+      </div>
+      <div fxFlex="30" style="background-color: #1d242c">
+        <app-right-side-nav></app-right-side-nav>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

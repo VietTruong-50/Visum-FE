@@ -1,0 +1,18 @@
+.description {
+    font-size: 20px;
+    font-family: cursive;
+    text-shadow: 1px 3px #00000085;
+}
+
+.form {
+    height: 650px;
+    margin-right: 70px;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.3em 0 1em 0;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0em;
+}

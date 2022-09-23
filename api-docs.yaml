@@ -1,0 +1,135 @@
+openapi: 3.0.1
+info:
+  title: Visum app
+  description: The API for the Visum music web project
+  version: v2
+servers:
+- url: http://localhost:8080/
+  description: This is the sample api doc
+security:
+- bearer-jwt:
+  - read
+  - write
+paths:
+  /auth/login:
+    post:
+      tags:
+      - user-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseLoginResponseDTO'
+  /auth/sign-up:
+    post:
+      tags:
+      - register
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseUserDTO'
+components:
+  schemas:
+    UserDTO:
+      required:
+      - birthOfDate
+      - email
+      - firstName
+      - gender
+      - lastName
+      - mobile
+      - password
+      - username
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        gender:
+          type: string
+        birthOfDate:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        mobile:
+          pattern: ^0\d{9}$
+          type: string
+        password:
+          type: string
+        avatar:
+          type: string
+        role:
+          type: string
+        email:
+          maxLength: 256
+          minLength: 0
+          type: string
+    ApiResponseUserDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/UserDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    LoginRequestDTO:
+      required:
+      - password
+      - userName
+      type: object
+      properties:
+        userName:
+          type: string
+        password:
+          type: string
+    ApiResponseLoginResponseDTO:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/LoginResponseDTO'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    LoginResponseDTO:
+      required:
+      - token
+      type: object
+      properties:
+        token:
+          type: string
+  securitySchemes:
+    bearer-jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

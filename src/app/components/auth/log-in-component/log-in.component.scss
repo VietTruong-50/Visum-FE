@@ -1,0 +1,32 @@
+.form{
+    margin-left: 100px;
+    height: 470px;
+}
+
+.font-label{
+    font-size: 14px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+.sign-up-btn{
+    position: absolute;
+    right: 90px;
+    top: 55px;
+}
+
+.background-sign-in{
+    position: relative;
+}
+
+.login-header{
+    width: 100%; 
+}
+
+.title{
+    font-size: 45px;
+    font-weight: 500;
+    color: #6295d6;
+}

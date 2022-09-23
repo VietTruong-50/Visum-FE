@@ -1,0 +1,94 @@
+<div
+  class="background-sign-in full-background h-100"
+  fxLayout="column"
+  fxLayoutAlign="center start"
+  fxLayoutGap="15px"
+>
+  <div class="login-header" fxLayout="row" fxLayoutAlign="center center">
+    <p class="title">VISUM LOGIN FORM</p>
+    <div class="sign-up-btn">
+      <a mat-raised-button href="auth/sign-up">Sign up</a>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="10">
+    <div
+      class="form"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
+      <div style="width: 400px" fxLayout="column" fxLayoutGap="20px">
+        <form
+          [formGroup]="formGroup"
+          fxLayout="column"
+          fxLayoutGap="10px"
+          class="text-white"
+        >
+          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+            <label for="userName" class="font-label">Username</label
+            ><mat-icon>person</mat-icon>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>User name</mat-label>
+            <input formControlName="userName" id="userName" matInput />
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+            <label for="password" class="font-label">Password</label
+            ><mat-icon>key</mat-icon>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              formControlName="password"
+              id="password"
+              type="password"
+              matInput
+            />
+          </mat-form-field>
+        </form>
+
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          class="text-white"
+        >
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <input type="checkbox" />
+            <label style="margin-left: 10px">Remember password</label>
+          </div>
+
+          <a href="">Forgot your password?</a>
+        </div>
+
+        <button mat-raised-button (click)="login()">Sign in</button>
+        <div fxLayoutAlign="center center" fxLayout="row" class="text-white">
+          <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="column" fxLayoutAlign="center center">OR</div>
+            <div fxLayout="row" fxLayoutGap="10px">
+              <button mat-mini-fab>
+                <mat-icon>home</mat-icon>
+              </button>
+              <button mat-mini-fab>
+                <mat-icon>home</mat-icon>
+              </button>
+              <button mat-mini-fab>
+                <mat-icon>home</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="text-white w-100"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+  >
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut aspernatur
+      aperiam at!
+    </p>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div fxLayout="column">
+  <p class="search-title topic-title">QUICK SEARCH</p>
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <label class="search-icon" fxLayout="row" fxLayoutAlign="center center">
+      <mat-icon>search</mat-icon>
+    </label>
+    <input
+      type="text"
+      class="search-header text-white"
+      placeholder="Type here to search"
+    />
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="40px">
+    <div fxLayout="column" fxLayoutGap="15px">
+      <p class="search-title topic-title">TOP ARTISTS</p>
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+        <img
+          class="img-artists"
+          src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+          width="60px"
+          height="55px"
+          alt=""
+        />
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="55">
+          <div fxLayout="column" fxLayoutGap="0">
+            <h5>aaaa</h5>
+            <label>bbbb</label>
+          </div>
+          <button mat-raised-button class="follow-btn">Follow</button>
+        </div>
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayout="column" style="width: 80%">
+        <!-- <img class="img-audio" src="{{ imgSource }}" alt="" />
+        <div class="container-audio">
+          <audio controls loop autoplay>
+            <source src="{{ mp3Source }}" type="audio/ogg" />
+          </audio>
+        </div> -->
+        <app-audio-player [file]="file"></app-audio-player>
+      </div>
+    </div>
+  </div>
+</div>
