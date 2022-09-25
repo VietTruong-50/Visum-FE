@@ -1,14 +1,29 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+
+interface SongData {
+  url: string;
+  img: string;
+  artist: string;
+}
 
 @Component({
   selector: 'app-audio-player',
   templateUrl: './audio-player.component.html',
   styleUrls: ['./audio-player.component.scss'],
 })
-export class AudioPlayerComponent implements OnInit {
+export class AudioPlayerComponent implements OnInit, OnDestroy {
   audio = new Audio();
+
   audioEvents = [
     'ended',
     'error',
@@ -21,64 +36,72 @@ export class AudioPlayerComponent implements OnInit {
     'loadstart',
   ];
 
-  @Input() file = {
-    url : '',
-    img : '',
-    name: ''
-  }
-  
-  files = [
-    {
-      url: '../assets/audio/Sunroof.mp3',
-      img: '',
-      name: 'Sunroof',
-    },
-    {
-      url: '../assets/audio/UntilIFoundYou.mp3',
-      img: '',
-      name: 'UntilIFoundYou',
-    },
-    {
-      url: '../assets/audio/keshi-playlist.mp3',
-      img: '',
-      name: 'Keshi',
-    },
-  ];
-
   currentTime = '00:00:00';
   duration = '00:00:00';
   seek = 0;
   rangeDuration = 0;
 
+  file: SongData;
 
-  constructor() {
+  isVolume: boolean = false;
+  show: boolean = false;
+
+  song: any;
+
+  constructor(private router: Router) {
+    this.song = localStorage.getItem('song');
+    const img = localStorage.getItem('img');
+    const artist = localStorage.getItem('artist');
+
+    this.file = {
+      url: '../assets/audio/' + this.song + '.mp3',
+      img: '../assets/images/song/' + img + '.jpg',
+      artist: artist ? artist : '',
+    };
   }
 
   ngOnInit(): void {
+    this.streamObserver(this.file.url).subscribe((event) => {});
   }
 
-  handler: any;
+  ngOnDestroy() {
+    // destroy audio here
+    if (this.audio) {
+      this.audio.pause();
 
-  streamObserver(url: any) { 
+      // if (this.audio.src != "http://localhost:4200" + this.file.url.replace("..", "")) {
+      //   localStorage.setItem('playTime', '0');
+      // }
+    }
+  }
+
+  streamObserver(url: any) {
     return new Observable((observer) => {
       this.audio.src = url;
       this.audio.load();
       this.audio.play();
-      
-      this.handler = (event: Event) => {
+
+      if (Number(localStorage.getItem('playTime'))) {
+        this.audio.currentTime = Number(localStorage.getItem('playTime'));
+      }
+
+      const handler = (event: Event) => {
         this.seek = this.audio.currentTime;
         this.rangeDuration = this.audio.duration;
         this.duration = this.timeFormat(this.audio.duration);
         this.currentTime = this.timeFormat(this.audio.currentTime);
+
+        localStorage.setItem('playTime', this.audio.currentTime.toString());
+        localStorage.setItem('duration', this.audio.duration.toString());
       };
 
-      this.addEvent(this.audio, this.audioEvents, this.handler);
+      this.addEvent(this.audio, this.audioEvents, handler);
 
       return () => {
         this.audio.pause();
         this.audio.currentTime = 0;
 
-        this.removeEvent(this.audio, this.audioEvents, this.handler);
+        this.removeEvent(this.audio, this.audioEvents, handler);
       };
     });
   }
@@ -99,23 +122,20 @@ export class AudioPlayerComponent implements OnInit {
     this.audio.currentTime = event.target.value;
   }
 
-  openUrl(url: string) {
-    this.streamObserver(url).subscribe((event) => {});
-
-    console.log(url);
-  }
-
   play() {
     this.audio.play();
+    this.show = false;
   }
 
   pause() {
     this.audio.pause();
+    this.show = true;
   }
 
   stop() {
     this.audio.pause();
     this.audio.currentTime = 0;
+    this.play();
   }
 
   setVolume(event: any) {

@@ -1,17 +1,19 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav class="sidenav" #sidenav mode="side" opened="true">
-    <div
+    <div fxLayout="row">
+      <app-gaps [width]="35"></app-gaps>
+      <div
       fxLayout="row"
-      fxLayoutAlign="center center"
-      fxLayoutGap="10px"
+      fxLayoutAlign="none center"
+      fxLayoutGap="20px"
       class="w-100"
       style="height: 100px"
     >
       <img
-        src="../../../../../assets/images/pngwing.com.png"
+        src="../../../../../assets/images/logo/apple-music-logo.png"
         alt=""
         width="35%"
-        height="60%"
+        height="65%"
       />
       <!-- <img
           style="cursor: pointer"
@@ -22,6 +24,8 @@
         /> -->
       <a href="" class="text-white logo">Visum</a>
     </div>
+    </div>
+   
     <app-side-bar></app-side-bar>
   </mat-sidenav>
 

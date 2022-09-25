@@ -1,10 +1,13 @@
 <div fxLayout="column">
-  <img class="img-audio" src="../assets/images/song/sunroof.jpg" alt="" />
-  <div class="container-audio w-100" >
-    <p (click)="openUrl(file.url)">
-      {{ file.name }}
-    </p>
-
+  <img class="img-audio" src="{{ file.img }}" alt="" />
+  <div class="container-audio w-100" fxLayout="column" fxLayoutGap="10px">
+    <div fxLayout="column">
+      <p style="margin: 0;">
+        {{ song | uppercase}}
+      </p>
+      <small>{{ file.artist }}</small>
+    </div>
+ 
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       <div fxLayout="row" fxLayoutAlign="space-evenly center">
         <span>{{ currentTime }}</span>
@@ -14,12 +17,14 @@
           max="{{ rangeDuration }}"
           [value]="seek"
           (input)="setSeekTo($event)"
-          style="width: 40%;"
+          style="width: 40%"
         />
         <span>{{ duration }}</span>
       </div>
-      <div fxLayout="row" style="position: relative;">
-        <mat-icon>volume_up</mat-icon>
+      <div fxLayout="row" style="position: relative">
+        <mat-icon (mouseover)="isVolume = true"
+          >volume_up</mat-icon
+        >
         <input
           class="volume"
           type="range"
@@ -28,15 +33,23 @@
           step="0.01"
           value="0.5"
           (input)="setVolume($event)"
+          *ngIf="isVolume"
+          (mouseover)="isVolume = true"
+          (mouseout)="isVolume = false"
         />
       </div>
-      
     </div>
 
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
-      <button (click)="play()">Play</button>
-      <button (click)="pause()">Pause</button>
-      <button (click)="stop()">Stop</button>
+      <button mat-mini-fab><mat-icon>skip_previous</mat-icon></button>
+      <button mat-mini-fab *ngIf="show == false" (click)="pause()">
+        <mat-icon>pause</mat-icon>
+      </button>
+      <button mat-mini-fab *ngIf="show == true" (click)="play()">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button mat-mini-fab (click)="stop()"><mat-icon>replay</mat-icon></button>
+      <button mat-mini-fab><mat-icon>skip_next</mat-icon></button>
     </div>
   </div>
 </div>

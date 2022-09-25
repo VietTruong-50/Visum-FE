@@ -15,9 +15,10 @@ export class LandingNavComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  playMusic(value: string, artist: string) {
-    localStorage.setItem('song', value);
-    localStorage.setItem('img', artist);
-    this.router.navigate(['home']);
+  playSong(song: string, img: string, artist: string) {
+    localStorage.setItem('song', song);
+    localStorage.setItem('img', img);
+    localStorage.setItem('artist', artist)
+    this.router.navigateByUrl('/home');
   }
 }
