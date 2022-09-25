@@ -69,9 +69,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     if (this.audio) {
       this.audio.pause();
 
-      // if (this.audio.src != "http://localhost:4200" + this.file.url.replace("..", "")) {
-      //   localStorage.setItem('playTime', '0');
-      // }
+      if (this.router.url == "/home") {
+        localStorage.setItem('playTime', '0');
+      }
     }
   }
 

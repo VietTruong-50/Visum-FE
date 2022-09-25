@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LogInComponent } from './components/auth/log-in-component/log-in.component';
 import { SignUpComponent } from './components/auth/sign-up-component/sign-up.component';
+import { FavoritePageComponent } from './components/pages/favorite-page/favorite-page.component';
 import { GenrePageComponent } from './components/pages/genre-page/genre-page.component';
 import { HomePageComponent } from './components/pages/home-page/home-page.component';
 import { LandingNavComponent } from './components/pages/landing-nav/landing-nav.component';
@@ -29,6 +30,11 @@ routes = [
     component: HomePageComponent,
     children: [
       {
+        path: '',
+        component: LandingNavComponent,
+        outlet: 'child',
+      },
+      {
         path: 'discover',
         component: LandingNavComponent,
         outlet: 'child',
@@ -39,8 +45,8 @@ routes = [
         outlet: 'child',
       },
       {
-        path: '',
-        component: LandingNavComponent,
+        path: 'favorite',
+        component: FavoritePageComponent,
         outlet: 'child',
       },
       {
@@ -52,8 +58,8 @@ routes = [
   },
   {
     path: 'audio',
-    component: AudioPlayerComponent
-  }
+    component: AudioPlayerComponent,
+  },
 ];
 
 @NgModule({
@@ -61,7 +67,7 @@ routes = [
     RouterModule.forRoot(routes, {
       scrollOffset: [0, 0],
       scrollPositionRestoration: 'top',
-      onSameUrlNavigation: 'reload'
+      onSameUrlNavigation: 'reload',
     }),
   ],
   exports: [RouterModule],

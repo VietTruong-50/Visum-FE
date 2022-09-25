@@ -33,6 +33,10 @@ import { UserProfileComponent } from './components/pages/user-profile/user-profi
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule} from '@angular/material/select';
 import { AudioPlayerComponent } from './components/shared/audio-player/audio-player.component';
+import { FavoritePageComponent } from './components/pages/favorite-page/favorite-page.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+import { MusicFavoriteComponent } from './components/pages/favorite-page/music-favorite/music-favorite.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +51,9 @@ import { AudioPlayerComponent } from './components/shared/audio-player/audio-pla
     GenrePageComponent,
     SongByGenreComponent,
     UserProfileComponent,
-    AudioPlayerComponent
+    AudioPlayerComponent,
+    FavoritePageComponent,
+    MusicFavoriteComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,9 @@ import { AudioPlayerComponent } from './components/shared/audio-player/audio-pla
     ReactiveFormsModule,
     HttpClientModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule,
+    MatTableModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true}],
   bootstrap: [AppComponent],
