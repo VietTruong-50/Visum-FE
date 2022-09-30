@@ -19,9 +19,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { ApiResponseUserDTO } from '../model/apiResponseUserDTO';
-// @ts-ignore
-import { UserDTO } from '../model/userDTO';
+import { ApiResponseGenreDTO } from '../model/apiResponseGenreDTO';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -32,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterService {
+export class GenreControllerService {
 
     protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
@@ -90,17 +88,13 @@ export class RegisterService {
     }
 
     /**
-     * @param userDTO 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public register(userDTO: UserDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponseUserDTO>;
-    public register(userDTO: UserDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponseUserDTO>>;
-    public register(userDTO: UserDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponseUserDTO>>;
-    public register(userDTO: UserDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (userDTO === null || userDTO === undefined) {
-            throw new Error('Required parameter userDTO was null or undefined when calling register.');
-        }
+    public getGenre(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponseGenreDTO>;
+    public getGenre(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponseGenreDTO>>;
+    public getGenre(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponseGenreDTO>>;
+    public getGenre(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -129,15 +123,6 @@ export class RegisterService {
         }
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -149,8 +134,7 @@ export class RegisterService {
             }
         }
 
-        return this.httpClient.post<ApiResponseUserDTO>(`${this.configuration.basePath}/auth/sign-up`,
-            userDTO,
+        return this.httpClient.get<ApiResponseGenreDTO>(`${this.configuration.basePath}/visum/genres`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

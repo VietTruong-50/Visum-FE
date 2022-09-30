@@ -1,5 +1,5 @@
-export * from './register.service';
-import { RegisterService } from './register.service';
+export * from './genreController.service';
+import { GenreControllerService } from './genreController.service';
 export * from './userController.service';
 import { UserControllerService } from './userController.service';
-export const APIS = [RegisterService, UserControllerService];
+export const APIS = [GenreControllerService, UserControllerService];

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { ApiResponseUserDTO, UserControllerService } from 'src/app/api-svc';
+import { GlobalConstants } from '../GlobalConstants';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  userData: any;
 
-  ngOnInit(): void {
+  constructor(private cookieService: CookieService, 
+    private router: Router,
+     private userController: UserControllerService) {
+
   }
 
+  ngOnInit(): void {
+    this.getUserData();
+  }
+
+  getUserData() {
+    this.userController
+      .getCurrentUser()
+      .subscribe((result: ApiResponseUserDTO) => {
+        if (result.errorCode == null) {
+          this.userData = result.result;
+          localStorage.setItem('userProfile', JSON.stringify(this.userData));
+        } else {
+          alert(result.errorCode);
+        }
+      });
+  }
+
+
+  onSignOut(){
+    this.cookieService.delete(GlobalConstants.authToken, "/")
+    localStorage.clear();
+    this.router.navigate(['/auth/log-in']);
+  }
 }

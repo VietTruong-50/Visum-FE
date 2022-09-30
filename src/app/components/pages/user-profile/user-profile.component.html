@@ -13,7 +13,7 @@
         width="200px"
         height="200px"
       />
-      <h5>Stephen Sanchez</h5>
+      <h5>{{this.formGroup.controls['userName'].value}}</h5>
       <p
         style="text-decoration: underline; color: #007aff; cursor: pointer;"
         [hidden]="!isChangePassword"
@@ -31,16 +31,16 @@
     </div>
   </div>
   <div fxFlex="50">
-    <form action="" fxLayout="column" [hidden]="!isChangePassword">
+    <form [formGroup]="formGroup" fxLayout="column" [hidden]="!isChangePassword">
       <div fxLayout="row" fxLayoutGap="10px">
         <mat-form-field fxFlex="50" appearance="outline">
           <mat-label>First name</mat-label>
-          <input matInput />
+          <input matInput formControlName="firstName"/>
         </mat-form-field>
 
         <mat-form-field fxFlex="50" appearance="outline">
           <mat-label>Last name</mat-label>
-          <input matInput />
+          <input matInput formControlName="lastName"/>
         </mat-form-field>
       </div>
       <mat-form-field appearance="outline">
@@ -52,17 +52,17 @@
       </mat-form-field>
       <mat-form-field fxFlex="50" appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput />
+        <input matInput formControlName="email" />
       </mat-form-field>
       <div fxLayout="row" fxLayoutGap="10px">
         <mat-form-field fxFlex="60" appearance="outline">
           <mat-label>Phone</mat-label>
-          <input matInput />
+          <input matInput formControlName="mobile" />
         </mat-form-field>
 
         <mat-form-field style="max-width: 58%" appearance="outline">
           <mat-label>Gender</mat-label>
-          <mat-select>
+          <mat-select formControlName="gender">
             <mat-option *ngFor="let g of gender" [value]="g.value">
               {{ g.viewValue }}</mat-option
             >
@@ -73,17 +73,21 @@
 
     <form fxLayout="column" [hidden]="isChangePassword">
       <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
+        <mat-label>Current password</mat-label>
         <input matInput />
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Confirm password</mat-label>
+        <mat-label>New password</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm new password</mat-label>
         <input matInput />
       </mat-form-field>
     </form>
 
     <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end end">
-      <button mat-raised-button>Save</button>
+      <button mat-raised-button color="warn">Save</button>
       <button mat-raised-button mat-dialog-close>Cancle</button>
     </div>
   </div>

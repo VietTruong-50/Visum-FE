@@ -11,17 +11,8 @@
  */
 
 
-export interface UserDTO { 
-    id?: number;
-    userName: string;
-    gender: string;
-    birthOfDate: string;
-    firstName: string;
-    lastName: string;
-    mobile: string;
-    password: string;
-    avatar?: string;
-    role?: string;
-    email: string;
+export interface GenreDTO { 
+    genre?: string;
+    category?: Array<string>;
 }
 

@@ -9,19 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { GenreDTO } from './genreDTO';
 
 
-export interface UserDTO { 
-    id?: number;
-    userName: string;
-    gender: string;
-    birthOfDate: string;
-    firstName: string;
-    lastName: string;
-    mobile: string;
-    password: string;
-    avatar?: string;
-    role?: string;
-    email: string;
+export interface ApiResponseGenreDTO { 
+    result?: Array<GenreDTO>;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

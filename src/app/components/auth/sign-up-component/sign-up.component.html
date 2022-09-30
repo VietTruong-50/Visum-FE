@@ -14,13 +14,13 @@
           accusamus aperiam dignissimos eos fugit totam.
         </p>
         <div fxFlex="30">
-          <a mat-raised-button href="home">Show more</a>
+          <a mat-raised-button href="home" style="background-color: #17a2b8;">Show more</a>
         </div>
       </div>
     </div>
 
     <div class="form" fxLayout="column" fxLayoutAlign="center center">
-      <div style="width: 350px" fxLayout="column" fxLayoutGap="30px">
+      <div style="width: 350px" fxLayout="column" fxLayoutGap="10px">
         <form
           [formGroup]="formGroup"
           fxLayout="column"
@@ -78,15 +78,20 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
+            <mat-label>Mobile:</mat-label>
+            <input formControlName="mobile" matInput />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
             <mat-label>Email:</mat-label>
             <input formControlName="email" matInput />
           </mat-form-field>
 
-          <button mat-raised-button>Sign up</button>
+          <button color="warn" mat-raised-button (click)="signUp()">Sign up</button>
         </form>
 
         <div fxLayoutAlign="center center" fxLayout="row" class="text-white">
-          <p>Already have an account ?<a href="auth/log-in"> Log in here</a></p>
+          <p class="m-0">Already have an account ?<a href="auth/log-in"> Log in here</a></p>
         </div>
         <!-- <div fxLayoutAlign="center center" fxLayout="row" class="text-white">
           <div fxLayout="column" fxLayoutGap="10px">

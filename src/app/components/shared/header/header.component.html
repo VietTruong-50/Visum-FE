@@ -6,23 +6,34 @@
   </div>
   <div
     fxLayout="row"
-    fxLayoutGap="20px"
+    fxLayoutGap="25px"
     fxLayoutAlign="center center"
-    style="width: 200px"
+    style="width: 260px"
   >
     <button mat-mini-fab class="text-white notification">
       <mat-icon>notifications</mat-icon>
     </button>
-    <img
-      src="../../../../../assets/images/artists/stephen-sanchez.jpg"
-      width="60px"
-      height="55px"
-      alt=""
-      class="avatar-img"
-    />
-    <div fxLayout="column" fxLayoutGap="0">
-      <h5>aaaa</h5>
-      <h6>vvvv</h6>
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+      <img
+        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+        width="60px"
+        height="55px"
+        alt=""
+        class="avatar-img"
+      />
+      <div
+        fxLayout="column"
+        [matMenuTriggerFor]="menu"
+        fxLayoutGap="0"
+        class="account"
+      >
+        <h5>{{ userData ? userData.userName : ' '}}</h5>
+        <small class="m-0 text-primary">Active</small>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item (click)="onSignOut()">Sign out</button>
+        </mat-menu>
+      </div>
     </div>
   </div>
 </div>

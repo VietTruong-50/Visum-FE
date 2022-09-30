@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiResponseUserDTO, UserControllerService } from 'src/app/api-svc';
 import SwiperCore from 'swiper';
 
 @Component({
@@ -8,11 +9,10 @@ import SwiperCore from 'swiper';
 })
 export class HomePageComponent implements OnInit {
 
-
   constructor() {}
 
   ngOnInit(): void {
-
+   
   }
-
+  
 }

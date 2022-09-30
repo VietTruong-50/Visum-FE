@@ -22,7 +22,7 @@ interface SongData {
   styleUrls: ['./audio-player.component.scss'],
 })
 export class AudioPlayerComponent implements OnInit, OnDestroy {
-  audio = new Audio();
+  audio: any;
 
   audioEvents = [
     'ended',
@@ -40,38 +40,41 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   duration = '00:00:00';
   seek = 0;
   rangeDuration = 0;
+  volume = 0;
 
   file: SongData;
 
   isVolume: boolean = false;
-  show: boolean = false;
+  isPlay: boolean = true;
 
   song: any;
 
   constructor(private router: Router) {
+    this.audio = new Audio();
+
     this.song = localStorage.getItem('song');
     const img = localStorage.getItem('img');
     const artist = localStorage.getItem('artist');
 
     this.file = {
       url: '../assets/audio/' + this.song + '.mp3',
-      img: '../assets/images/song/' + img + '.jpg',
+      img: img
+        ? '../assets/images/song/' + img + '.jpg'
+        : '../assets/images/Music_Mindfully.jpg',
       artist: artist ? artist : '',
     };
   }
 
   ngOnInit(): void {
-    this.streamObserver(this.file.url).subscribe((event) => {});
+    if (localStorage.getItem('song')) {
+      this.streamObserver(this.file.url).subscribe((event) => {});
+    }
   }
 
   ngOnDestroy() {
     // destroy audio here
     if (this.audio) {
       this.audio.pause();
-
-      if (this.router.url == "/home") {
-        localStorage.setItem('playTime', '0');
-      }
     }
   }
 
@@ -90,30 +93,31 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         this.rangeDuration = this.audio.duration;
         this.duration = this.timeFormat(this.audio.duration);
         this.currentTime = this.timeFormat(this.audio.currentTime);
+        this.volume = this.audio.volume;
 
         localStorage.setItem('playTime', this.audio.currentTime.toString());
         localStorage.setItem('duration', this.audio.duration.toString());
       };
 
-      this.addEvent(this.audio, this.audioEvents, handler);
+      this.addEvent(this.audio, handler);
 
       return () => {
         this.audio.pause();
         this.audio.currentTime = 0;
 
-        this.removeEvent(this.audio, this.audioEvents, handler);
+        this.removeEvent(this.audio, handler);
       };
     });
   }
 
-  addEvent(obj: HTMLAudioElement, events: string[], handler: any) {
-    events.forEach((event) => {
+  addEvent(obj: HTMLAudioElement, handler: any) {
+    this.audioEvents.forEach((event) => {
       obj.addEventListener(event, handler);
     });
   }
 
-  removeEvent(obj: HTMLAudioElement, events: string[], handler: any) {
-    events.forEach((event) => {
+  removeEvent(obj: HTMLAudioElement, handler: any) {
+    this.audioEvents.forEach((event) => {
       obj.removeEventListener(event, handler);
     });
   }
@@ -124,12 +128,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   play() {
     this.audio.play();
-    this.show = false;
+    this.isPlay = false;
   }
 
   pause() {
     this.audio.pause();
-    this.show = true;
+    this.isPlay = true;
   }
 
   stop() {

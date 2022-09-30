@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
-import { RegisterService } from './api/register.service';
+import { GenreControllerService } from './api/genreController.service';
 import { UserControllerService } from './api/userController.service';
 
 @NgModule({

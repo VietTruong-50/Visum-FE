@@ -37,6 +37,7 @@ import { FavoritePageComponent } from './components/pages/favorite-page/favorite
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import { MusicFavoriteComponent } from './components/pages/favorite-page/music-favorite/music-favorite.component';
+import {MatMenuModule} from '@angular/material/menu'
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +76,8 @@ import { MusicFavoriteComponent } from './components/pages/favorite-page/music-f
     MatDialogModule,
     MatSelectModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatMenuModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true}],
   bootstrap: [AppComponent],

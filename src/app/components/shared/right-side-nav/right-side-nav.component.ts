@@ -8,8 +8,14 @@ import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 })
 export class RightSideNavComponent implements OnInit {
 
+  // song: any;
+  // img: any;
+  // artist: any;
 
   constructor() {
+    // this.song = '../assets/audio/' + localStorage.getItem('song') + '.mp3';
+    // this.img = '../assets/images/song/' + localStorage.getItem('img') + '.jpg';
+    // this.artist = localStorage.getItem('artist');
 
   }
 
