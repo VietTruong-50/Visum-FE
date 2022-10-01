@@ -3,6 +3,7 @@ README.md
 api.module.ts
 api/api.ts
 api/genreController.service.ts
+api/songController.service.ts
 api/userController.service.ts
 configuration.ts
 encoder.ts
@@ -10,10 +11,12 @@ git_push.sh
 index.ts
 model/apiResponseGenreDTO.ts
 model/apiResponseLoginResponseDTO.ts
+model/apiResponseSongDTO.ts
 model/apiResponseUserDTO.ts
 model/genreDTO.ts
 model/loginRequestDTO.ts
 model/loginResponseDTO.ts
 model/models.ts
+model/songDTO.ts
 model/userDTO.ts
 variables.ts

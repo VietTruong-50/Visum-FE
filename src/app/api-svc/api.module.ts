@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 import { GenreControllerService } from './api/genreController.service';
+import { SongControllerService } from './api/songController.service';
 import { UserControllerService } from './api/userController.service';
 
 @NgModule({

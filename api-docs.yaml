@@ -71,6 +71,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseGenreDTO'
+  /visum/songs:
+    get:
+      tags:
+        - song-controller
+      operationId: getSong
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseSongDTO'
 components:
   schemas:
     UserDTO:
@@ -175,6 +187,35 @@ components:
           type: array
           items:
             type: string
+    ApiResponseSongDTO:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: "#/components/schemas/SongDTO"
+        errorCode:
+          type: string
+        message: 
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    SongDTO:
+      type: object
+      properties:
+        id: 
+          type: string
+        title:
+          type: string
+        image:
+          type: string
+        thumbnail:
+          type: string
+        genre:
+          type: object
+        vip:
+          type: boolean
   securitySchemes:
     bearer-jwt:
       type: http

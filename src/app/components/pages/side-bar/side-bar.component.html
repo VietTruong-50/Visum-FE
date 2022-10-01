@@ -5,7 +5,7 @@
     </div>
     <mat-list role="list">
       <mat-list-item
-        [routerLink]="[{ outlets: { child: ['discover'] } }]"
+        routerLink="/discover"
         role="listitem"
         fxLayout="row"
         fxLayoutGap="5px"
@@ -16,7 +16,7 @@
         ><mat-icon>poll</mat-icon>Trending</mat-list-item
       >
       <mat-list-item
-        [routerLink]="[{ outlets: { child: ['genres'] } }]"
+        routerLink="/genres"
         role="listitem"
         fxLayout="row"
         fxLayoutGap="5px"
@@ -33,7 +33,12 @@
       <mat-list-item role="listitem" fxLayout="row" fxLayoutGap="5px">
         <mat-icon>slideshow</mat-icon> Playlist
       </mat-list-item>
-      <mat-list-item [routerLink]="[{ outlets: { child: ['favorite'] } }]" role="listitem" fxLayout="row" fxLayoutGap="5px">
+      <mat-list-item
+        routerLink="/favorite"
+        role="listitem"
+        fxLayout="row"
+        fxLayoutGap="5px"
+      >
         <mat-icon>favorite</mat-icon>Favorite
       </mat-list-item>
     </mat-list>

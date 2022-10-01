@@ -13,52 +13,37 @@ import { RightSideNavComponent } from './components/shared/right-side-nav/right-
 
 let routes: Routes = [];
 routes = [
-  {
-    path: '',
-    component: SignUpComponent,
-  },
-  {
-    path: 'auth/sign-up',
-    component: SignUpComponent,
-  },
+  // {
+  //   path: '',
+  //   component: SignUpComponent,
+  // },
+  // {
+  //   path: 'auth/sign-up',
+  //   component: SignUpComponent,
+  // },
   {
     path: 'auth/log-in',
     component: LogInComponent,
   },
+  // {
+  //   path: 'home',
+  //   component: HomePageComponent,
+  // },
   {
-    path: 'home',
-    component: HomePageComponent,
-    children: [
-      {
-        path: '',
-        component: LandingNavComponent,
-        outlet: 'child',
-      },
-      {
-        path: 'discover',
-        component: LandingNavComponent,
-        outlet: 'child',
-      },
-      {
-        path: 'genres',
-        component: GenrePageComponent,
-        outlet: 'child',
-      },
-      {
-        path: 'favorite',
-        component: FavoritePageComponent,
-        outlet: 'child',
-      },
-      {
-        path: ':genres/songs',
-        component: SongByGenreComponent,
-        outlet: 'child',
-      },
-    ],
+    path: 'discover',
+    component: LandingNavComponent,
   },
   {
-    path: 'audio',
-    component: AudioPlayerComponent,
+    path: 'genres',
+    component: GenrePageComponent,
+  },
+  {
+    path: 'favorite',
+    component: FavoritePageComponent,
+  },
+  {
+    path: 'genres/:genre',
+    component: SongByGenreComponent,
   },
 ];
 

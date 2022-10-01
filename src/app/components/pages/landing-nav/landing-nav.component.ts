@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AudioPlayerComponent } from '../../shared/audio-player/audio-player.component';
+import { ApiResponseSongDTO, SongControllerService } from 'src/app/api-svc';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-landing-nav',
@@ -8,17 +8,32 @@ import { AudioPlayerComponent } from '../../shared/audio-player/audio-player.com
   styleUrls: ['./landing-nav.component.scss'],
 })
 export class LandingNavComponent implements OnInit {
-  
-  constructor(private router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  songData: any;
+
+  constructor(
+    private songControllerService: SongControllerService,
+    private _data: DataService
+  ) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSongData();
+  }
 
-  playSong(song: string, img: string, artist: string) {
-    localStorage.setItem('song', song);
-    localStorage.setItem('img', img);
-    localStorage.setItem('artist', artist)
-    this.router.navigateByUrl('/home');
+  getSongData() {
+    this.songControllerService
+      .getSong()
+      .subscribe((result: ApiResponseSongDTO) => {
+        if(result.errorCode == null){
+          this.songData = result.result;
+          console.log(this.songData )
+        }else{
+          alert('Error');
+        }
+      });
+  }
+
+  playSong(song: any) {
+    this._data.add(song);
   }
 }

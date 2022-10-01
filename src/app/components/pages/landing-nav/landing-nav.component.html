@@ -23,22 +23,21 @@
           </ng-template>
         </swiper> -->
 <div fxLayout="column" fxLayoutAlign="center none">
-  <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
-            <div fxLayout="row"  style="width: 90%"
-              class="align-self-center">
-              <div fxLayout="column" class="recently-play-item">
-                <img
-                  src="../../../../../assets/images/artists/stephen-sanchez.jpg"
-                  width="108px"
-                  height="100px"
-                  style="border-radius: 12px"
-                />
-                <div fxLayout="column">
-                  <h5>aaa</h5>
-                  <small>This is some</small>
-                </div>
-              </div>
-            </div> -->
+  <p class="content-title topic-title">RECENTLY PLAYED</p>
+  <div fxLayout="row" style="width: 90%" class="align-self-center">
+    <div fxLayout="column" class="recently-play-item">
+      <img
+        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+        width="108px"
+        height="100px"
+        style="border-radius: 12px"
+      />
+      <div fxLayout="column">
+        <h5>aaa</h5>
+        <small>This is some</small>
+      </div>
+    </div>
+  </div>
   <p class="content-title topic-title">MOST POPULAR</p>
   <div
     fxLayout="row wrap"
@@ -47,29 +46,29 @@
     class="align-self-center"
     fxLayoutGap="15px grid"
   >
-  <div fxLayout="row">
-    <img
-      width="80px"
-      height="80px"
-      class="popular-item-img"
-      src="../../../../../assets/images/artists/nicky-youre.jpg"
-      alt=""
-    />
-    <div
-      fxLayout="row"
-      class="popular-item-content"
-      fxLayoutAlign="space-between center"
-    >
-      <div fxLayout="column" fxLayoutAlign="center start">
-        <strong>Sunroof</strong>
-        <small>This is some</small>
+    <div fxLayout="row" *ngFor="let song of songData">
+      <img
+        width="80px"
+        height="80px"
+        class="popular-item-img"
+        src="../assets/images/song/{{ song ? song.image : 'songBg' }}.jpg"
+        alt=""
+      />
+      <div
+        fxLayout="row"
+        class="popular-item-content"
+        fxLayoutAlign="space-between center"
+      >
+        <div fxLayout="column" fxLayoutAlign="center start">
+          <strong>{{ song.title }}</strong>
+          <small>{{ song.thumbnail }}</small>
+        </div>
+        <button (click)="playSong(song)" mat-mini-fab class="text-white">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
       </div>
-      <button (click)="playSong('Sunroof', 'sunroof', 'Nicky Youre')" mat-mini-fab class="text-white">
-        <mat-icon>play_arrow</mat-icon>
-      </button>
     </div>
-  </div>
-    <div fxLayout="row">
+    <!-- <div fxLayout="row">
       <img
         width="80px"
         height="80px"
@@ -86,7 +85,13 @@
           <strong>Until I Found You</strong>
           <small>This is some</small>
         </div>
-        <button (click)="playSong('UntilIFoundYou', 'UntilIFoundYou', 'Stephen Sanchez')" mat-mini-fab class="text-white">
+        <button
+          (click)="
+            playSong('UntilIFoundYou', 'UntilIFoundYou', 'Stephen Sanchez')
+          "
+          mat-mini-fab
+          class="text-white"
+        >
           <mat-icon>play_arrow</mat-icon>
         </button>
       </div>
@@ -108,10 +113,14 @@
           <strong>Keshi playlist</strong>
           <small>This is some</small>
         </div>
-        <button (click)="playSong('keshi-playlist', 'keshi', 'Keshi')" mat-mini-fab class="text-white">
+        <button
+          (click)="playSong('keshi-playlist', 'keshi', 'Keshi')"
+          mat-mini-fab
+          class="text-white"
+        >
           <mat-icon>play_arrow</mat-icon>
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

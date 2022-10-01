@@ -35,8 +35,9 @@ export class LogInComponent implements OnInit {
         password: this.formGroup.controls['password'].value
       }).subscribe((response: ApiResponseLoginResponseDTO) => {
         if (response.errorCode == null) {
-          this.cookie.set(GlobalConstants.authToken, <string>response.result?.token, undefined, "/")
-          this.route.navigateByUrl("/home").then();
+          this.cookie.set(GlobalConstants.authToken, <string>response.result?.token, undefined, "/");
+          window.location.reload();
+          this.route.navigateByUrl("/discover").then();
         } else {
           // this.dialogService.showErrorDialog({
           //   title: "Error",

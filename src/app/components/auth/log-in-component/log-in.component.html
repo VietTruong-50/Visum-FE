@@ -1,22 +1,14 @@
 <div
   class="background-sign-in full-background h-100"
   fxLayout="column"
-  fxLayoutAlign="center start"
-  fxLayoutGap="15px"
+  fxLayoutAlign="center center"
 >
   <div class="login-header" fxLayout="row" fxLayoutAlign="center center">
     <p class="title">VISUM LOGIN FORM</p>
-    <div class="sign-up-btn">
-      <a mat-raised-button href="auth/sign-up" color="warn">Sign up</a>
-    </div>
   </div>
 
   <div fxLayout="row" fxLayoutGap="10">
-    <div
-      class="form"
-      fxLayout="column"
-      fxLayoutAlign="center center"
-    >
+    <div class="form" fxLayout="column" fxLayoutAlign="center center">
       <div style="width: 400px" fxLayout="column" fxLayoutGap="20px">
         <form
           [formGroup]="formGroup"
@@ -61,34 +53,33 @@
           <a href="">Forgot your password?</a>
         </div>
 
-        <button color="warn" mat-raised-button (click)="login()">Sign in</button>
+        <button color="warn" mat-raised-button (click)="login()">
+          Sign in
+        </button>
         <div fxLayoutAlign="center center" fxLayout="row" class="text-white">
-          <div fxLayout="column" fxLayoutGap="10px">
-            <div fxLayout="column" fxLayoutAlign="center center">OR</div>
+          <div
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="10px"
+          >
+            <div fxLayout="column">OR</div>
             <div fxLayout="row" fxLayoutGap="10px">
               <button mat-mini-fab>
-                <mat-icon>home</mat-icon>
+                <mat-icon>facebook</mat-icon>
               </button>
               <button mat-mini-fab>
-                <mat-icon>home</mat-icon>
+                <mat-icon>facebook</mat-icon>
               </button>
               <button mat-mini-fab>
-                <mat-icon>home</mat-icon>
+                <mat-icon>facebook</mat-icon>
               </button>
             </div>
           </div>
         </div>
+        <div class="align-self-center">
+          Not a member yet? <a href="auth/sign-up" color="warn">Sign up</a>
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    class="text-white w-100"
-    fxLayout="row"
-    fxLayoutAlign="center center"
-  >
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut aspernatur
-      aperiam at!
-    </p>
   </div>
 </div>

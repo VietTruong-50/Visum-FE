@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiResponseUserDTO, UserControllerService } from 'src/app/api-svc';
+import { LogInComponent } from '../../auth/log-in-component/log-in.component';
 import { GlobalConstants } from '../GlobalConstants';
 
 @Component({
@@ -15,12 +17,15 @@ export class HeaderComponent implements OnInit {
 
   constructor(private cookieService: CookieService, 
     private router: Router,
-     private userController: UserControllerService) {
-
+     private userController: UserControllerService,
+     private dialog: MatDialog) {
+    if(this.cookieService.check(GlobalConstants.authToken)){
+      this.getUserData();
+    }
   }
 
   ngOnInit(): void {
-    this.getUserData();
+
   }
 
   getUserData() {
@@ -36,10 +41,15 @@ export class HeaderComponent implements OnInit {
       });
   }
 
+  openSigninDialog(){
+    this.dialog.open(LogInComponent, {
+      width: '45vw',
+    });
+  }
 
   onSignOut(){
     this.cookieService.delete(GlobalConstants.authToken, "/")
     localStorage.clear();
-    this.router.navigate(['/auth/log-in']);
+    window.location.reload();
   }
 }

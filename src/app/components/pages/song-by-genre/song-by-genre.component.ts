@@ -9,10 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SongByGenreComponent implements OnInit {
 
-  title: string | undefined;
+  title: string;
 
   constructor( private route: ActivatedRoute) {
-    this.title = this.route.snapshot.params['genres'];
+    this.title = this.route.snapshot.params['genre'];
    }
 
   ngOnInit(): void {

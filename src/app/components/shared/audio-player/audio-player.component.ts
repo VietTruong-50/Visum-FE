@@ -1,20 +1,12 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-
-interface SongData {
-  url: string;
-  img: string;
-  artist: string;
-}
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-audio-player',
@@ -42,40 +34,27 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   rangeDuration = 0;
   volume = 0;
 
-  file: SongData;
-
   isVolume: boolean = false;
-  isPlay: boolean = true;
+  isPlay: boolean = false;
 
   song: any;
 
-  constructor(private router: Router) {
+  constructor( private _data: DataService) {
     this.audio = new Audio();
-
-    this.song = localStorage.getItem('song');
-    const img = localStorage.getItem('img');
-    const artist = localStorage.getItem('artist');
-
-    this.file = {
-      url: '../assets/audio/' + this.song + '.mp3',
-      img: img
-        ? '../assets/images/song/' + img + '.jpg'
-        : '../assets/images/Music_Mindfully.jpg',
-      artist: artist ? artist : '',
-    };
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('song')) {
-      this.streamObserver(this.file.url).subscribe((event) => {});
-    }
+    this._data.get()?.subscribe(rs => {
+      this.song = rs;
+      this.streamObserver('../assets/audio/' + rs.title + '.mp3').subscribe((event) => {});
+    })
   }
 
   ngOnDestroy() {
     // destroy audio here
-    if (this.audio) {
-      this.audio.pause();
-    }
+    // if (this.audio) {
+    //   this.audio.pause();
+    // }
   }
 
   streamObserver(url: any) {
@@ -84,10 +63,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       this.audio.load();
       this.audio.play();
 
-      if (Number(localStorage.getItem('playTime'))) {
-        this.audio.currentTime = Number(localStorage.getItem('playTime'));
-      }
-
       const handler = (event: Event) => {
         this.seek = this.audio.currentTime;
         this.rangeDuration = this.audio.duration;
@@ -95,8 +70,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         this.currentTime = this.timeFormat(this.audio.currentTime);
         this.volume = this.audio.volume;
 
-        localStorage.setItem('playTime', this.audio.currentTime.toString());
-        localStorage.setItem('duration', this.audio.duration.toString());
       };
 
       this.addEvent(this.audio, handler);
@@ -136,7 +109,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.isPlay = true;
   }
 
-  stop() {
+  replay() {
     this.audio.pause();
     this.audio.currentTime = 0;
     this.play();

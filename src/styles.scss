@@ -21,11 +21,12 @@ a {
 }
 
 .background-sign-up {
-    background-image: url("assets/images/sign-up.png");
+    // background-image: url("assets/images/sign-up.png");
 }
 
 .background-sign-in {
-    background-image: url("assets/images/img_6835.png");
+    // background-image: url("assets/images/img_6835.png");
+    border-radius: 10px;
 }
 
 .full-background {
@@ -88,4 +89,8 @@ mat-form-field {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.mat-dialog-container{
+    border-radius: 12px;
 }

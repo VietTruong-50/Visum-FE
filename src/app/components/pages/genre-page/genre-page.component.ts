@@ -23,14 +23,14 @@ export class GenrePageComponent implements OnInit {
     this.genreController.getGenre().subscribe((result: ApiResponseGenreDTO) => {
       if (result.errorCode == null) {
         this.genreData = result.result;
-        console.log(this.genreData)
-      }else{
-        alert('Error')
+        console.log(this.genreData);
+      } else {
+        alert('Error');
       }
     });
   }
 
   goToSongByGenre(category: string) {
-    this.router.navigateByUrl('/home/(child:' + category + '/songs)');
+    this.router.navigate(['/genres', category]);
   }
 }
