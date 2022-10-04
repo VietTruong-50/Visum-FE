@@ -9,16 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Sort } from './sort';
 
 
-export interface SongDTO { 
-    id?: string;
-    title?: string;
-    image?: string;
-    thumbnail?: string;
-    genre?: object;
-    songAuthor?: object;
-    duration?: number;
-    vip?: boolean;
+export interface PageableObject { 
+    offset?: number;
+    sort?: Sort;
+    pageNumber?: number;
+    pageSize?: number;
+    paged?: boolean;
+    unpaged?: boolean;
 }
 

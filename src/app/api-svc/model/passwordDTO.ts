@@ -11,14 +11,9 @@
  */
 
 
-export interface SongDTO { 
-    id?: string;
-    title?: string;
-    image?: string;
-    thumbnail?: string;
-    genre?: object;
-    songAuthor?: object;
-    duration?: number;
-    vip?: boolean;
+export interface PasswordDTO { 
+    currentPassword?: string;
+    newPassword?: string;
+    cf_password?: string;
 }
 

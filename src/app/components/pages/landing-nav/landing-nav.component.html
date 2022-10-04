@@ -23,9 +23,14 @@
           </ng-template>
         </swiper> -->
 <div fxLayout="column" fxLayoutAlign="center none">
-  <p class="content-title topic-title">RECENTLY PLAYED</p>
-  <div fxLayout="row" style="width: 90%" class="align-self-center">
-    <div fxLayout="column" class="recently-play-item">
+  <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
+  <div fxLayout="row" style="width: 90%" class="align-self-center" fxLayoutGap="15px">
+    <div
+      fxLayout="column"
+      class="recently-play-item"
+      fxLayoutGap="5px"
+      *ngFor="let song of songData"
+    >
       <img
         src="../../../../../assets/images/artists/stephen-sanchez.jpg"
         width="108px"
@@ -33,11 +38,11 @@
         style="border-radius: 12px"
       />
       <div fxLayout="column">
-        <h5>aaa</h5>
-        <small>This is some</small>
+        <h5>{{ song.title }}</h5>
+        <small>{{ song.thumbnail }}</small>
       </div>
     </div>
-  </div>
+  </div> -->
   <p class="content-title topic-title">MOST POPULAR</p>
   <div
     fxLayout="row wrap"
@@ -61,7 +66,7 @@
       >
         <div fxLayout="column" fxLayoutAlign="center start">
           <strong>{{ song.title }}</strong>
-          <small>{{ song.thumbnail }}</small>
+          <small>{{ song.songAuthor?.name }}</small>
         </div>
         <button (click)="playSong(song)" mat-mini-fab class="text-white">
           <mat-icon>play_arrow</mat-icon>
@@ -89,32 +94,6 @@
           (click)="
             playSong('UntilIFoundYou', 'UntilIFoundYou', 'Stephen Sanchez')
           "
-          mat-mini-fab
-          class="text-white"
-        >
-          <mat-icon>play_arrow</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div fxLayout="row">
-      <img
-        width="80px"
-        height="80px"
-        class="popular-item-img"
-        src="../../../../../assets/images/artists/keshi.jpg"
-        alt=""
-      />
-      <div
-        fxLayout="row"
-        class="popular-item-content"
-        fxLayoutAlign="space-between center"
-      >
-        <div fxLayout="column" fxLayoutAlign="center start">
-          <strong>Keshi playlist</strong>
-          <small>This is some</small>
-        </div>
-        <button
-          (click)="playSong('keshi-playlist', 'keshi', 'Keshi')"
           mat-mini-fab
           class="text-white"
         >

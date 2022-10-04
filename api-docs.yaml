@@ -59,6 +59,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiResponseUserDTO"
+  /visum/user/{id}:
+    put:
+      tags:
+        - user-controller
+      operationId: updateUser
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponseUserDTO"
+  /visum/changePassword/user/{id}:
+    put:
+      tags:
+        - user-controller
+      operationId: changePassword
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponseUserDTO"
   /visum/genres:
     get:
       tags: 
@@ -83,6 +131,71 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseSongDTO'
+  /visum/songs/{category}:
+    get:
+      tags:
+        - song-controller
+      operationId: getSongByCategory
+      parameters:
+      - in: path
+        name: category
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: sortBy
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseSongByCategory'
+  /visum/favorites:
+    get:
+      tags:
+        - song-controller
+      operationId: getFavorite
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: sortBy
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseFavoriteSong'
 components:
   schemas:
     UserDTO:
@@ -104,6 +217,7 @@ components:
           type: string
         gender:
           type: string
+          enum: [Male, FEMALE, OTHER]
         birthOfDate:
           type: string
         firstName:
@@ -214,7 +328,103 @@ components:
           type: string
         genre:
           type: object
+        songAuthor:
+          type: object
+        duration:
+          type: number
         vip:
+          type: boolean
+    ApiResponseSongByCategory:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/PageSong'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    ApiResponseFavoriteSong:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/PageSong'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    PageSong:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/SongDTO'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        number:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    PasswordDTO:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+        cf_password:
+          type: string
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
           type: boolean
   securitySchemes:
     bearer-jwt:

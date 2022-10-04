@@ -5,7 +5,7 @@
     </div>
     <mat-list role="list">
       <mat-list-item
-        routerLink="/discover"
+        (click)="navigateTo('/discover')"
         role="listitem"
         fxLayout="row"
         fxLayoutGap="5px"
@@ -16,7 +16,7 @@
         ><mat-icon>poll</mat-icon>Trending</mat-list-item
       >
       <mat-list-item
-        routerLink="/genres"
+        (click)="navigateTo('/genres')"
         role="listitem"
         fxLayout="row"
         fxLayoutGap="5px"
@@ -34,7 +34,8 @@
         <mat-icon>slideshow</mat-icon> Playlist
       </mat-list-item>
       <mat-list-item
-        routerLink="/favorite"
+        *ngIf="key"
+        (click)="navigateTo('/favorite')"
         role="listitem"
         fxLayout="row"
         fxLayoutGap="5px"

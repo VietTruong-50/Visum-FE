@@ -9,16 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { PageSong } from './pageSong';
 
 
-export interface SongDTO { 
-    id?: string;
-    title?: string;
-    image?: string;
-    thumbnail?: string;
-    genre?: object;
-    songAuthor?: object;
-    duration?: number;
-    vip?: boolean;
+export interface ApiResponseSongByCategory { 
+    result?: PageSong;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

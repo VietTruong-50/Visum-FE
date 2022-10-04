@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { ApiResponseUserDTO, UserControllerService } from 'src/app/api-svc';
+import { LogInComponent } from '../log-in-component/log-in.component';
 
 @Component({
   selector: 'app-sign-up-component',
@@ -14,8 +16,10 @@ export class SignUpComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userController: UserControllerService,
-    private router: Router
-  ) {
+    private router: Router,
+    private dialogRef: MatDialogRef<SignUpComponent>,
+    private dialog: MatDialog
+    ) {
     this.formGroup = this.formBuilder.group({
       userName: ['', Validators.required],
       password: ['', Validators.required],
@@ -59,5 +63,12 @@ export class SignUpComponent implements OnInit {
     }else{
       alert('Password and Cfpassword is incorrect');
     }
+  }
+
+  openSignin(){
+    this.dialogRef.close();
+    this.dialog.open(LogInComponent, {
+      width: '45vw'
+    })
   }
 }

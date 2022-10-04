@@ -19,9 +19,10 @@ interface GENDER {
 })
 export class UserProfileComponent implements OnInit {
   formGroup: FormGroup;
+  pwFormGroup: FormGroup;
   userData: any;
 
-  isChangePassword: boolean = true;
+  isChangePassword: boolean = false;
 
   gender: GENDER[] = [
     { value: 'MALE', viewValue: 'Nam' },
@@ -30,9 +31,11 @@ export class UserProfileComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userController: UserControllerService
   ) {
     this.formGroup = this.formBuilder.group({
+      id: ['', Validators.required],
       userName: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -40,6 +43,13 @@ export class UserProfileComponent implements OnInit {
       birthOfDate: ['', Validators.required],
       mobile: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+
+    this.pwFormGroup = this.formBuilder.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      cf_password: ['', Validators.required],
     });
   }
 
@@ -48,10 +58,11 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserData() {
-    this.userData =  localStorage.getItem('userProfile');
-    this.userData =  JSON.parse(this.userData);
-    
+    this.userData = localStorage.getItem('userProfile');
+    this.userData = JSON.parse(this.userData);
+
     this.formGroup.patchValue({
+      id: this.userData.id,
       userName: this.userData.userName,
       firstName: this.userData.firstName,
       lastName: this.userData.lastName,
@@ -64,11 +75,61 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  changePassword(value: string) {
+  changePasswordForm(value: string) {
     if (value == 'password') {
-      this.isChangePassword = false;
-    } else {
       this.isChangePassword = true;
+    } else {
+      this.isChangePassword = false;
+    }
+  }
+
+  saveUser() {
+    let formValue;
+    if (this.isChangePassword) {
+      formValue = this.pwFormGroup.getRawValue();
+      this.changePassword(formValue);
+    } else {
+      formValue = this.formGroup.getRawValue();
+      this.updateUser(formValue);
+    }
+  }
+
+  updateUser(formValue: any) {
+    this.userController
+      .updateUser(this.userData.id, {
+        userName: formValue.userName,
+        password: '',
+        gender: formValue.gender,
+        email: formValue.email,
+        mobile: formValue.mobile,
+        birthOfDate: moment(formValue.birthOfDate).toISOString(),
+        firstName: formValue.firstName,
+        lastName: formValue.lastName,
+      })
+      .subscribe((result) => {
+        if (result.errorCode == null) {
+          localStorage.setItem('userProfile', JSON.stringify(formValue));
+          alert('Change profile success');
+        } else alert('error');
+      });
+  }
+
+  changePassword(formValue: any) {
+    if (formValue.newPassword == formValue.cf_password) {
+      this.userController
+        .changePassword(this.userData.id, {
+          currentPassword: formValue.currentPassword,
+          newPassword: formValue.newPassword,
+          cf_password: formValue.cf_password,
+        })
+        .subscribe((result) => {
+          if (result.errorCode == null) {
+            alert('Change password success');
+            this.pwFormGroup.reset();
+          } else alert('error');
+        });
+    } else {
+      alert('Error pw');
     }
   }
 }

@@ -14,7 +14,7 @@
 export interface UserDTO { 
     id?: number;
     userName: string;
-    gender: string;
+    gender: UserDTO.GenderEnum;
     birthOfDate: string;
     firstName: string;
     lastName: string;
@@ -24,4 +24,13 @@ export interface UserDTO {
     role?: string;
     email: string;
 }
+export namespace UserDTO {
+    export type GenderEnum = 'Male' | 'FEMALE' | 'OTHER';
+    export const GenderEnum = {
+        Male: 'Male' as GenderEnum,
+        Female: 'FEMALE' as GenderEnum,
+        Other: 'OTHER' as GenderEnum
+    };
+}
+
 

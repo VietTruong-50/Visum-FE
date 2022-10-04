@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
+import { SongControllerService, SongDTO } from 'src/app/api-svc';
+import { DataService } from 'src/app/service/data.service';
 
 interface MusicData {
   position: number;
@@ -29,8 +33,26 @@ const ELEMENT_DATA: MusicData[] = [
 export class MusicFavoriteComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'album', 'duration'];
 
-  dataSource = ELEMENT_DATA;
-  constructor() {}
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any[]>();
+  constructor(private songController: SongControllerService, private _data: DataService) {
+    this.getFavoriteData();
+  }
 
   ngOnInit(): void {}
+
+  getFavoriteData() {
+    this.songController.getFavorite(1, 4, 'createdAt').subscribe((result) => {
+      let data = result.result?.content ? result.result?.content : [];
+      this.dataSource = new MatTableDataSource<SongDTO>(data);
+    });
+  }
+
+  timeFormat(time: any, format = 'HH:mm:ss') {
+    const momentTime = time * 1000;
+    return moment.utc(momentTime).format(format);
+  }
+
+  playSong(song: any) {
+    this._data.add(song);
+  }
 }

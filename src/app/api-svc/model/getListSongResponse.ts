@@ -9,16 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SongDTO } from './songDTO';
 
 
-export interface SongDTO { 
-    id?: string;
-    title?: string;
-    image?: string;
-    thumbnail?: string;
-    genre?: object;
-    songAuthor?: object;
-    duration?: number;
-    vip?: boolean;
+export interface GetListSongResponse { 
+    song?: SongDTO;
 }
 

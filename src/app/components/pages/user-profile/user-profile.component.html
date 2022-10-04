@@ -16,22 +16,22 @@
       <h5>{{this.formGroup.controls['userName'].value}}</h5>
       <p
         style="text-decoration: underline; color: #007aff; cursor: pointer;"
-        [hidden]="!isChangePassword"
-        (click)="changePassword('password')"
+        [hidden]="isChangePassword"
+        (click)="changePasswordForm('password')"
       >
         Change password
       </p>
       <p
         style="text-decoration: underline; color: #007aff; cursor: pointer;"
-        [hidden]="isChangePassword"
-        (click)="changePassword('profile')"
+        [hidden]="!isChangePassword"
+        (click)="changePasswordForm('profile')"
       >
         Change profile
       </p>
     </div>
   </div>
   <div fxFlex="50">
-    <form [formGroup]="formGroup" fxLayout="column" [hidden]="!isChangePassword">
+    <form [formGroup]="formGroup" fxLayout="column" [hidden]="isChangePassword">
       <div fxLayout="row" fxLayoutGap="10px">
         <mat-form-field fxFlex="50" appearance="outline">
           <mat-label>First name</mat-label>
@@ -71,23 +71,23 @@
       </div>
     </form>
 
-    <form fxLayout="column" [hidden]="isChangePassword">
+    <form [formGroup]="pwFormGroup" fxLayout="column" [hidden]="!isChangePassword">
       <mat-form-field appearance="outline">
         <mat-label>Current password</mat-label>
-        <input matInput />
+        <input matInput type="password" formControlName="currentPassword"/>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>New password</mat-label>
-        <input matInput />
+        <input matInput type="password" formControlName="newPassword"/>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Confirm new password</mat-label>
-        <input matInput />
+        <input matInput type="password" formControlName="cf_password"/>
       </mat-form-field>
     </form>
 
     <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end end">
-      <button mat-raised-button color="warn">Save</button>
+      <button mat-raised-button color="warn" (click)="saveUser()">Save</button>
       <button mat-raised-button mat-dialog-close>Cancle</button>
     </div>
   </div>

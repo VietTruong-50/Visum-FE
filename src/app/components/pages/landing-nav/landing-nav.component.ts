@@ -26,6 +26,7 @@ export class LandingNavComponent implements OnInit {
       .subscribe((result: ApiResponseSongDTO) => {
         if(result.errorCode == null){
           this.songData = result.result;
+
           console.log(this.songData )
         }else{
           alert('Error');

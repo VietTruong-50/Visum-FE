@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DataService } from 'src/app/service/data.service';
+import { SongDTO } from 'src/app/api-svc';
 
 @Component({
   selector: 'app-audio-player',
@@ -46,30 +47,25 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._data.get()?.subscribe(rs => {
       this.song = rs;
+
       this.streamObserver('../assets/audio/' + rs.title + '.mp3').subscribe((event) => {});
     })
   }
 
-  ngOnDestroy() {
-    // destroy audio here
-    // if (this.audio) {
-    //   this.audio.pause();
-    // }
-  }
+  ngOnDestroy() {}
 
   streamObserver(url: any) {
     return new Observable((observer) => {
       this.audio.src = url;
       this.audio.load();
       this.audio.play();
-
+      
       const handler = (event: Event) => {
         this.seek = this.audio.currentTime;
         this.rangeDuration = this.audio.duration;
-        this.duration = this.timeFormat(this.audio.duration);
+        this.duration = this.timeFormat(this.audio.duration);     
         this.currentTime = this.timeFormat(this.audio.currentTime);
         this.volume = this.audio.volume;
-
       };
 
       this.addEvent(this.audio, handler);

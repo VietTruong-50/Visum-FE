@@ -12,11 +12,12 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
   styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent implements OnInit {
+
+  key: boolean;
   constructor(private dialog: MatDialog, 
     private router: Router, 
-    private route: ActivatedRoute,
     private cookieService: CookieService) {
-   
+    this.key = this.cookieService.check(GlobalConstants.authToken);
   }
 
   ngOnInit(): void {}
@@ -35,6 +36,6 @@ export class SideBarComponent implements OnInit {
   }
 
   navigateTo(route: string) {
-    this.router.navigate([route], {relativeTo: this.route});  
+    this.router.navigate([route]);  
   }
 }

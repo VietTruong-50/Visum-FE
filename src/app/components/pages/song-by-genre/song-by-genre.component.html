@@ -7,7 +7,46 @@
     class="align-self-center"
     fxLayoutGap="15px grid"
   >
-    <div fxLayout="row">
+    <div fxLayout="row" *ngFor="let song of listSong">
+      <img
+        width="80px"
+        height="80px"
+        class="popular-item-img"
+        src="../assets/images/song/{{ song ? song.image : 'songBg' }}.jpg"
+        alt=""
+      />
+      <div
+        fxLayout="row"
+        class="popular-item-content"
+        fxLayoutAlign="space-between center"
+      >
+        <div fxLayout="column" fxLayoutAlign="center start">
+          <strong>{{ song.title }}</strong>
+          <small>{{ song.thumbnail }}</small>
+        </div>
+        <button mat-mini-fab class="text-white">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+    </div>
+    <!-- <div fxLayout="row" *ngFor="let song of listSong">
+      <img
+        width="80px"
+        height="80px"
+        class="popular-item-img"
+        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+        alt=""
+      />
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center start"
+        class="popular-item-content"
+      >
+        <strong>{{ song.title }}</strong>
+        <small>{{ song.thumbnail }}</small>
+      </div>
+    </div> -->
+    <!-- <div fxLayout="row">
       <img
         width="80px"
         height="80px"
@@ -40,23 +79,6 @@
         <strong>aaa</strong>
         <small>This is some</small>
       </div>
-    </div>
-    <div fxLayout="row">
-      <img
-        width="80px"
-        height="80px"
-        class="popular-item-img"
-        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
-        alt=""
-      />
-      <div
-        fxLayout="column"
-        fxLayoutAlign="center start"
-        class="popular-item-content"
-      >
-        <strong>aaa</strong>
-        <small>This is some</small>
-      </div>
-    </div>
+    </div> -->
   </div>
 </div>

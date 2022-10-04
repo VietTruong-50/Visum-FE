@@ -20,6 +20,7 @@
         height="55px"
         alt=""
         class="avatar-img"
+        *ngIf="userData"
       />
       <div *ngIf="!userData" (click)="openSigninDialog()" class="account">Log-in</div>
       <div
@@ -32,7 +33,7 @@
         <h5>{{ userData ? userData.userName : " " }}</h5>
         <small class="m-0 text-primary">Active</small>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Change status</button>
           <button mat-menu-item (click)="onSignOut()">Sign out</button>
         </mat-menu>
       </div>

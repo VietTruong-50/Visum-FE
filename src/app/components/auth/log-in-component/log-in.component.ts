@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiResponseLoginResponseDTO, UserControllerService } from 'src/app/api-svc';
 import { GlobalConstants } from '../../shared/GlobalConstants';
+import { SignUpComponent } from '../sign-up-component/sign-up.component';
 
 @Component({
   selector: 'app-log-in-component',
@@ -17,7 +19,9 @@ export class LogInComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userController: UserControllerService,
     private route: Router,
-    private cookie: CookieService
+    private cookie: CookieService,
+    private dialogRef: MatDialogRef<LogInComponent>,
+    private dialog: MatDialog
   ) {
     this.formGroup = this.formBuilder.group({
       userName: ['', Validators.required],
@@ -27,6 +31,7 @@ export class LogInComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
   login() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
@@ -49,5 +54,12 @@ export class LogInComponent implements OnInit {
         }
       })
     }
+  }
+
+  openSignup(){
+    this.dialogRef.close();
+    this.dialog.open(SignUpComponent, {
+      width: '45vw'
+    })
   }
 }
