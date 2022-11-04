@@ -68,9 +68,15 @@
           <strong>{{ song.title }}</strong>
           <small>{{ song.songAuthor?.name }}</small>
         </div>
-        <button (click)="playSong(song)" mat-mini-fab class="text-white">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <button mat-mini-fab class="middle">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button (click)="playSong(song)" mat-mini-fab class="text-white">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+        </div>
+        
       </div>
     </div>
     <!-- <div fxLayout="row">

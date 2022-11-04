@@ -41,15 +41,15 @@
     </div>
 
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
-      <button mat-mini-fab><mat-icon>skip_previous</mat-icon></button>
-      <button mat-mini-fab *ngIf="isPlay == false" (click)="pause()">
+      <button mat-mini-fab (click)="playPrevious()"><mat-icon>skip_previous</mat-icon></button>
+      <button mat-mini-fab *ngIf="isPlay == true" (click)="pause()">
         <mat-icon>pause</mat-icon>
       </button>
-      <button mat-mini-fab *ngIf="isPlay == true" (click)="play()">
+      <button mat-mini-fab *ngIf="isPlay == false" (click)="play()">
         <mat-icon>play_arrow</mat-icon>
       </button>
       <button mat-mini-fab (click)="replay()"><mat-icon>replay</mat-icon></button>
-      <button mat-mini-fab><mat-icon>skip_next</mat-icon></button>
+      <button mat-mini-fab (click)="playNext()"><mat-icon>skip_next</mat-icon></button>
     </div>
   </div>
 </div>

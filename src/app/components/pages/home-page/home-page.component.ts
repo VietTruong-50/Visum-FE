@@ -9,10 +9,15 @@ import SwiperCore from 'swiper';
 })
 export class HomePageComponent implements OnInit {
 
+  status: boolean = true;
+
   constructor() {}
 
   ngOnInit(): void {
    
   }
   
+  toggle(){
+    this.status = !this.status;
+  }
 }

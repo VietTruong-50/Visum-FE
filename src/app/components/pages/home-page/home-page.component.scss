@@ -1,5 +1,3 @@
-
-
 .popular-item-content {
   width: 260px;
   border-bottom-right-radius: 12px;
@@ -36,4 +34,47 @@
   font-size: 25px;
   font-weight: 500;
   font-family: cursive;
+}
+
+.closeSidenav {
+  width: 70px;
+  transition: .40s;
+}
+
+.openSidenav {
+  width: 250px;
+  background-color: #1d242c;
+  transition: .40s;
+}
+
+.openSidenavContent {
+  margin-left: 250px !important;
+  transition: .40s;
+}
+
+.closeSidenavContent {
+  margin-left: 70px !important;
+  transition: .40s;
+}
+
+.left-sidenav-content {
+  height: 44%;
+  overflow: auto
+}
+
+.openSidenavLogo {
+  width: 75px;
+  height: 65px;
+  transition: .40s;
+}
+
+.closeSidenavLogo {
+  width: 60px;
+  height: 55px;
+  transition: .40s;
+}
+
+.btn-toggle-container {
+  top: 46%;
+  position: absolute;
 }

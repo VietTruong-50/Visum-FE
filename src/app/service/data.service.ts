@@ -6,7 +6,7 @@ import { SongDTO } from "../api-svc";
     providedIn: "root"
 })
 export class DataService{
-    data: Subject<SongDTO> | undefined;
+    data: Subject<SongDTO> ;
 
     constructor(){
         this.data = new Subject();

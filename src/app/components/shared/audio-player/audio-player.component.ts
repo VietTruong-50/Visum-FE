@@ -14,7 +14,7 @@ import { SongDTO } from 'src/app/api-svc';
   templateUrl: './audio-player.component.html',
   styleUrls: ['./audio-player.component.scss'],
 })
-export class AudioPlayerComponent implements OnInit, OnDestroy {
+export class AudioPlayerComponent implements OnInit{
   audio: any;
 
   audioEvents = [
@@ -44,18 +44,20 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.audio = new Audio();
   }
 
+  listSong: any[] = [];
+
   ngOnInit(): void {
     this._data.get()?.subscribe(rs => {
-      this.song = rs;
-
-      this.streamObserver('../assets/audio/' + rs.title + '.mp3').subscribe((event) => {});
+      this.listSong.push(rs);
+      this.song = this.listSong.at(this.listSong.length-1);
+      
+      this.streamObserver('../assets/audio/' + this.song.title + '.mp3').subscribe((event) => {});
     })
   }
 
-  ngOnDestroy() {}
-
   streamObserver(url: any) {
     return new Observable((observer) => {
+      
       this.audio.src = url;
       this.audio.load();
       this.audio.play();
@@ -69,6 +71,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       };
 
       this.addEvent(this.audio, handler);
+
+      this.isPlay = true;
 
       return () => {
         this.audio.pause();
@@ -97,12 +101,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   play() {
     this.audio.play();
-    this.isPlay = false;
+    this.isPlay = true;
   }
 
   pause() {
     this.audio.pause();
-    this.isPlay = true;
+    this.isPlay = false;
   }
 
   replay() {
@@ -118,5 +122,20 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   timeFormat(time: any, format = 'HH:mm:ss') {
     const momentTime = time * 1000;
     return moment.utc(momentTime).format(format);
+  }
+
+  playNext(){
+    const currentIndex = this.listSong.findIndex(value => value == this.song);
+    let nextIndex = (currentIndex + 1)%this.listSong.length;
+    this.song = this.listSong.at(nextIndex);
+    this.streamObserver('../assets/audio/' + this.song.title + '.mp3').subscribe((event) => {});
+
+  }
+
+  playPrevious(){
+    const currentIndex = this.listSong.findIndex(value => value == this.song);
+    let previousIndex = (currentIndex + this.listSong.length - 1)%this.listSong.length;
+    this.song = this.listSong.at(previousIndex);
+    this.streamObserver('../assets/audio/' + this.song.title + '.mp3').subscribe((event) => {});
   }
 }

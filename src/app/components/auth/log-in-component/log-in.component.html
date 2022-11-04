@@ -38,20 +38,21 @@
               matInput
             />
           </mat-form-field>
-        </form>
-
-        <div
+          <div
           fxLayout="row"
           fxLayoutAlign="space-between center"
           class="text-white"
         >
           <div fxLayout="row" fxLayoutAlign="center center">
-            <input type="checkbox" />
+            <input type="checkbox" formControlName="remember_me"/>
             <label style="margin-left: 10px">Remember password</label>
           </div>
 
           <a href="">Forgot your password?</a>
         </div>
+        </form>
+
+        
 
         <button color="warn" mat-raised-button (click)="login()">
           Sign in

@@ -1,39 +1,55 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav class="sidenav" #sidenav mode="side" opened="true">
+  <mat-sidenav
+    class="sidenav"
+    mode="side"
+    opened="true"
+    [ngClass]="status ? 'openSidenav' : 'closeSidenav'"
+  >
     <div fxLayout="row">
-      <app-gaps [width]="35"></app-gaps>
+      <app-gaps [width]="status ? 25 : 5"></app-gaps>
       <div
-      fxLayout="row"
-      fxLayoutAlign="none center"
-      fxLayoutGap="20px"
-      class="w-100"
-      style="height: 100px"
-    >
-      <img
-        src="../../../../../assets/images/logo/apple-music-logo.png"
-        alt=""
-        width="35%"
-        height="65%"
-      />
-      <!-- <img
+        fxLayout="row"
+        fxLayoutAlign="none center"
+        fxLayoutGap="20px"
+        class="w-100"
+        style="height: 100px"
+      >
+        <img
+          src="../../../../../assets/images/logo/apple-music-logo.png"
+          alt=""
+          [ngClass]="status ? 'openSidenavLogo' : 'closeSidenavLogo'"
+        />
+        <!-- <img
           style="cursor: pointer"
           src="../../../../../assets/images/logo.a27cfc72.svg"
           height="75%"
           width="75%"
           alt="Visum"
         /> -->
-      <a href="" class="text-white logo">Visum</a>
+        <a href="" class="text-white logo" *ngIf="status">Visum</a>
+      </div>
     </div>
+
+    <div *ngIf="status">
+      <app-side-bar></app-side-bar>
     </div>
-   
-    <app-side-bar></app-side-bar>
+
+    <div
+      class="w-100 btn-toggle-container"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+    >
+      <button mat-raised-button (click)="toggle()">Close</button>
+    </div>
   </mat-sidenav>
 
-  <mat-sidenav-content style="background-color: #16191e">
+  <mat-sidenav-content
+    style="background-color: #16191e"
+    [ngClass]="status ? 'openSidenavContent' : 'closeSidenavContent'"
+  >
     <app-header></app-header>
     <div fxLayout="row" class="w-100 h-100">
-      <div fxFlex="70" fxLayout="column" style="height: 44%;
-      overflow: auto;">
+      <div fxFlex="70" fxLayout="column" class="left-sidenav-content">
         <router-outlet></router-outlet>
       </div>
       <div fxFlex="30" style="background-color: #1d242c">

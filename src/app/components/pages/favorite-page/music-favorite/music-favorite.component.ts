@@ -55,4 +55,8 @@ export class MusicFavoriteComponent implements OnInit {
   playSong(song: any) {
     this._data.add(song);
   }
+
+  stop(song: any){
+    
+  }
 }

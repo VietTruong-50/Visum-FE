@@ -13,22 +13,10 @@ import { RightSideNavComponent } from './components/shared/right-side-nav/right-
 
 let routes: Routes = [];
 routes = [
-  // {
-  //   path: '',
-  //   component: SignUpComponent,
-  // },
-  // {
-  //   path: 'auth/sign-up',
-  //   component: SignUpComponent,
-  // },
   {
-    path: 'auth/log-in',
-    component: LogInComponent,
+    path: '',
+    component: LandingNavComponent,
   },
-  // {
-  //   path: 'home',
-  //   component: HomePageComponent,
-  // },
   {
     path: 'discover',
     component: LandingNavComponent,

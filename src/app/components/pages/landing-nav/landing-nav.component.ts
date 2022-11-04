@@ -13,7 +13,7 @@ export class LandingNavComponent implements OnInit {
   constructor(
     private songControllerService: SongControllerService,
     private _data: DataService
-  ) {
+  ) { 
   }
 
   ngOnInit(): void {
