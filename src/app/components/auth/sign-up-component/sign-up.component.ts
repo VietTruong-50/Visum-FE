@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { ApiResponseUserDTO, UserControllerService } from 'src/app/api-svc';
+import { AuthControllerService } from 'src/app/api-svc';
 import { LogInComponent } from '../log-in-component/log-in.component';
 
 @Component({
@@ -15,7 +15,7 @@ export class SignUpComponent implements OnInit {
   formGroup: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
-    private userController: UserControllerService,
+    private authController: AuthControllerService,
     private router: Router,
     private dialogRef: MatDialogRef<SignUpComponent>,
     private dialog: MatDialog
@@ -41,8 +41,8 @@ export class SignUpComponent implements OnInit {
     this.formGroup.markAllAsTouched();
     console.log(formValue);
     if (formValue.password === formValue.cf_password && this.formGroup.valid) {
-      this.userController
-        .register({
+      this.authController
+        .registerUser({
           userName: formValue.userName,
           password: formValue.password,
           gender: formValue.gender,
@@ -52,7 +52,7 @@ export class SignUpComponent implements OnInit {
           firstName: formValue.firstName,
           lastName: formValue.lastName,
         })
-        .subscribe((result: ApiResponseUserDTO) => {
+        .subscribe((result) => {
           console.log(result.result);
           if (result.errorCode == null) {
             this.router.navigate(['/auth/log-in']);

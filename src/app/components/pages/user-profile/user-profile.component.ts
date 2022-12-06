@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import {
-  ApiResponseUserDTO,
   UserControllerService,
-  UserDTO,
 } from 'src/app/api-svc';
 
 interface GENDER {
@@ -95,41 +93,41 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateUser(formValue: any) {
-    this.userController
-      .updateUser(this.userData.id, {
-        userName: formValue.userName,
-        password: '',
-        gender: formValue.gender,
-        email: formValue.email,
-        mobile: formValue.mobile,
-        birthOfDate: moment(formValue.birthOfDate).toISOString(),
-        firstName: formValue.firstName,
-        lastName: formValue.lastName,
-      })
-      .subscribe((result) => {
-        if (result.errorCode == null) {
-          localStorage.setItem('userProfile', JSON.stringify(formValue));
-          alert('Change profile success');
-        } else alert('error');
-      });
+    // this.userController
+    //   .updateUser(this.userData.id, {
+    //     userName: formValue.userName,
+    //     password: '',
+    //     gender: formValue.gender,
+    //     email: formValue.email,
+    //     mobile: formValue.mobile,
+    //     birthOfDate: moment(formValue.birthOfDate).toISOString(),
+    //     firstName: formValue.firstName,
+    //     lastName: formValue.lastName,
+    //   })
+    //   .subscribe((result) => {
+    //     if (result.errorCode == null) {
+    //       localStorage.setItem('userProfile', JSON.stringify(formValue));
+    //       alert('Change profile success');
+    //     } else alert('error');
+    //   });
   }
 
   changePassword(formValue: any) {
-    if (formValue.newPassword == formValue.cf_password) {
-      this.userController
-        .changePassword(this.userData.id, {
-          currentPassword: formValue.currentPassword,
-          newPassword: formValue.newPassword,
-          cf_password: formValue.cf_password,
-        })
-        .subscribe((result) => {
-          if (result.errorCode == null) {
-            alert('Change password success');
-            this.pwFormGroup.reset();
-          } else alert('error');
-        });
-    } else {
-      alert('Error pw');
-    }
+    // if (formValue.newPassword == formValue.cf_password) {
+    //   this.userController
+    //     .changePassword(this.userData.id, {
+    //       currentPassword: formValue.currentPassword,
+    //       newPassword: formValue.newPassword,
+    //       cf_password: formValue.cf_password,
+    //     })
+    //     .subscribe((result) => {
+    //       if (result.errorCode == null) {
+    //         alert('Change password success');
+    //         this.pwFormGroup.reset();
+    //       } else alert('error');
+    //     });
+    // } else {
+    //   alert('Error pw');
+    // }
   }
 }

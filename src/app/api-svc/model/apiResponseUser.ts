@@ -9,15 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Sort } from './sort';
+import { User } from './user';
 
 
-export interface PageableObject { 
-    offset?: number;
-    sort?: Sort;
-    pageSize?: number;
-    pageNumber?: number;
-    paged?: boolean;
-    unpaged?: boolean;
+export interface ApiResponseUser { 
+    result?: User;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

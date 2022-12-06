@@ -1,26 +1,46 @@
 openapi: 3.0.1
 info:
-  title: Visum app
-  description: The API for the Visum music web project
-  version: v2
+  title: OpenAPI definition
+  version: v0
 servers:
-  - url: http://localhost:8080/
-    description: This is the sample api doc
-security:
-  - bearer-jwt:
-      - read
-      - write
+- url: http://localhost:8080
+  description: Generated server url
 paths:
-  /auth/login:
-    post:
+  /visum/songs/{songId}:
+    get:
       tags:
-        - user-controller
-      operationId: login
+      - song-controller
+      operationId: findSongById
+      parameters:
+      - name: songId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseOptionalSong'
+    put:
+      tags:
+      - song-controller
+      operationId: updateSong
+      parameters:
+      - name: songId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginRequestDTO"
+              $ref: '#/components/schemas/SongDTO'
         required: true
       responses:
         "200":
@@ -28,17 +48,35 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResponseLoginResponseDTO"
-  /auth/sign-up:
+                $ref: '#/components/schemas/ApiResponseSong'
+    delete:
+      tags:
+      - song-controller
+      operationId: deleteSong
+      parameters:
+      - name: songId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseSong'
+  /visum/playlist:
     post:
       tags:
-        - user-controller
-      operationId: register
+      - user-controller
+      operationId: createNewPlaylist
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserDTO"
+              $ref: '#/components/schemas/PlaylistDTO'
         required: true
       responses:
         "200":
@@ -46,99 +84,204 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResponseUserDTO"
+                $ref: '#/components/schemas/ApiResponsePlaylist'
+  /visum/playlist/{id}:
+    get:
+      tags:
+      - user-controller
+      operationId: getPlaylist
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseSetSong'
+    post:
+      tags:
+      - user-controller
+      operationId: addSongToPlaylist
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseObject'
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteSongFromPlaylist
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseObject'
+  /visum/insertSong:
+    post:
+      tags:
+      - song-controller
+      operationId: createSong
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SongDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseSong'
+  /visum/insertListSong:
+    post:
+      tags:
+      - song-controller
+      operationId: createListSong
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SongDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListSong'
+  /signup:
+    post:
+      tags:
+      - auth-controller
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseUser'
+  /signin:
+    post:
+      tags:
+      - auth-controller
+      operationId: authenticateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseJwtResponse'
   /visum/user:
     get:
       tags:
-        - user-controller
+      - user-controller
       operationId: getCurrentUser
       responses:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
-                $ref: "#/components/schemas/ApiResponseUserDTO"
-  /visum/user/{id}:
-    put:
-      tags:
-        - user-controller
-      operationId: updateUser
-      parameters:
-      - in: path
-        name: id
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserDTO"
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ApiResponseUserDTO"
-  /visum/changePassword/user/{id}:
-    put:
-      tags:
-        - user-controller
-      operationId: changePassword
-      parameters:
-      - in: path
-        name: id
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PasswordDTO"
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ApiResponseUserDTO"
-  /visum/genres:
-    get:
-      tags: 
-        - genre-controller
-      operationId: getGenre
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponseGenreDTO'
+                $ref: '#/components/schemas/ApiResponseUser'
   /visum/songs:
     get:
       tags:
-        - song-controller
+      - song-controller
       operationId: getSong
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: sortBy
+        in: query
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponseSongDTO'
+                $ref: '#/components/schemas/ApiResponsePageSong'
   /visum/songs/{category}:
     get:
       tags:
-        - song-controller
-      operationId: getSongByCategory
+      - song-controller
+      operationId: findSongsByCategory
       parameters:
-      - in: path
-        name: category
+      - name: category
+        in: path
         required: true
         schema:
           type: string
@@ -165,13 +308,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponseSongByCategory'
-  /visum/favorites:
+                $ref: '#/components/schemas/ApiResponsePageSong'
+  /visum/search:
     get:
       tags:
-        - song-controller
-      operationId: getFavorite
+      - song-controller
+      operationId: findSongsByTitle
       parameters:
+      - name: title
+        in: query
+        required: true
+        schema:
+          type: string
       - name: page
         in: query
         required: true
@@ -195,19 +343,292 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponseFavoriteSong'
+                $ref: '#/components/schemas/ApiResponsePageSong'
+  /visum/favorite:
+    get:
+      tags:
+      - user-controller
+      operationId: getListFavorites
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: sortBy
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageSong'
 components:
   schemas:
+    SongDTO:
+      type: object
+      properties:
+        songName:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        image:
+          type: array
+          items:
+            type: string
+            format: byte
+        imageName:
+          type: string
+        singer_id:
+          type: integer
+          format: int64
+        composer_id:
+          type: integer
+          format: int64
+        subCategory_id:
+          type: integer
+          format: int64
+    ApiResponseSong:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Song'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        categoryName:
+          type: string
+        subCategories:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/SubCategory'
+    Composer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        composerName:
+          type: string
+        information:
+          type: string
+    Singer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        singerName:
+          type: string
+        description:
+          type: string
+    Song:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        songName:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        image:
+          type: array
+          items:
+            type: string
+            format: byte
+        imageName:
+          type: string
+        views:
+          type: integer
+          format: int32
+        trending:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Trending'
+        singer:
+          $ref: '#/components/schemas/Singer'
+        composer:
+          $ref: '#/components/schemas/Composer'
+        subCategory:
+          $ref: '#/components/schemas/SubCategory'
+    SubCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        subCategoryName:
+          type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        songList:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+    Trending:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        views:
+          type: integer
+          format: int32
+        week:
+          type: integer
+          format: int32
+        month:
+          type: integer
+          format: int32
+        songs:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+    PlaylistDTO:
+      type: object
+      properties:
+        playlistName:
+          type: string
+        userId:
+          type: integer
+          format: int64
+    ApiResponsePlaylist:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Playlist'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    Playlist:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        playlistName:
+          type: string
+        songList:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+    ApiResponseObject:
+      type: object
+      properties:
+        result:
+          type: object
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    ApiResponseListSong:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
     UserDTO:
-      required:
-        - birthOfDate
-        - email
-        - firstName
-        - gender
-        - lastName
-        - mobile
-        - password
-        - userName
+      type: object
+      properties:
+        userName:
+          type: string
+        password:
+          type: string
+        gender:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+        birthOfDate:
+          type: string
+          format: date-time
+        firstName:
+          type: string
+        lastName:
+          type: string
+        mobile:
+          pattern: "^0\\d{9}$"
+          type: string
+        email:
+          type: string
+        favoriteSongs:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    ApiResponseUser:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/User'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+    User:
       type: object
       properties:
         id:
@@ -215,130 +636,56 @@ components:
           format: int64
         userName:
           type: string
-        gender:
-          type: string
-          enum: [Male, FEMALE, OTHER]
-        birthOfDate:
+        password:
           type: string
         firstName:
           type: string
         lastName:
           type: string
-        mobile:
-          pattern: ^0\d{9}$
-          type: string
-        password:
-          type: string
-        avatar:
-          type: string
-        role:
-          type: string
-        email:
-          maxLength: 256
-          minLength: 0
-          type: string
-    ApiResponseUserDTO:
-      type: object
-      properties:
-        result:
-          $ref: "#/components/schemas/UserDTO"
-        errorCode:
-          type: string
-        message:
-          type: object
-        responseCode:
-          type: integer
-          format: int32
-    LoginRequestDTO:
-      required:
-        - password
-        - userName
-      type: object
-      properties:
-        userName:
-          type: string
-        password:
-          type: string
-    ApiResponseLoginResponseDTO:
-      type: object
-      properties:
-        result:
-          $ref: "#/components/schemas/LoginResponseDTO"
-        errorCode:
-          type: string
-        message:
-          type: object
-        responseCode:
-          type: integer
-          format: int32
-    LoginResponseDTO:
-      required:
-        - token
-      type: object
-      properties:
-        token:
-          type: string
-    ApiResponseGenreDTO:
-      type: object
-      properties:
-        result:
-          type: array
-          items:
-            $ref: "#/components/schemas/GenreDTO"
-        errorCode:
-          type: string
-        message: 
-          type: object
-        responseCode:
-          type: integer
-          format: int32
-    GenreDTO:
-      type: object
-      properties:
-        genre:
-          type: string
-        category:
+        avatarImage:
           type: array
           items:
             type: string
-    ApiResponseSongDTO:
-      type: object
-      properties:
-        result:
+            format: byte
+        imageName:
+          type: string
+        birthOfDate:
+          type: string
+          format: date-time
+        genderEnum:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+        email:
+          type: string
+        mobile:
+          type: string
+        status:
+          type: string
+        playlists:
+          uniqueItems: true
           type: array
           items:
-            $ref: "#/components/schemas/SongDTO"
-        errorCode:
-          type: string
-        message: 
-          type: object
-        responseCode:
-          type: integer
-          format: int32
-    SongDTO:
+            $ref: '#/components/schemas/Playlist'
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    LoginRequest:
       type: object
       properties:
-        id: 
+        username:
           type: string
-        title:
+        password:
           type: string
-        image:
-          type: string
-        thumbnail:
-          type: string
-        genre:
-          type: object
-        songAuthor:
-          type: object
-        duration:
-          type: number
-        vip:
-          type: boolean
-    ApiResponseSongByCategory:
+    ApiResponseJwtResponse:
       type: object
       properties:
         result:
-          $ref: '#/components/schemas/PageSong'
+          $ref: '#/components/schemas/JwtResponse'
         errorCode:
           type: string
         message:
@@ -346,7 +693,21 @@ components:
         responseCode:
           type: integer
           format: int32
-    ApiResponseFavoriteSong:
+    JwtResponse:
+      type: object
+      properties:
+        jwtToken:
+          type: string
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    ApiResponsePageSong:
       type: object
       properties:
         result:
@@ -373,7 +734,10 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/SongDTO'
+            $ref: '#/components/schemas/Song'
+        number:
+          type: integer
+          format: int32
         sort:
           $ref: '#/components/schemas/Sort'
         first:
@@ -385,20 +749,8 @@ components:
           format: int32
         pageable:
           $ref: '#/components/schemas/PageableObject'
-        number:
-          type: integer
-          format: int32
         empty:
           type: boolean
-    PasswordDTO:
-      type: object
-      properties:
-        currentPassword:
-          type: string
-        newPassword:
-          type: string
-        cf_password:
-          type: string
     PageableObject:
       type: object
       properties:
@@ -407,10 +759,10 @@ components:
           format: int64
         sort:
           $ref: '#/components/schemas/Sort'
-        pageNumber:
+        pageSize:
           type: integer
           format: int32
-        pageSize:
+        pageNumber:
           type: integer
           format: int32
         paged:
@@ -420,14 +772,36 @@ components:
     Sort:
       type: object
       properties:
+        empty:
+          type: boolean
         sorted:
           type: boolean
         unsorted:
           type: boolean
-        empty:
-          type: boolean
-  securitySchemes:
-    bearer-jwt:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    ApiResponseOptionalSong:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Song'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    ApiResponseSetSong:
+      type: object
+      properties:
+        result:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiResponseSongDTO, SongControllerService } from 'src/app/api-svc';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ApiResponsePageSong, SongControllerService } from 'src/app/api-svc';
 import { DataService } from 'src/app/service/data.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class LandingNavComponent implements OnInit {
 
   constructor(
     private songControllerService: SongControllerService,
-    private _data: DataService
+    private _data: DataService,
+    private sanitizer: DomSanitizer
   ) { 
   }
 
@@ -22,10 +24,18 @@ export class LandingNavComponent implements OnInit {
 
   getSongData() {
     this.songControllerService
-      .getSong()
-      .subscribe((result: ApiResponseSongDTO) => {
+      .getSong(0, 6, 'songName')
+      .subscribe((result: ApiResponsePageSong) => {
         if(result.errorCode == null){
-          this.songData = result.result;
+          result.result?.content?.forEach((item) => {
+            if (item.image) {
+              let objectURL = 'data:image/jpeg;base64,' + item.image;
+  
+              item.imgUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+            }
+          });
+
+          this.songData = result.result?.content;
 
           console.log(this.songData )
         }else{

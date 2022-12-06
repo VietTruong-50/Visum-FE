@@ -9,15 +9,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SafeUrl } from '@angular/platform-browser';
+import { Composer } from './composer';
+import { Singer } from './singer';
+import { SubCategory } from './subCategory';
+import { Trending } from './trending';
 
 
-export interface SongDTO { 
+export interface Song { 
+    id?: number;
     songName?: string;
     duration?: number;
     image?: Array<string>;
     imageName?: string;
-    singer_id?: number;
-    composer_id?: number;
-    subCategory_id?: number;
+    views?: number;
+    imgUrl: SafeUrl;
+    trending?: Set<Trending>;
+    singer?: Singer;
+    composer?: Composer;
+    subCategory?: SubCategory;
 }
 

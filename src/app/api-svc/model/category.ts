@@ -9,15 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Sort } from './sort';
+import { SubCategory } from './subCategory';
 
 
-export interface PageableObject { 
-    offset?: number;
-    sort?: Sort;
-    pageSize?: number;
-    pageNumber?: number;
-    paged?: boolean;
-    unpaged?: boolean;
+export interface Category { 
+    id?: number;
+    categoryName?: string;
+    subCategories?: Set<SubCategory>;
 }
 

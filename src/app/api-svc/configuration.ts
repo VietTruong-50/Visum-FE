@@ -57,15 +57,6 @@ export class Configuration {
         else {
             this.credentials = {};
         }
-
-        // init default bearer-jwt credential
-        if (!this.credentials['bearer-jwt']) {
-            this.credentials['bearer-jwt'] = () => {
-                return typeof this.accessToken === 'function'
-                    ? this.accessToken()
-                    : this.accessToken;
-            };
-        }
     }
 
     /**

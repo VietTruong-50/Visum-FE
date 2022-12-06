@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { ApiResponseUserDTO, UserControllerService } from 'src/app/api-svc';
+import { ApiResponseUser, UserControllerService } from 'src/app/api-svc';
 import { LogInComponent } from '../../auth/log-in-component/log-in.component';
 import { GlobalConstants } from '../GlobalConstants';
 
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   getUserData() {
     this.userController
       .getCurrentUser()
-      .subscribe((result: ApiResponseUserDTO) => {
+      .subscribe((result: ApiResponseUser) => {
         if (result.errorCode == null) {
           this.userData = result.result;
           localStorage.setItem('userProfile', JSON.stringify(this.userData));

@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiResponseUserDTO, UserControllerService } from 'src/app/api-svc';
-import SwiperCore from 'swiper';
-
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -10,6 +7,7 @@ import SwiperCore from 'swiper';
 export class HomePageComponent implements OnInit {
 
   status: boolean = true;
+  buttonText: string = 'Close';
 
   constructor() {}
 
@@ -18,6 +16,7 @@ export class HomePageComponent implements OnInit {
   }
   
   toggle(){
+    this.buttonText = this.status ? '->' : 'Close';
     this.status = !this.status;
   }
 }

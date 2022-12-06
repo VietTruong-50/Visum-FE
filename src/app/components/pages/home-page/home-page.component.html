@@ -39,7 +39,7 @@
       fxLayout="row"
       fxLayoutAlign="center center"
     >
-      <button mat-raised-button (click)="toggle()">Close</button>
+      <!-- <button mat-raised-button (click)="toggle()">{{buttonText}}</button> -->
     </div>
   </mat-sidenav>
 
@@ -49,10 +49,10 @@
   >
     <app-header></app-header>
     <div fxLayout="row" class="w-100 h-100">
-      <div fxFlex="70" fxLayout="column" class="left-sidenav-content">
+      <div fxFlex="{{ status ? '70' : '75'}}" fxLayout="column" class="left-sidenav-content">
         <router-outlet></router-outlet>
       </div>
-      <div fxFlex="30" style="background-color: #1d242c">
+      <div fxFlex="{{ status ? '30' : '25'}}" style="background-color: #1d242c">
         <app-right-side-nav></app-right-side-nav>
       </div>
     </div>

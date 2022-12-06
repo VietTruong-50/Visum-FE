@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {
-  ApiResponseLoginResponseDTO,
+  AuthControllerService,
   UserControllerService,
 } from 'src/app/api-svc';
 import { GlobalConstants } from '../../shared/GlobalConstants';
@@ -20,7 +20,7 @@ export class LogInComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userController: UserControllerService,
+    private authController: AuthControllerService,
     private route: Router,
     private cookie: CookieService,
     private dialogRef: MatDialogRef<LogInComponent>,
@@ -47,16 +47,16 @@ export class LogInComponent implements OnInit {
   login() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      this.userController
-        .login({
-          userName: this.formGroup.controls['userName'].value,
+      this.authController
+        .authenticateUser({
+          username: this.formGroup.controls['userName'].value,
           password: this.formGroup.controls['password'].value,
         })
-        .subscribe((response: ApiResponseLoginResponseDTO) => {
+        .subscribe((response) => {
           if (response.errorCode == null) {
             this.cookie.set(
               GlobalConstants.authToken,
-              <string>response.result?.token,
+              <string>response.result?.jwtToken,
               undefined,
               '/'
             );

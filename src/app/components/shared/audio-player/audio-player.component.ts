@@ -51,7 +51,7 @@ export class AudioPlayerComponent implements OnInit{
       this.listSong.push(rs);
       this.song = this.listSong.at(this.listSong.length-1);
       
-      this.streamObserver('../assets/audio/' + this.song.title + '.mp3').subscribe((event) => {});
+      this.streamObserver('../assets/audio/' + this.song.songName + '.mp3').subscribe((event) => {});
     })
   }
 

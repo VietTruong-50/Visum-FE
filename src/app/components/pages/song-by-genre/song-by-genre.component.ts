@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResponseSongByCategory, ApiResponseSongDTO, SongControllerService } from 'src/app/api-svc';
+import { ApiResponsePageSong, SongControllerService } from 'src/app/api-svc';
 
 @Component({
   selector: 'app-song-by-genre',
@@ -23,8 +23,8 @@ export class SongByGenreComponent implements OnInit {
 
   getData() {
     this.songController
-      .getSongByCategory(this.title, 1, 5, 'createdAt')
-      .subscribe((result: ApiResponseSongByCategory) => {
+      .findSongsByCategory(this.title, 1, 5, 'createdAt')
+      .subscribe((result: ApiResponsePageSong) => {
         if(result.errorCode == null){
           this.listSong = result.result?.content;
         }
