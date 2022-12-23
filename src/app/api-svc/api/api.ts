@@ -1,7 +1,11 @@
 export * from './authController.service';
 import { AuthControllerService } from './authController.service';
+export * from './categoryController.service';
+import { CategoryControllerService } from './categoryController.service';
+export * from './singerController.service';
+import { SingerControllerService } from './singerController.service';
 export * from './songController.service';
 import { SongControllerService } from './songController.service';
 export * from './userController.service';
 import { UserControllerService } from './userController.service';
-export const APIS = [AuthControllerService, SongControllerService, UserControllerService];
+export const APIS = [AuthControllerService, CategoryControllerService, SingerControllerService, SongControllerService, UserControllerService];

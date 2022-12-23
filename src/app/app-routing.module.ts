@@ -7,6 +7,8 @@ import { FavoritePageComponent } from './components/pages/favorite-page/favorite
 import { GenrePageComponent } from './components/pages/genre-page/genre-page.component';
 import { HomePageComponent } from './components/pages/home-page/home-page.component';
 import { LandingNavComponent } from './components/pages/landing-nav/landing-nav.component';
+import { PlaylistDetailComponent } from './components/pages/playlist-page/playlist-detail/playlist-detail.component';
+import { PlaylistPageComponent } from './components/pages/playlist-page/playlist-page.component';
 import { SongByGenreComponent } from './components/pages/song-by-genre/song-by-genre.component';
 import { AudioPlayerComponent } from './components/shared/audio-player/audio-player.component';
 import { RightSideNavComponent } from './components/shared/right-side-nav/right-side-nav.component';
@@ -32,6 +34,14 @@ routes = [
   {
     path: 'genres/:genre',
     component: SongByGenreComponent,
+  },
+  {
+    path: 'playlist',
+    component: PlaylistPageComponent,
+  },
+  {
+    path: 'playlist-detail',
+    component: PlaylistDetailComponent,
   },
 ];
 

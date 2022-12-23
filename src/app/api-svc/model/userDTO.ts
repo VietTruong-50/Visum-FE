@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Song } from './song';
 
 
 export interface UserDTO { 
@@ -21,7 +20,6 @@ export interface UserDTO {
     lastName?: string;
     mobile?: string;
     email?: string;
-    favoriteSongs?: Set<Song>;
     roles?: Set<string>;
 }
 export namespace UserDTO {

@@ -46,17 +46,17 @@
   <p class="content-title topic-title">MOST POPULAR</p>
   <div
     fxLayout="row wrap"
-    fxLayoutAlign="space-between"
-    style="width: 92%"
+    fxLayoutAlign="start start"
+    style="width: 98%"
     class="align-self-center"
-    fxLayoutGap="15px grid"
+    fxLayoutGap="20px grid"
   >
     <div fxLayout="row" *ngFor="let song of songData">
       <img
         width="80px"
         height="80px"
         class="popular-item-img"
-        src="../assets/images/song/{{ song.image != null ? song.imgUrl : 'songBg' }}.jpg"
+        src="../assets/images/song/{{ song.imageName != null ? song.imageName : 'songBg' }}.jpg"
         alt=""
       />
       <div

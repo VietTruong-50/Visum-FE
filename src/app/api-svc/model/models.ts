@@ -1,4 +1,7 @@
 export * from './apiResponseJwtResponse';
+export * from './apiResponseListCategory';
+export * from './apiResponseListPlaylist';
+export * from './apiResponseListSinger';
 export * from './apiResponseListSong';
 export * from './apiResponseObject';
 export * from './apiResponseOptionalSong';
@@ -14,7 +17,6 @@ export * from './loginRequest';
 export * from './pageSong';
 export * from './pageableObject';
 export * from './playlist';
-export * from './playlistDTO';
 export * from './role';
 export * from './singer';
 export * from './song';

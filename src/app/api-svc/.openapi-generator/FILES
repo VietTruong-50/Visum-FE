@@ -3,6 +3,8 @@ README.md
 api.module.ts
 api/api.ts
 api/authController.service.ts
+api/categoryController.service.ts
+api/singerController.service.ts
 api/songController.service.ts
 api/userController.service.ts
 configuration.ts
@@ -10,6 +12,9 @@ encoder.ts
 git_push.sh
 index.ts
 model/apiResponseJwtResponse.ts
+model/apiResponseListCategory.ts
+model/apiResponseListPlaylist.ts
+model/apiResponseListSinger.ts
 model/apiResponseListSong.ts
 model/apiResponseObject.ts
 model/apiResponseOptionalSong.ts
@@ -26,7 +31,6 @@ model/models.ts
 model/pageSong.ts
 model/pageableObject.ts
 model/playlist.ts
-model/playlistDTO.ts
 model/role.ts
 model/singer.ts
 model/song.ts

@@ -9,14 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Song } from './song';
-import { Category } from './category';
 
 
 export interface SubCategory { 
     id?: number;
     subCategoryName?: string;
-    category?: Category;
-    songList?: Set<Song>;
 }
 

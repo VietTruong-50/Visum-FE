@@ -146,7 +146,7 @@ export class AuthControllerService {
             }
         }
 
-        return this.httpClient.post<ApiResponseJwtResponse>(`${this.configuration.basePath}/signin`,
+        return this.httpClient.post<ApiResponseJwtResponse>(`${this.configuration.basePath}/api/auth/signin`,
             loginRequest,
             {
                 context: localVarHttpContext,
@@ -212,7 +212,7 @@ export class AuthControllerService {
             }
         }
 
-        return this.httpClient.post<ApiResponseUser>(`${this.configuration.basePath}/signup`,
+        return this.httpClient.post<ApiResponseUser>(`${this.configuration.basePath}/api/auth/signup`,
             userDTO,
             {
                 context: localVarHttpContext,

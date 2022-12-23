@@ -1,13 +1,13 @@
 
 <div  fxLayout="column" fxLayoutAlign="center center">
-  <div class="p-3" style="width: 90%;" *ngFor="let genre of genreData">
-    <mat-expansion-panel>
+  <div class="p-3" style="width: 90%;" >
+    <mat-expansion-panel *ngFor="let category of categoryData">
       <mat-expansion-panel-header>
-        <mat-panel-title>{{genre.genre}}</mat-panel-title>
+        <mat-panel-title>{{category.categoryName}}</mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-list *ngFor="let cate of genre.category">
+      <mat-list *ngFor="let cate of category.subCategories">
         <a (click)="goToSongByGenre(cate)">
-          <mat-list-item>{{cate}}</mat-list-item>
+          <mat-list-item>{{cate.subCategoryName}}</mat-list-item>
         </a>
       </mat-list>
     </mat-expansion-panel>

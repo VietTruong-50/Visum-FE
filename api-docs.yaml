@@ -67,17 +67,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseSong'
-  /visum/playlist:
+  /visum/playlist/{playlistName}:
     post:
       tags:
       - user-controller
       operationId: createNewPlaylist
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PlaylistDTO'
+      parameters:
+      - name: playlistName
+        in: path
         required: true
+        schema:
+          type: string
       responses:
         "200":
           description: OK
@@ -196,7 +196,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseListSong'
-  /signup:
+  /visum/favorite/{songId}:
+    post:
+      tags:
+      - user-controller
+      operationId: addFavoriteSong
+      parameters:
+      - name: songId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseSong'
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteFavoriteSong
+      parameters:
+      - name: songId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseSong'
+  /api/auth/signup:
     post:
       tags:
       - auth-controller
@@ -214,7 +251,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseUser'
-  /signin:
+  /api/auth/signin:
     post:
       tags:
       - auth-controller
@@ -241,9 +278,21 @@ paths:
         "200":
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseUser'
+  /visum/topArtists:
+    get:
+      tags:
+      - singer-controller
+      operationId: getTopArtists
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListSinger'
   /visum/songs:
     get:
       tags:
@@ -344,6 +393,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponsePageSong'
+  /visum/playlists:
+    get:
+      tags:
+      - user-controller
+      operationId: getAllPlaylistByUser
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListPlaylist'
   /visum/favorite:
     get:
       tags:
@@ -371,9 +432,21 @@ paths:
         "200":
           description: OK
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponsePageSong'
+  /visum/categories:
+    get:
+      tags:
+      - category-controller
+      operationId: getAllCategory
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListCategory'
 components:
   schemas:
     SongDTO:
@@ -412,19 +485,6 @@ components:
         responseCode:
           type: integer
           format: int32
-    Category:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        categoryName:
-          type: string
-        subCategories:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/SubCategory'
     Composer:
       type: object
       properties:
@@ -485,13 +545,6 @@ components:
           format: int64
         subCategoryName:
           type: string
-        category:
-          $ref: '#/components/schemas/Category'
-        songList:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Song'
     Trending:
       type: object
       properties:
@@ -512,14 +565,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Song'
-    PlaylistDTO:
-      type: object
-      properties:
-        playlistName:
-          type: string
-        userId:
-          type: integer
-          format: int64
     ApiResponsePlaylist:
       type: object
       properties:
@@ -540,11 +585,6 @@ components:
           format: int64
         playlistName:
           type: string
-        songList:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Song'
     ApiResponseObject:
       type: object
       properties:
@@ -596,11 +636,6 @@ components:
           type: string
         email:
           type: string
-        favoriteSongs:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Song'
         roles:
           uniqueItems: true
           type: array
@@ -707,6 +742,20 @@ components:
           type: array
           items:
             type: string
+    ApiResponseListSinger:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Singer'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
     ApiResponsePageSong:
       type: object
       properties:
@@ -744,11 +793,11 @@ components:
           type: boolean
         last:
           type: boolean
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         empty:
           type: boolean
     PageableObject:
@@ -759,10 +808,10 @@ components:
           format: int64
         sort:
           $ref: '#/components/schemas/Sort'
-        pageSize:
+        pageNumber:
           type: integer
           format: int32
-        pageNumber:
+        pageSize:
           type: integer
           format: int32
         paged:
@@ -790,6 +839,20 @@ components:
         responseCode:
           type: integer
           format: int32
+    ApiResponseListPlaylist:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Playlist'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
     ApiResponseSetSong:
       type: object
       properties:
@@ -805,3 +868,30 @@ components:
         responseCode:
           type: integer
           format: int32
+    ApiResponseListCategory:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        errorCode:
+          type: string
+        message:
+          type: object
+        responseCode:
+          type: integer
+          format: int32
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        categoryName:
+          type: string
+        subCategories:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/SubCategory'

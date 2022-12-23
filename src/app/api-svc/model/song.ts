@@ -23,10 +23,10 @@ export interface Song {
     image?: Array<string>;
     imageName?: string;
     views?: number;
-    imgUrl: SafeUrl;
     trending?: Set<Trending>;
     singer?: Singer;
     composer?: Composer;
     subCategory?: SubCategory;
+    imgUrl: SafeUrl;
 }
 

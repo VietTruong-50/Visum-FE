@@ -1,22 +1,22 @@
-import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
-import { SongDTO } from "../api-svc";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { SongDTO } from '../api-svc';
 
 @Injectable({
-    providedIn: "root"
+  providedIn: 'root',
 })
-export class DataService{
-    data: Subject<SongDTO> ;
+export class DataService {
+  data: Subject<SongDTO>;
 
-    constructor(){
-        this.data = new Subject();
-    }
+  constructor() {
+    this.data = new Subject();
+  }
 
-    add(song: SongDTO){
-        this.data?.next(song);
-    }
+  add(song: SongDTO) {
+    this.data?.next(song);
+  }
 
-    get(){
-        return this.data;
-    }
+  get() {
+    return this.data;
+  }
 }

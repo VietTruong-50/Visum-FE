@@ -9,12 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Song } from './song';
 
 
 export interface Playlist { 
     id?: number;
     playlistName?: string;
-    songList?: Set<Song>;
 }
 

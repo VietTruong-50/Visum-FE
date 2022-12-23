@@ -19,7 +19,7 @@ import { LogInComponent } from './components/auth/log-in-component/log-in.compon
 import { HomePageComponent } from './components/pages/home-page/home-page.component';
 import { SideBarComponent } from './components/pages/side-bar/side-bar.component';
 import { HeaderComponent } from './components/shared/header/header.component';
-import { SwiperModule } from 'swiper/angular';
+import { SwiperModule } from 'swiper/angular'; 
 import { GapsComponent } from './components/shared/gaps/gaps.component';
 import { RightSideNavComponent } from './components/shared/right-side-nav/right-side-nav.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -37,7 +37,9 @@ import { FavoritePageComponent } from './components/pages/favorite-page/favorite
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import { MusicFavoriteComponent } from './components/pages/favorite-page/music-favorite/music-favorite.component';
-import {MatMenuModule} from '@angular/material/menu'
+import {MatMenuModule} from '@angular/material/menu';
+import { PlaylistPageComponent } from './components/pages/playlist-page/playlist-page.component';
+import { PlaylistDetailComponent } from './components/pages/playlist-page/playlist-detail/playlist-detail.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,9 @@ import {MatMenuModule} from '@angular/material/menu'
     UserProfileComponent,
     AudioPlayerComponent,
     FavoritePageComponent,
-    MusicFavoriteComponent
+    MusicFavoriteComponent,
+    PlaylistPageComponent,
+    PlaylistDetailComponent
   ],
   imports: [
     BrowserModule,

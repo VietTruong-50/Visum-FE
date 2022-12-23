@@ -3,6 +3,8 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 import { AuthControllerService } from './api/authController.service';
+import { CategoryControllerService } from './api/categoryController.service';
+import { SingerControllerService } from './api/singerController.service';
 import { SongControllerService } from './api/songController.service';
 import { UserControllerService } from './api/userController.service';
 

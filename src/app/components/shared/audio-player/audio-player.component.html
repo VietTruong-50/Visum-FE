@@ -1,11 +1,11 @@
 <div fxLayout="column">
-  <img class="img-audio" src="../assets/images/song/{{song ? song.image : 'songBg'}}.jpg" alt="" />
+  <img class="img-audio" src="../assets/images/song/{{song ? song.imageName : 'songBg'}}.jpg" alt="" />
   <div class="container-audio w-100" fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="column">
       <p style="margin: 0;">
          {{ song ? song.songName : '...' }}
       </p>
-      <small>{{ song ? song.songName : '...' }}</small>
+      <small>{{ song ? song.singer.singerName : '...' }}</small>
     </div>
  
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
