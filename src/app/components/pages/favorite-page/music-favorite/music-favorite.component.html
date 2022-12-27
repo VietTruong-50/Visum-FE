@@ -2,16 +2,20 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>No.</th>
-      <td mat-cell *matCellDef="let element" class="image-container">
-        <img
-          src="../assets/images/song/{{element ? element.image : 'songBg'}}.jpg"
-          width="50px"
-          height="50px"
-          alt=""
-        />
-        <button mat-mini-fab class="middle" (click)="playSong(element)">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
+      <td mat-cell *matCellDef="let element">
+        <div class="image-container" fxLayout="row">
+          <img
+            src="../assets/images/song/{{
+              element ? element.image : 'songBg'
+            }}.jpg"
+            width="50px"
+            height="50px"
+            alt=""
+          />
+          <button mat-mini-fab class="middle" (click)="playSong(element)">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+        </div>
       </td>
     </ng-container>
 

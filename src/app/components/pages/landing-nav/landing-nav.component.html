@@ -56,7 +56,9 @@
         width="80px"
         height="80px"
         class="popular-item-img"
-        src="../assets/images/song/{{ song.imageName != null ? song.imageName : 'songBg' }}.jpg"
+        src="../assets/images/song/{{
+          song.imageName != null ? song.imageName : 'songBg'
+        }}.jpg"
         alt=""
       />
       <div
@@ -76,7 +78,6 @@
             <mat-icon>play_arrow</mat-icon>
           </button>
         </div>
-        
       </div>
     </div>
     <!-- <div fxLayout="row">

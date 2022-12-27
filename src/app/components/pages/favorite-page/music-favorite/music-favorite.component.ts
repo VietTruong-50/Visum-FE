@@ -34,6 +34,7 @@ export class MusicFavoriteComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'album', 'duration'];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any[]>();
+  
   constructor(private userController: UserControllerService, private _data: DataService) {
     this.getFavoriteData();
   }
@@ -53,7 +54,6 @@ export class MusicFavoriteComponent implements OnInit {
   }
 
   playSong(song: any) {
-    this._data.add(song);
   }
 
   stop(song: any){

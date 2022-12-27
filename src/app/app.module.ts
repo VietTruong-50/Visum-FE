@@ -19,7 +19,7 @@ import { LogInComponent } from './components/auth/log-in-component/log-in.compon
 import { HomePageComponent } from './components/pages/home-page/home-page.component';
 import { SideBarComponent } from './components/pages/side-bar/side-bar.component';
 import { HeaderComponent } from './components/shared/header/header.component';
-import { SwiperModule } from 'swiper/angular'; 
+import { SwiperModule } from 'swiper/angular';
 import { GapsComponent } from './components/shared/gaps/gaps.component';
 import { RightSideNavComponent } from './components/shared/right-side-nav/right-side-nav.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -31,15 +31,27 @@ import { GenrePageComponent } from './components/pages/genre-page/genre-page.com
 import { SongByGenreComponent } from './components/pages/song-by-genre/song-by-genre.component';
 import { UserProfileComponent } from './components/pages/user-profile/user-profile.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { AudioPlayerComponent } from './components/shared/audio-player/audio-player.component';
 import { FavoritePageComponent } from './components/pages/favorite-page/favorite-page.component';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatTableModule} from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 import { MusicFavoriteComponent } from './components/pages/favorite-page/music-favorite/music-favorite.component';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { PlaylistPageComponent } from './components/pages/playlist-page/playlist-page.component';
-import { PlaylistDetailComponent } from './components/pages/playlist-page/playlist-detail/playlist-detail.component'
+import { PlaylistDetailComponent } from './components/pages/playlist-page/playlist-detail/playlist-detail.component';
+import { SearchPageComponent } from './components/pages/search-page/search-page.component';
+import { ArtistDetailComponent } from './components/pages/artist-detail/artist-detail.component';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import {
+  CategoryService,
+  LegendService,
+  TooltipService,
+  DataLabelService,
+  LineSeriesService,
+} from '@syncfusion/ej2-angular-charts';
+import { TrendingPageComponent } from './components/pages/trending-page/trending-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +70,10 @@ import { PlaylistDetailComponent } from './components/pages/playlist-page/playli
     FavoritePageComponent,
     MusicFavoriteComponent,
     PlaylistPageComponent,
-    PlaylistDetailComponent
+    PlaylistDetailComponent,
+    SearchPageComponent,
+    ArtistDetailComponent,
+    TrendingPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,9 +96,17 @@ import { PlaylistDetailComponent } from './components/pages/playlist-page/playli
     MatSelectModule,
     MatTabsModule,
     MatTableModule,
-    MatMenuModule
+    MatMenuModule,
+    ChartModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true}],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true },
+    CategoryService,
+    LegendService,
+    TooltipService,
+    DataLabelService,
+    LineSeriesService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

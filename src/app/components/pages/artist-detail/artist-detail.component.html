@@ -1,0 +1,104 @@
+<div fxLayout="column" style="height: 1000px" fxLayoutAlign="center none">
+    <div
+      fxFlex="30"
+      class="align-self-center"
+      class="w-100"
+      style="position: relative"
+    >
+      <div class="w-100 artist-image-bg"></div>
+      <div
+        style="
+          position: absolute;
+          top: 65%;
+          left: 48%;
+          transform: translate(-50%, -50%);
+          z-index: 2;
+          width: 80%;
+        "
+        fxLayout="row"
+        fxLayoutGap="15px"
+      >
+        <img
+          src="https://photo-zmp3.zmdcdn.me/album_default.png"
+          style="
+            border-radius: 50%;
+            box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2),
+              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          "
+          width="120px"
+          height="120px"
+          alt=""
+        />
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
+            <h3
+              class="artist-name title"
+              style="
+                width: fit-content;
+                font-size: 60px;
+                font-family: 'Times New Roman', Times, serif;
+              "
+            >
+              <span>
+                <span>Noo Phước Thịnh</span>
+              </span>
+            </h3>
+            <button mat-raised-button>
+              <i class="fa-solid fa-play icon"></i>
+            </button>
+          </div>
+          <div fxLayout="row" fxLayoutGap="15px">
+            <span class="follow">331.820 người quan tâm</span
+            ><button
+              class="zm-btn is-outlined active is-medium follow-btn is-upper button"
+              fxLayout="row" fxLayoutGap="5px"
+            >
+              <i class="fa-solid fa-heart-circle-plus"></i><span>Quan tâm</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="70">
+      <div>
+        <p class="content-title topic-title" style="font-size: 26px">Bài hát</p>
+      </div>
+      <div
+        fxLayout="row wrap"
+        fxLayoutAlign="center center"
+        style="width: 98%"
+        fxLayoutGap="20px grid"
+      >
+        <div fxLayout="row" *ngFor="let song of songData">
+          <img
+            width="80px"
+            height="80px"
+            class="popular-item-img"
+            src="../assets/images/song/{{
+              song.imageName != null ? song.imageName : 'songBg'
+            }}.jpg"
+            alt=""
+          />
+          <div
+            fxLayout="row"
+            class="popular-item-content"
+            fxLayoutAlign="space-between center"
+          >
+            <div fxLayout="column" fxLayoutAlign="center start">
+              <strong>{{ song.songName }}</strong>
+              <small>{{ song.songAuthor?.name }}</small>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
+              <button mat-mini-fab class="middle text-white favorite">
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <button (click)="playSong(song)" mat-mini-fab class="text-white">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

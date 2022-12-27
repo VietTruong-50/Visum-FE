@@ -1,25 +1,25 @@
 <div fxLayout="column">
-  <img class="img-audio" src="../assets/images/song/{{song ? song.imageName : 'songBg'}}.jpg" alt="" />
+  <img class="img-audio" src="../assets/images/song/{{getCurrentSong ? getCurrentSong.imageName : 'songBg'}}.jpg" alt="" />
   <div class="container-audio w-100" fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="column">
       <p style="margin: 0;">
-         {{ song ? song.songName : '...' }}
+         {{ getCurrentSong ? getCurrentSong.songName : '...' }}
       </p>
-      <small>{{ song ? song.singer.singerName : '...' }}</small>
+      <small>{{ getCurrentSong ? getCurrentSong.singer.singerName : '...' }}</small>
     </div>
  
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       <div fxLayout="row" fxLayoutAlign="space-evenly center">
-        <span>{{ currentTime }}</span>
+        <span>{{ state.readableCurrentTime }}</span>
         <input
           type="range"
           min="0"
-          max="{{ rangeDuration }}"
-          [value]="seek"
+          max="{{ state.duration }}"
+          [value]="state.currentTime"
           (input)="setSeekTo($event)"
           style="width: 40%"
         />
-        <span>{{ duration }}</span>
+        <span>{{ state.readableDuration }}</span>
       </div>
       <div fxLayout="row" style="position: relative">
         <mat-icon (mouseover)="isVolume = true"
@@ -31,7 +31,7 @@
           min="0"
           max="1"
           step="0.01"
-          [value]="volume"
+          [value]="state.volume"
           (input)="setVolume($event)"
           *ngIf="isVolume"
           (mouseover)="isVolume = true"

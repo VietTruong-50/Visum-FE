@@ -1,0 +1,57 @@
+<div>
+  <p class="content-title topic-title" style="font-size: 26px">Bài hát</p>
+</div>
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="center center"
+  style="width: 98%"
+  fxLayoutGap="20px grid"
+>
+  <div fxLayout="row" *ngFor="let song of songData">
+    <img
+      width="80px"
+      height="80px"
+      class="popular-item-img"
+      src="../assets/images/song/{{
+        song.imageName != null ? song.imageName : 'songBg'
+      }}.jpg"
+      alt=""
+    />
+    <div
+      fxLayout="row"
+      class="popular-item-content"
+      fxLayoutAlign="space-between center"
+    >
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <strong>{{ song.songName }}</strong>
+        <small>{{ song.songAuthor?.name }}</small>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
+        <button mat-mini-fab class="middle text-white favorite">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button (click)="playSong(song)" mat-mini-fab class="text-white">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <p class="content-title topic-title" style="font-size: 26px">Nghệ sĩ</p>
+</div>
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="center center"
+  style="width: 98%"
+  fxLayoutGap="20px grid"
+></div>
+<div>
+  <p class="content-title topic-title" style="font-size: 26px">Album</p>
+</div>
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="center center"
+  style="width: 98%"
+  fxLayoutGap="20px grid"
+></div>
