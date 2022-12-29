@@ -1,27 +1,55 @@
 <!-- <swiper
-          [loop]="true"
-          [autoHeight]="true"
-          [autoplay]="{ delay: 1000 }"
-          [pagination]="{ clickable: true }"
-          [navigation]="false"
-          style="width: 100%"
-        >
-          <ng-template data-swiper-autoplay="6000" swiperSlide>
-            Slide 1
-          </ng-template>
+  [loop]="true"
+  [autoHeight]="true"
+  [autoplay]="{ delay: 1000 }"
+  [pagination]="{ clickable: true }"
+  [navigation]="false"
+  style="width: 90%; height: 300px"
+>
+  <ng-template data-swiper-autoplay="6000" swiperSlide>
+    <div style="width: 300px; height: 100%">
+      <img
+        src="../../../../../assets/images/artists/Stephen Sanchez.jpg"
+        alt=""
+      />
+    </div>
+  </ng-template>
 
-          <ng-template
-            data-swiper-autoplay="10000"
-            class="swiper-slide"
-            swiperSlide
-          >
-            Slide 2
-          </ng-template>
+  <ng-template data-swiper-autoplay="10000" class="swiper-slide" swiperSlide>
+    <img
+      src="../../../../../assets/images/artists/Stephen Sanchez.jpg"
+      alt=""
+    />
+  </ng-template>
 
-          <ng-template data-swiper-autoplay="60000" swiperSlide>
-            Slide 3
-          </ng-template>
-        </swiper> -->
+  <ng-template data-swiper-autoplay="60000" swiperSlide> Slide 3 </ng-template>
+</swiper> -->
+<swiper [zoom]="true" [autoplay]="true">
+  <ng-template swiperSlide class="custom-class" [zoom]="true">
+    <div style="width: 80%; height: 350px">
+      <img
+        src="https://swiperjs.com/demos/images/nature-1.jpg"
+        style="width: 75%; max-height: 100%; object-fit: fill"
+      />
+    </div>
+  </ng-template>
+  <ng-template swiperSlide>
+    <div style="width: 80%; height: 350px">
+      <img
+        src="https://swiperjs.com/demos/images/nature-2.jpg"
+        style="width: 75%; max-height: 100%; object-fit: fill"
+      />
+    </div>
+  </ng-template>
+  <ng-template swiperSlide [zoom]="true">
+    <div style="width: 80%; height: 350px">
+      <img
+        src="https://swiperjs.com/demos/images/nature-3.jpg"
+        style="width: 75%; max-height: 100%; object-fit: fill"
+      />
+    </div>
+  </ng-template>
+</swiper>
 <div fxLayout="column" fxLayoutAlign="center none">
   <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
   <div fxLayout="row" style="width: 90%" class="align-self-center" fxLayoutGap="15px">
@@ -46,21 +74,27 @@
   <p class="content-title topic-title">MOST POPULAR</p>
   <div
     fxLayout="row wrap"
-    fxLayoutAlign="start start"
+    fxLayoutAlign="center start"
     style="width: 98%"
     class="align-self-center"
-    fxLayoutGap="20px grid"
+    fxLayoutGap="22px grid"
   >
     <div fxLayout="row" *ngFor="let song of songData">
-      <img
-        width="80px"
-        height="80px"
-        class="popular-item-img"
-        src="../assets/images/song/{{
-          song.imageName != null ? song.imageName : 'songBg'
-        }}.jpg"
-        alt=""
-      />
+      <div class="image-container" fxLayout="row">
+        <img
+          width="80px"
+          height="80px"
+          class="popular-item-img"
+          src="../assets/images/song/{{
+            song.imageName != null ? song.imageName : 'songBg'
+          }}.jpg"
+          alt=""
+        />
+        <button mat-mini-fab class="middle" (click)="playSong(song)">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+
       <div
         fxLayout="row"
         class="popular-item-content"
@@ -71,12 +105,22 @@
           <small>{{ song.songAuthor?.name }}</small>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
-          <button mat-mini-fab class="middle text-white favorite">
+          <button mat-mini-fab class="text-white favorite">
             <mat-icon>favorite</mat-icon>
           </button>
-          <button (click)="playSong(song)" mat-mini-fab class="text-white">
-            <mat-icon>play_arrow</mat-icon>
+          <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
           </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="playlist">
+              <mat-icon>add_circle_outline</mat-icon>
+              <span>Add to playlist</span>
+            </button>
+          </mat-menu>
+
+          <mat-menu #playlist="matMenu">
+            <button mat-menu-item *ngFor="let playlist of playlistData" (click)="addToPlaylist(playlist.id, song.id)">{{playlist.playlistName}}</button>
+          </mat-menu>
         </div>
       </div>
     </div>

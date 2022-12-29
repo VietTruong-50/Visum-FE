@@ -22,7 +22,7 @@ import { HeaderComponent } from './components/shared/header/header.component';
 import { SwiperModule } from 'swiper/angular';
 import { GapsComponent } from './components/shared/gaps/gaps.component';
 import { RightSideNavComponent } from './components/shared/right-side-nav/right-side-nav.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiHttpInterceptor } from './components/shared/api-http-interceptor';
 import { HttpClientModule } from '@angular/common/http';
@@ -51,6 +51,10 @@ import {
   LineSeriesService,
 } from '@syncfusion/ej2-angular-charts';
 import { TrendingPageComponent } from './components/pages/trending-page/trending-page.component';
+import { SpinnerLoadingComponent } from './components/shared/spinner-loading/spinner-loading.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PlaylistDialogComponent } from './components/pages/playlist-page/playlist-dialog/playlist-dialog.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -74,6 +78,8 @@ import { TrendingPageComponent } from './components/pages/trending-page/trending
     SearchPageComponent,
     ArtistDetailComponent,
     TrendingPageComponent,
+    SpinnerLoadingComponent,
+    PlaylistDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,6 +104,9 @@ import { TrendingPageComponent } from './components/pages/trending-page/trending
     MatTableModule,
     MatMenuModule,
     ChartModule,
+    MatProgressSpinnerModule,
+    FormsModule,
+    MatSortModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true },

@@ -9,20 +9,22 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Composer } from './composer';
+import { PageableObject } from './pageableObject';
 import { Singer } from './singer';
-import { SubCategory } from './subCategory';
+import { Sort } from './sort';
 
 
-export interface Song { 
-    id?: number;
-    songName?: string;
-    duration?: number;
-    image?: Array<string>;
-    imageName?: string;
-    views?: number;
-    singer?: Singer;
-    composer?: Composer;
-    subCategory?: SubCategory;
+export interface PageSinger { 
+    totalPages?: number;
+    totalElements?: number;
+    size?: number;
+    content?: Array<Singer>;
+    number?: number;
+    sort?: Sort;
+    first?: boolean;
+    last?: boolean;
+    pageable?: PageableObject;
+    numberOfElements?: number;
+    empty?: boolean;
 }
 

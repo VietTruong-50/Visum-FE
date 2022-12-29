@@ -340,19 +340,19 @@ export class SongControllerService {
     }
 
     /**
-     * @param category 
+     * @param subCategoryName 
      * @param page 
      * @param size 
      * @param sortBy 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findSongsByCategory(category: string, page: number, size: number, sortBy: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePageSong>;
-    public findSongsByCategory(category: string, page: number, size: number, sortBy: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePageSong>>;
-    public findSongsByCategory(category: string, page: number, size: number, sortBy: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePageSong>>;
-    public findSongsByCategory(category: string, page: number, size: number, sortBy: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (category === null || category === undefined) {
-            throw new Error('Required parameter category was null or undefined when calling findSongsByCategory.');
+    public findSongsByCategory(subCategoryName: string, page: number, size: number, sortBy: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePageSong>;
+    public findSongsByCategory(subCategoryName: string, page: number, size: number, sortBy: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePageSong>>;
+    public findSongsByCategory(subCategoryName: string, page: number, size: number, sortBy: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePageSong>>;
+    public findSongsByCategory(subCategoryName: string, page: number, size: number, sortBy: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (subCategoryName === null || subCategoryName === undefined) {
+            throw new Error('Required parameter subCategoryName was null or undefined when calling findSongsByCategory.');
         }
         if (page === null || page === undefined) {
             throw new Error('Required parameter page was null or undefined when calling findSongsByCategory.');
@@ -365,6 +365,10 @@ export class SongControllerService {
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (subCategoryName !== undefined && subCategoryName !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>subCategoryName, 'subCategoryName');
+        }
         if (page !== undefined && page !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>page, 'page');
@@ -409,7 +413,7 @@ export class SongControllerService {
             }
         }
 
-        return this.httpClient.get<ApiResponsePageSong>(`${this.configuration.basePath}/visum/songs/${encodeURIComponent(String(category))}`,
+        return this.httpClient.get<ApiResponsePageSong>(`${this.configuration.basePath}/visum/songs/category`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -426,14 +430,13 @@ export class SongControllerService {
      * @param title 
      * @param page 
      * @param size 
-     * @param sortBy 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findSongsByTitle(title: string, page: number, size: number, sortBy: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePageSong>;
-    public findSongsByTitle(title: string, page: number, size: number, sortBy: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePageSong>>;
-    public findSongsByTitle(title: string, page: number, size: number, sortBy: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePageSong>>;
-    public findSongsByTitle(title: string, page: number, size: number, sortBy: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public findSongsByTitle(title: string, page: number, size: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePageSong>;
+    public findSongsByTitle(title: string, page: number, size: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePageSong>>;
+    public findSongsByTitle(title: string, page: number, size: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePageSong>>;
+    public findSongsByTitle(title: string, page: number, size: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (title === null || title === undefined) {
             throw new Error('Required parameter title was null or undefined when calling findSongsByTitle.');
         }
@@ -442,9 +445,6 @@ export class SongControllerService {
         }
         if (size === null || size === undefined) {
             throw new Error('Required parameter size was null or undefined when calling findSongsByTitle.');
-        }
-        if (sortBy === null || sortBy === undefined) {
-            throw new Error('Required parameter sortBy was null or undefined when calling findSongsByTitle.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -459,10 +459,6 @@ export class SongControllerService {
         if (size !== undefined && size !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>size, 'size');
-        }
-        if (sortBy !== undefined && sortBy !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>sortBy, 'sortBy');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -496,7 +492,7 @@ export class SongControllerService {
             }
         }
 
-        return this.httpClient.get<ApiResponsePageSong>(`${this.configuration.basePath}/visum/search`,
+        return this.httpClient.get<ApiResponsePageSong>(`${this.configuration.basePath}/visum/searchSongs`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,

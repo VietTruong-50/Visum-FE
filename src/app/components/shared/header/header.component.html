@@ -1,7 +1,7 @@
 <div class="header-border" fxLayout="row" fxLayoutAlign="space-between center">
   <div fxLayout="row">
     <a class="p-6 text-white" href="">NEW RELEASES</a>
-    <a class="p-6 text-white" href="">SHUFFLE PLAY</a>
+    <a class="p-6 text-white" (click) ="playShuffle()">SHUFFLE PLAY</a>
     <a class="p-6 text-white" href="">LIVE PODCASTS</a>
   </div>
   <div
@@ -15,7 +15,7 @@
     </button>
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
       <img
-        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+        src="../../../../../assets/images/default.jpg"
         width="60px"
         height="55px"
         alt=""
@@ -33,6 +33,7 @@
         <h5>{{ userData ? userData.userName : " " }}</h5>
         <small class="m-0 text-primary">Active</small>
         <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openUserProfile()">Edit profile</button>
           <button mat-menu-item>Change status</button>
           <button mat-menu-item (click)="onSignOut()">Sign out</button>
         </mat-menu>

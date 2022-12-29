@@ -9,12 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Song } from './song';
+import { PageSinger } from './pageSinger';
 
 
-export interface Playlist { 
-    id?: number;
-    playlistName?: string;
-    songList?: Array<Song>;
+export interface ApiResponsePageSinger { 
+    result?: PageSinger;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AudioPlayerComponent } from '../audio-player/audio-player.component';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-right-side-nav',
@@ -7,18 +7,13 @@ import { AudioPlayerComponent } from '../audio-player/audio-player.component';
   styleUrls: ['./right-side-nav.component.scss'],
 })
 export class RightSideNavComponent implements OnInit {
+  title: string = '';
 
-  // song: any;
-  // img: any;
-  // artist: any;
-
-  constructor() {
-    // this.song = '../assets/audio/' + localStorage.getItem('song') + '.mp3';
-    // this.img = '../assets/images/song/' + localStorage.getItem('img') + '.jpg';
-    // this.artist = localStorage.getItem('artist');
-
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
-  
+
+  search(title: string) {
+    this.router.navigate(['/search', title]);
+  }
 }

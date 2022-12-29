@@ -19,19 +19,23 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { ApiResponseListPlaylist } from '../model/apiResponseListPlaylist';
+import { ApiResponseListPlaylistResponse } from '../model/apiResponseListPlaylistResponse';
 // @ts-ignore
 import { ApiResponseObject } from '../model/apiResponseObject';
+// @ts-ignore
+import { ApiResponsePagePlaylistResponse } from '../model/apiResponsePagePlaylistResponse';
 // @ts-ignore
 import { ApiResponsePageSong } from '../model/apiResponsePageSong';
 // @ts-ignore
 import { ApiResponsePlaylist } from '../model/apiResponsePlaylist';
 // @ts-ignore
-import { ApiResponseSetSong } from '../model/apiResponseSetSong';
+import { ApiResponsePlaylistResponse } from '../model/apiResponsePlaylistResponse';
 // @ts-ignore
 import { ApiResponseSong } from '../model/apiResponseSong';
 // @ts-ignore
 import { ApiResponseUser } from '../model/apiResponseUser';
+// @ts-ignore
+import { PlaylistDTO } from '../model/playlistDTO';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -227,16 +231,16 @@ export class UserControllerService {
     }
 
     /**
-     * @param playlistName 
+     * @param playlistDTO 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createNewPlaylist(playlistName: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePlaylist>;
-    public createNewPlaylist(playlistName: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePlaylist>>;
-    public createNewPlaylist(playlistName: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePlaylist>>;
-    public createNewPlaylist(playlistName: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (playlistName === null || playlistName === undefined) {
-            throw new Error('Required parameter playlistName was null or undefined when calling createNewPlaylist.');
+    public createNewPlaylist(playlistDTO: PlaylistDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePlaylist>;
+    public createNewPlaylist(playlistDTO: PlaylistDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePlaylist>>;
+    public createNewPlaylist(playlistDTO: PlaylistDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePlaylist>>;
+    public createNewPlaylist(playlistDTO: PlaylistDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (playlistDTO === null || playlistDTO === undefined) {
+            throw new Error('Required parameter playlistDTO was null or undefined when calling createNewPlaylist.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -259,6 +263,15 @@ export class UserControllerService {
         }
 
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -270,8 +283,8 @@ export class UserControllerService {
             }
         }
 
-        return this.httpClient.post<ApiResponsePlaylist>(`${this.configuration.basePath}/visum/playlist/${encodeURIComponent(String(playlistName))}`,
-            null,
+        return this.httpClient.post<ApiResponsePlaylist>(`${this.configuration.basePath}/visum/playlist`,
+            playlistDTO,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -328,6 +341,62 @@ export class UserControllerService {
         }
 
         return this.httpClient.delete<ApiResponseSong>(`${this.configuration.basePath}/visum/favorite/${encodeURIComponent(String(songId))}`,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param playlistId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deletePlaylist(playlistId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePlaylist>;
+    public deletePlaylist(playlistId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePlaylist>>;
+    public deletePlaylist(playlistId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePlaylist>>;
+    public deletePlaylist(playlistId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (playlistId === null || playlistId === undefined) {
+            throw new Error('Required parameter playlistId was null or undefined when calling deletePlaylist.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        return this.httpClient.delete<ApiResponsePlaylist>(`${this.configuration.basePath}/visum/playlists/${encodeURIComponent(String(playlistId))}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -409,12 +478,91 @@ export class UserControllerService {
     }
 
     /**
+     * @param title 
+     * @param page 
+     * @param size 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllPlaylistByUser(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponseListPlaylist>;
-    public getAllPlaylistByUser(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponseListPlaylist>>;
-    public getAllPlaylistByUser(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponseListPlaylist>>;
+    public findPlaylistsByTitle(title: string, page: number, size: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePagePlaylistResponse>;
+    public findPlaylistsByTitle(title: string, page: number, size: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePagePlaylistResponse>>;
+    public findPlaylistsByTitle(title: string, page: number, size: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePagePlaylistResponse>>;
+    public findPlaylistsByTitle(title: string, page: number, size: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (title === null || title === undefined) {
+            throw new Error('Required parameter title was null or undefined when calling findPlaylistsByTitle.');
+        }
+        if (page === null || page === undefined) {
+            throw new Error('Required parameter page was null or undefined when calling findPlaylistsByTitle.');
+        }
+        if (size === null || size === undefined) {
+            throw new Error('Required parameter size was null or undefined when calling findPlaylistsByTitle.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (title !== undefined && title !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>title, 'title');
+        }
+        if (page !== undefined && page !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>page, 'page');
+        }
+        if (size !== undefined && size !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>size, 'size');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        return this.httpClient.get<ApiResponsePagePlaylistResponse>(`${this.configuration.basePath}/visum/searchPlaylists`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAllPlaylistByUser(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponseListPlaylistResponse>;
+    public getAllPlaylistByUser(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponseListPlaylistResponse>>;
+    public getAllPlaylistByUser(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponseListPlaylistResponse>>;
     public getAllPlaylistByUser(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
@@ -448,7 +596,7 @@ export class UserControllerService {
             }
         }
 
-        return this.httpClient.get<ApiResponseListPlaylist>(`${this.configuration.basePath}/visum/playlists`,
+        return this.httpClient.get<ApiResponseListPlaylistResponse>(`${this.configuration.basePath}/visum/playlists`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -596,12 +744,12 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPlaylist(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponseSetSong>;
-    public getPlaylist(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponseSetSong>>;
-    public getPlaylist(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponseSetSong>>;
-    public getPlaylist(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getPlaylistById(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePlaylistResponse>;
+    public getPlaylistById(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePlaylistResponse>>;
+    public getPlaylistById(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePlaylistResponse>>;
+    public getPlaylistById(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getPlaylist.');
+            throw new Error('Required parameter id was null or undefined when calling getPlaylistById.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -635,7 +783,7 @@ export class UserControllerService {
             }
         }
 
-        return this.httpClient.get<ApiResponseSetSong>(`${this.configuration.basePath}/visum/playlist/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<ApiResponsePlaylistResponse>(`${this.configuration.basePath}/visum/playlist/${encodeURIComponent(String(id))}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

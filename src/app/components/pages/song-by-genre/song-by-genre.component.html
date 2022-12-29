@@ -1,5 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="center none">
-  <p class="content-title topic-title">{{ title | uppercase }}</p>
+  <div fxLayout="row" fxLayoutAlign="none center">
+    <p class="content-title topic-title">
+      <a class="topic-title">{{ "Danh sách thể  loại / " | uppercase }}</a
+      >{{ title | uppercase }}
+    </p>
+  </div>
   <div
     fxLayout="row wrap"
     fxLayoutAlign="space-between"
@@ -7,12 +12,14 @@
     class="align-self-center"
     fxLayoutGap="15px grid"
   >
-    <div fxLayout="row" *ngFor="let song of listSong">
+    <div fxLayout="row" *ngFor="let song of songData">
       <img
         width="80px"
         height="80px"
         class="popular-item-img"
-        src="../assets/images/song/{{ song ? song.image : 'songBg' }}.jpg"
+        src="../assets/images/song/{{
+          song.imageName != null ? song.imageName : 'songBg'
+        }}.jpg"
         alt=""
       />
       <div
@@ -21,12 +28,17 @@
         fxLayoutAlign="space-between center"
       >
         <div fxLayout="column" fxLayoutAlign="center start">
-          <strong>{{ song.title }}</strong>
-          <small>{{ song.thumbnail }}</small>
+          <strong>{{ song.songName }}</strong>
+          <small>{{ song.songAuthor?.name }}</small>
         </div>
-        <button mat-mini-fab class="text-white">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
+          <button mat-mini-fab class="middle text-white favorite">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button (click)="playSong(song)" mat-mini-fab class="text-white">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
     <!-- <div fxLayout="row" *ngFor="let song of listSong">

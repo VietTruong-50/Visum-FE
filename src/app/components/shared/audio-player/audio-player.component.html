@@ -1,25 +1,25 @@
 <div fxLayout="column">
-  <img class="img-audio" src="../assets/images/song/{{getCurrentSong ? getCurrentSong.imageName : 'songBg'}}.jpg" alt="" />
+  <img class="img-audio" src="../assets/images/song/{{getCurrentSong != null ? getCurrentSong.imageName : 'songBg'}}.jpg" alt="" />
   <div class="container-audio w-100" fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="column">
       <p style="margin: 0;">
-         {{ getCurrentSong ? getCurrentSong.songName : '...' }}
+         {{ getCurrentSong != null ? getCurrentSong.songName : '...' }}
       </p>
-      <small>{{ getCurrentSong ? getCurrentSong.singer.singerName : '...' }}</small>
+      <small>{{ getCurrentSong != null ? getCurrentSong.singer.singerName : '...' }}</small>
     </div>
  
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       <div fxLayout="row" fxLayoutAlign="space-evenly center">
-        <span>{{ state.readableCurrentTime }}</span>
+        <span>{{ state.readableCurrentTime ? state.readableCurrentTime : 0}}</span>
         <input
           type="range"
           min="0"
-          max="{{ state.duration }}"
+          max="{{ state.duration ? state.duration : 0}}"
           [value]="state.currentTime"
           (input)="setSeekTo($event)"
           style="width: 40%"
         />
-        <span>{{ state.readableDuration }}</span>
+        <span>{{ state.readableDuration ? state.readableDuration : 0}}</span>
       </div>
       <div fxLayout="row" style="position: relative">
         <mat-icon (mouseover)="isVolume = true"
@@ -31,7 +31,7 @@
           min="0"
           max="1"
           step="0.01"
-          [value]="state.volume"
+          [value]="state.volume ? state.volume : 1"
           (input)="setVolume($event)"
           *ngIf="isVolume"
           (mouseover)="isVolume = true"
@@ -42,10 +42,10 @@
 
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       <button mat-mini-fab (click)="playPrevious()"><mat-icon>skip_previous</mat-icon></button>
-      <button mat-mini-fab *ngIf="isPlay == true" (click)="pause()">
+      <button mat-mini-fab *ngIf="state.isPlaying == true" (click)="pause()">
         <mat-icon>pause</mat-icon>
       </button>
-      <button mat-mini-fab *ngIf="isPlay == false" (click)="play()">
+      <button mat-mini-fab *ngIf="state.isPlaying == false" (click)="play()">
         <mat-icon>play_arrow</mat-icon>
       </button>
       <button mat-mini-fab (click)="replay()"><mat-icon>replay</mat-icon></button>

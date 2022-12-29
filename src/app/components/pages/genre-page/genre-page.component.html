@@ -1,12 +1,14 @@
 
 <div  fxLayout="column" fxLayoutAlign="center center">
+  <p class="content-title topic-title">{{ 'Danh sách thể  loại' | uppercase }}<p>
+
   <div class="p-3" style="width: 90%;" >
     <mat-expansion-panel *ngFor="let category of categoryData">
       <mat-expansion-panel-header>
         <mat-panel-title>{{category.categoryName}}</mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list *ngFor="let cate of category.subCategories">
-        <a (click)="goToSongByGenre(cate)">
+        <a (click)="goToSongByGenre(cate.subCategoryName)">
           <mat-list-item>{{cate.subCategoryName}}</mat-list-item>
         </a>
       </mat-list>

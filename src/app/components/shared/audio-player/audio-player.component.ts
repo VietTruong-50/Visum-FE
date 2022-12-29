@@ -1,10 +1,7 @@
-import { Component, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import * as moment from 'moment';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
-import { Song, SongDTO } from 'src/app/api-svc';
 import { StreamState } from '../../interface/StreamState';
-import { CloudService } from 'src/app/service/cloud.service';
+
 
 @Component({
   selector: 'app-audio-player',
@@ -23,7 +20,6 @@ export class AudioPlayerComponent implements OnInit {
   volume = 0;
 
   isVolume: boolean = false;
-  isPlay: boolean = false;
 
   constructor(private audioService: DataService) {}
 
@@ -39,17 +35,14 @@ export class AudioPlayerComponent implements OnInit {
 
   playStream(url?: any) {
     this.audioService.playStream(url);
-    this.isPlay = true;
   }
 
   play() {
     this.audioService.play();
-    this.isPlay = true;
   }
 
   pause() {
     this.audioService.pause();
-    this.isPlay = false;
   }
 
   stop() {
@@ -64,9 +57,13 @@ export class AudioPlayerComponent implements OnInit {
     this.audioService.updateVolume(event);
   }
 
-  playNext() {}
+  playNext() {
+    this.audioService.playNext()
+  }
 
-  playPrevious() {}
+  playPrevious() {
+    this.audioService.playPrevious()
+  }
 
   setSeekTo(change: Event) {
     this.audioService.setSeekTo(change);

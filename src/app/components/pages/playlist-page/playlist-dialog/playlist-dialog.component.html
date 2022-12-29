@@ -1,0 +1,14 @@
+<div fxLayout="column">
+  <p class="content-title topic-title">{{title}}</p>
+  <div fxLayout="row" fxLayoutAlign="center">
+    <form action="" [formGroup]="formGroup">
+      <mat-form-field appearance="outline">
+        <mat-label>Playlist name</mat-label>
+        <input formControlName="playlistName" id="playlistName" matInput />
+      </mat-form-field>
+    </form>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end">
+    <button mat-raised-button (click)="doAction()">Save</button>
+  </div>
+</div>

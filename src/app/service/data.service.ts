@@ -104,12 +104,16 @@ export class DataService {
     console.log(this.state);
   }
 
-  playStream(song: Song) {
-    this.addSongToList(song);
+  playStream(song?: Song, isAdd?: boolean) {
+    if (song && isAdd) {
+      this.addSongToList(song);
+    }
 
     return this.streamObserver(
       '../assets/audio/' +
-        this._listSong[this._listSong.length - 1].songName +
+        (song
+          ? song.songName
+          : this._listSong[this._listSong.length - 1].songName) +
         '.mp3'
     ).subscribe((rs) => {});
   }
@@ -136,7 +140,9 @@ export class DataService {
     this.stop$.next();
   }
 
-  replay() {}
+  replay() {
+    this.audio.currentTime = 0;
+  }
 
   setSeekTo(event: any) {
     this.audio.currentTime = event.target.value;
@@ -202,7 +208,14 @@ export class DataService {
   }
 
   loadCurrentSong() {
-    return JSON.parse(localStorage.getItem('currentSong')!) ?? [];
+    return (
+      JSON.parse(localStorage.getItem('currentSong')!) ?? {
+        songName: '',
+        duration: 0,
+        imageName: '',
+        singer: {},
+      }
+    );
   }
 
   updateVolume(event: any) {
@@ -215,11 +228,13 @@ export class DataService {
   playNext(song?: Song) {
     console.log('Play next');
 
-    const currentIndex = this._listSong.findIndex((value) =>
-      value === song ? song : this.loadCurrentSong()
+    let currentIndex = this._listSong.findIndex(
+      (value) => value.id === this.loadCurrentSong().id
     );
+    console.log(currentIndex);
 
-    let nextIndex = (currentIndex + 1) % this._listSong.length;
+    let nextIndex =
+      currentIndex === this._listSong.length - 1 ? 0 : currentIndex + 1;
 
     this.currentSong = this._listSong.at(nextIndex)!;
 
@@ -227,17 +242,41 @@ export class DataService {
     this.playStream(this.currentSong);
   }
 
-  // playPrevious() {
-  // const currentIndex = this.listSong.findIndex((value) => value == this.song);
-  // let previousIndex =
-  //   (currentIndex + this.listSong.length - 1) % this.listSong.length;
-  // this.song = this.listSong.at(previousIndex);
-  // this.streamObserver('../assets/audio/' + this.song.title + '.mp3').subscribe((event) => {});
-  // }
+  playPrevious(song?: Song) {
+    console.log(this.loadCurrentSong().songName);
 
-  playPlaylist(isSuffle: boolean) {
-    // if (isSuffle != true) {
-    // } else {
-    // }
+    let currentIndex = this._listSong.findIndex(
+      (value) => value.id === this.loadCurrentSong().id
+    );
+
+    console.log(currentIndex);
+
+    let previousIndex =
+      currentIndex === 0 ? this._listSong.length - 1 : currentIndex - 1;
+    console.log(previousIndex);
+    console.log(this._listSong);
+
+    this.currentSong = this._listSong.at(previousIndex)!;
+
+    this.saveCurrentSong(this.currentSong);
+    this.playStream(this.currentSong);
+  }
+
+  playPlaylist(isSuffle: boolean, list?: Song[]) {
+    this._listSong = list!;
+
+    if (isSuffle == true) {
+      for (var i = this._listSong.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = this._listSong[i];
+        this._listSong[i] = this._listSong[j];
+        this._listSong[j] = temp;
+      }
+    }
+
+    this.saveCurrentSong(this._listSong[0]);
+    this.streamObserver(
+      '../assets/audio/' + this._listSong[0].songName + '.mp3'
+    ).subscribe((rs) => {});
   }
 }

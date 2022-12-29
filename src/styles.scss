@@ -3,6 +3,8 @@
 @import "swiper/css/bundle";
 @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
 
+/* Context Menu target */
+
 html,
 body {
   height: 100%;
@@ -244,4 +246,32 @@ figure {
 
 .mat-mini-fab.favorite:hover{
   color: #fc1b15 !important;
+}
+
+/*Trending*/
+.number {
+  min-width: 38px;
+  -webkit-text-stroke: 1.5px #fff;
+  opacity: 0.7;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  color: rgba(74, 144, 226, 0);
+  font-family: "Roboto", sans-serif;
+  white-space: nowrap;
+}
+
+.number.is-top-1 {
+  -webkit-text-stroke: 1px #4a90e2;
+  opacity: 1;
+}
+
+.number.is-top-2 {
+  -webkit-text-stroke: 1px #50e3c2;
+}
+
+.number.is-top-3 {
+  -webkit-text-stroke: 1px #e35050;
+  opacity: 1;
 }

@@ -13,6 +13,5 @@
 
 export interface PlaylistDTO { 
     playlistName?: string;
-    userId?: number;
 }
 

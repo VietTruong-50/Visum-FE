@@ -3,7 +3,7 @@
 </div>
 <div
   fxLayout="row wrap"
-  fxLayoutAlign="center center"
+  fxLayoutAlign="center none"
   style="width: 98%"
   fxLayoutGap="20px grid"
 >
@@ -47,11 +47,43 @@
   fxLayoutGap="20px grid"
 ></div>
 <div>
-  <p class="content-title topic-title" style="font-size: 26px">Album</p>
+  <p class="content-title topic-title" style="font-size: 26px">Playlist</p>
 </div>
 <div
   fxLayout="row wrap"
   fxLayoutAlign="center center"
   style="width: 98%"
   fxLayoutGap="20px grid"
-></div>
+>
+  <div class="column is-fullhd-20" *ngFor="let playlist of playlistData">
+    <a href="">
+      <div class="zm-card-image">
+        <div
+          class="zm-box zm-actions playlist-actions"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          fxLayoutGap="10px"
+        >
+          <button class="zm-btn zm-tooltip-btn button">
+            <i class="icon fa-solid fa-house"></i></button
+          ><button class="zm-btn action-play button">
+            <i class="icon action-play fa-solid fa-play"></i></button
+          ><button class="zm-btn zm-tooltip-btn button">
+            <i class="icon fa-solid fa-house"></i>
+          </button>
+        </div>
+        <figure>
+          <img src="https://photo-zmp3.zmdcdn.me/album_default.png" />
+        </figure>
+        <div class="opacity"></div>
+      </div>
+    </a>
+
+    <div fxLayout="column" fxLayoutGap="5px" class="zm-card-content">
+      <h4 class="title is-6">
+        <a href="">{{ playlist.playlistName }}</a>
+      </h4>
+      <h3 class="subtitle">{{ playlist.userName }}</h3>
+    </div>
+  </div>
+</div>

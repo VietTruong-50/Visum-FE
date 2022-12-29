@@ -43,11 +43,11 @@ routes = [
     component: PlaylistPageComponent,
   },
   {
-    path: 'playlist-details',
+    path: 'playlist-details/:playlistId',
     component: PlaylistDetailComponent,
   },
   {
-    path: 'search',
+    path: 'search/:title',
     component: SearchPageComponent,
   },
   {

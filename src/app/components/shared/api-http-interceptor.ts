@@ -10,6 +10,7 @@ import {
 import {catchError, finalize, Observable, retry, throwError} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {GlobalConstants} from "./GlobalConstants";
+import { DialogService } from "src/app/service/dialog.service";
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ApiHttpInterceptor implements HttpInterceptor {
 
   constructor(
     private cookieService: CookieService,
-    // private dialog: DialogService
+    private dialog: DialogService
   ) {
   }
   intercept
@@ -31,7 +32,7 @@ export class ApiHttpInterceptor implements HttpInterceptor {
     this.totalRequest++
     console.log(this.totalRequest)
     if (this.totalRequest === 1) {
-      // this.dialog.showLoadingData()
+      this.dialog.showSpinnerDialog()
     }
 
     const dupReq = request.clone({
@@ -47,7 +48,7 @@ export class ApiHttpInterceptor implements HttpInterceptor {
         if (this.totalRequest > 0) this.totalRequest--;
         console.log(this.totalRequest)
         if(this.totalRequest === 0) {
-          // this.dialog.closeLoadingData()
+          this.dialog.hideSpinnerDialog()
         }
 
       }),

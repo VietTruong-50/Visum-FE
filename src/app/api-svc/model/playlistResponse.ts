@@ -12,9 +12,10 @@
 import { Song } from './song';
 
 
-export interface Playlist { 
+export interface PlaylistResponse { 
     id?: number;
     playlistName?: string;
+    userName?: string;
     songList?: Array<Song>;
 }
 

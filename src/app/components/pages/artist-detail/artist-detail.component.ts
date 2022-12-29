@@ -27,13 +27,13 @@ export class ArtistDetailComponent implements OnInit {
       .getSong(0, 6, 'songName')
       .subscribe((result: ApiResponsePageSong) => {
         if (result.errorCode == null) {
-          result.result?.content?.forEach((item) => {
-            if (item.image) {
-              let objectURL = 'data:image/jpeg;base64,' + item.image;
+          // result.result?.content?.forEach((item) => {
+          //   if (item.image) {
+          //     let objectURL = 'data:image/jpeg;base64,' + item.image;
 
-              item.imgUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-            }
-          });
+          //     item.imgUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          //   }
+          // });
 
           this.songData = result.result?.content;
 

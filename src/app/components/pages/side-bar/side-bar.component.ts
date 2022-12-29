@@ -36,6 +36,7 @@ export class SideBarComponent implements OnInit {
   }
 
   navigateTo(route: string) {
+    // if((route == '/favorite' || route == '/playlist') && !this.cookieService.check(GlobalConstants.authToken)) {
     if(route == '/favorite' && !this.cookieService.check(GlobalConstants.authToken)) {
       this.dialog.open(LogInComponent, {
         width: '45vw',

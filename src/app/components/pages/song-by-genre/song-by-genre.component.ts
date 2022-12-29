@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResponsePageSong, SongControllerService } from 'src/app/api-svc';
+import { ApiResponsePageSong, Song, SongControllerService } from 'src/app/api-svc';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-song-by-genre',
@@ -9,10 +10,11 @@ import { ApiResponsePageSong, SongControllerService } from 'src/app/api-svc';
 })
 export class SongByGenreComponent implements OnInit {
   title: string;
-  listSong: any;
+  songData: any;
   constructor(
     private route: ActivatedRoute,
-    private songController: SongControllerService
+    private songController: SongControllerService,
+    private audioService: DataService
   ) {
     this.title = this.route.snapshot.params['genre'];
   }
@@ -23,11 +25,16 @@ export class SongByGenreComponent implements OnInit {
 
   getData() {
     this.songController
-      .findSongsByCategory(this.title, 1, 5, 'createdAt')
+      .findSongsByCategory(this.title, 0, 5, 'songName')
       .subscribe((result: ApiResponsePageSong) => {
         if(result.errorCode == null){
-          this.listSong = result.result?.content;
+          this.songData = result.result?.content;
         }
       });
+  }
+
+  playSong(song: Song) {
+    this.audioService.saveCurrentSong(song)
+    this.audioService.playStream(song, true)
   }
 }

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
-import { SongControllerService, SongDTO, UserControllerService } from 'src/app/api-svc';
+import {
+  SongControllerService,
+  SongDTO,
+  UserControllerService,
+} from 'src/app/api-svc';
 import { DataService } from 'src/app/service/data.service';
 
 interface MusicData {
@@ -34,18 +38,23 @@ export class MusicFavoriteComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'album', 'duration'];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any[]>();
-  
-  constructor(private userController: UserControllerService, private _data: DataService) {
+
+  constructor(
+    private userController: UserControllerService,
+    private _data: DataService
+  ) {
     this.getFavoriteData();
   }
 
   ngOnInit(): void {}
 
   getFavoriteData() {
-    this.userController.getListFavorites(1, 4, 'createdAt').subscribe((result) => {
-      let data = result.result?.content ? result.result?.content : [];
-      this.dataSource = new MatTableDataSource<SongDTO>(data);
-    });
+    this.userController
+      .getListFavorites(0, 4, 'views')
+      .subscribe((result) => {
+        let data = result.result?.content ? result.result?.content : [];
+        this.dataSource = new MatTableDataSource<SongDTO>(data);
+      });
   }
 
   timeFormat(time: any, format = 'HH:mm:ss') {
@@ -53,10 +62,11 @@ export class MusicFavoriteComponent implements OnInit {
     return moment.utc(momentTime).format(format);
   }
 
-  playSong(song: any) {
-  }
+  playSong(song: any) {}
 
-  stop(song: any){
-    
+  stop(song: any) {}
+
+  sortData($event: any) {
+    throw new Error('Method not implemented.');
   }
 }
