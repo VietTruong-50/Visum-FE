@@ -112,9 +112,13 @@
             <mat-icon>more_horiz</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="playlist">
+            <button mat-menu-item [matMenuTriggerFor]="playlist" *ngIf="playlistData">
               <mat-icon>add_circle_outline</mat-icon>
               <span>Add to playlist</span>
+            </button>
+            <button mat-menu-item (click)="openCommentDialog(song.id)">
+              <mat-icon>comment</mat-icon>
+              <span>Comment</span>
             </button>
           </mat-menu>
 

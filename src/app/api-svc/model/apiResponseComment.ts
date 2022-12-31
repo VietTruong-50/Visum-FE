@@ -10,21 +10,12 @@
  * Do not edit the class manually.
  */
 import { Comment } from './comment';
-import { Composer } from './composer';
-import { Singer } from './singer';
-import { SubCategory } from './subCategory';
 
 
-export interface Song { 
-    id?: number;
-    songName?: string;
-    duration?: number;
-    image?: Array<string>;
-    imageName?: string;
-    views?: number;
-    singer?: Singer;
-    composer?: Composer;
-    subCategory?: SubCategory;
-    comments?: Array<Comment>;
+export interface ApiResponseComment { 
+    result?: Comment;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

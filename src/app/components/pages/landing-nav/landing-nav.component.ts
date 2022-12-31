@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CookieService } from 'ngx-cookie-service';
 import {
   ApiResponsePageSong,
   Song,
@@ -8,6 +10,8 @@ import {
 } from 'src/app/api-svc';
 import { CloudService } from 'src/app/service/cloud.service';
 import { DataService } from 'src/app/service/data.service';
+import { GlobalConstants } from '../../shared/GlobalConstants';
+import { CommentPageDialogComponent } from '../comment-page-dialog/comment-page-dialog.component';
 
 @Component({
   selector: 'app-landing-nav',
@@ -17,17 +21,22 @@ import { DataService } from 'src/app/service/data.service';
 export class LandingNavComponent implements OnInit {
   songData: any;
   playlistData: any;
+  key: boolean;
 
   constructor(
     private songControllerService: SongControllerService,
     private audioService: DataService,
     private sanitizer: DomSanitizer,
-    private userController: UserControllerService
-  ) {}
+    private userController: UserControllerService,
+    private dialog: MatDialog,
+    private cookieService: CookieService
+  ) {
+    this.key = this.cookieService.check(GlobalConstants.authToken);
+  }
 
   ngOnInit(): void {
     this.getSongData();
-    this.getAllPlaylist()
+    this.getAllPlaylist();
   }
 
   getSongData() {
@@ -44,7 +53,6 @@ export class LandingNavComponent implements OnInit {
           // });
 
           this.songData = result.result?.content;
-          // this.audioService.listSong = this.songData
 
           console.log(this.songData);
         } else {
@@ -54,9 +62,11 @@ export class LandingNavComponent implements OnInit {
   }
 
   getAllPlaylist() {
-    this.userController.getAllPlaylistByUser().subscribe((rs) => {
-      this.playlistData = rs.result;
-    });
+    if (this.key) {
+      this.userController.getAllPlaylistByUser().subscribe((rs) => {
+        this.playlistData = rs.result;
+      });
+    }
   }
 
   playSong(song: Song) {
@@ -64,7 +74,16 @@ export class LandingNavComponent implements OnInit {
     this.audioService.playStream(song, true);
   }
 
-  addToPlaylist(playlistId: number, songId: number){
-    this.userController.addSongToPlaylist(playlistId, [songId]).subscribe(rs => {})
+  addToPlaylist(playlistId: number, songId: number) {
+    this.userController
+      .addSongToPlaylist(playlistId, [songId])
+      .subscribe((rs) => {});
+  }
+
+  openCommentDialog(songId: number) {
+    this.dialog.open(CommentPageDialogComponent, {
+      width: '30vw',
+      data: songId
+    });
   }
 }

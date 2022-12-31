@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 import { PageableObject } from './pageableObject';
-import { Song } from './song';
+import { CommentDTO } from './commentDTO';
 import { Sort } from './sort';
 
 
-export interface PageSong { 
+export interface PageCommentDTO { 
     totalPages?: number;
     totalElements?: number;
     size?: number;
-    content?: Array<Song>;
+    content?: Array<CommentDTO>;
     number?: number;
     sort?: Sort;
     first?: boolean;

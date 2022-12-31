@@ -23,20 +23,29 @@
     <div fxLayout="column" fxLayoutGap="15px">
       <p class="search-title topic-title">TOP ARTISTS</p>
 
-      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
-        <img
-          class="img-artists"
-          src="../../../../../assets/images/artists/Stephen Sanchez.jpg"
-          width="55px"
-          height="55px"
-          alt=""
-        />
-        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="55">
-          <div fxLayout="column" fxLayoutGap="0">
-            <h5>aaaa</h5>
-            <label>bbbb</label>
+      <div fxLayout="column" fxLayoutGap="20px">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          fxLayoutGap="15px"
+          *ngFor="let singer of singerData"
+        >
+          <img
+            class="img-artists"
+            src="../../../../../assets/images/artists/{{
+              singer.singerName
+            }}.jpg"
+            width="55px"
+            height="55px"
+            alt=""
+          />
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="60" fxLayoutGap="10px">
+            <div fxLayout="column" fxLayoutGap="0">
+              <h6>{{ singer.singerName }}</h6>
+              <label>{{ singer.followers }}</label>
+            </div>
+            <button mat-raised-button class="follow-btn">Follow</button>
           </div>
-          <button mat-raised-button class="follow-btn">Follow</button>
         </div>
       </div>
     </div>

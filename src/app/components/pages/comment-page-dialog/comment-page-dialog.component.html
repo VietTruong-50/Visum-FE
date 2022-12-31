@@ -1,0 +1,45 @@
+<div>
+  <div fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h3>Binh luan</h3>
+      <button mat-mini-fab mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div>
+      <p>{{ commentData ? commentData.length : 0 }} binh luan</p>
+    </div>
+    <div fxLayout="column" fxLayoutGap="25px">
+      <div
+        fxLayout="row"
+        fxLayoutGap="20px"
+        *ngFor="let comment of commentData"
+      >
+        <div>
+          <img
+            src="../../../../../assets/images/{{ comment.userAvatar }}.jpg"
+            alt=""
+            class="user-avatar"
+          />
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center">
+          <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center">
+            <div>{{ comment.username }}</div>
+            <div style="color: rgb(195, 196, 202)">{{ comment.createdAt }}</div>
+          </div>
+          <div>{{ comment.commentText }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <form action="">
+      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5px">
+        <input type="text" fxFlex="70" />
+        <button fxFlex="30" mat-raised-button>Binh luan</button>
+      </div>
+    </form> -->
+    <div fxLayout="row" fxLayoutAlign="center" class="login-notify" (click)="openLoginDialog()">
+      <p class="notify-text">Vui long dang nhap de binh luan</p>
+    </div>
+  </div>
+</div>

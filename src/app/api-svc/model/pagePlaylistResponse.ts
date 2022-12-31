@@ -23,8 +23,8 @@ export interface PagePlaylistResponse {
     sort?: Sort;
     first?: boolean;
     last?: boolean;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     empty?: boolean;
 }
 

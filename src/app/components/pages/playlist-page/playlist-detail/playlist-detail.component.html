@@ -140,7 +140,7 @@
         <!-- Duration Column -->
         <ng-container matColumnDef="duration">
           <th mat-header-cell *matHeaderCellDef>Thời gian</th>
-          <td mat-cell *matCellDef="let element">{{ element.duration }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.duration | timeFormat}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

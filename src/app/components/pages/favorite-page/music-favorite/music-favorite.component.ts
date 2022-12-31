@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
+import { BehaviorSubject } from 'rxjs';
 import {
+  Song,
   SongControllerService,
   SongDTO,
   UserControllerService,
@@ -35,13 +37,16 @@ const ELEMENT_DATA: MusicData[] = [
   styleUrls: ['./music-favorite.component.scss'],
 })
 export class MusicFavoriteComponent implements OnInit {
+
+  listSong: BehaviorSubject<Song[]> = new BehaviorSubject<Song[]>([]);
+
   displayedColumns: string[] = ['position', 'name', 'album', 'duration'];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any[]>();
 
   constructor(
     private userController: UserControllerService,
-    private _data: DataService
+    private audioService: DataService
   ) {
     this.getFavoriteData();
   }
@@ -53,16 +58,16 @@ export class MusicFavoriteComponent implements OnInit {
       .getListFavorites(0, 4, 'views')
       .subscribe((result) => {
         let data = result.result?.content ? result.result?.content : [];
+        this.listSong.next(data!);
         this.dataSource = new MatTableDataSource<SongDTO>(data);
       });
   }
 
-  timeFormat(time: any, format = 'HH:mm:ss') {
-    const momentTime = time * 1000;
-    return moment.utc(momentTime).format(format);
+  playPlaylist() {
+    this.listSong.subscribe((rs) => {
+      this.audioService.playPlaylist(false, rs);
+    });
   }
-
-  playSong(song: any) {}
 
   stop(song: any) {}
 

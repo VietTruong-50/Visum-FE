@@ -10,6 +10,7 @@ import { UserControllerService } from 'src/app/api-svc';
 })
 export class PlaylistDialogComponent implements OnInit {
   title: string = '';
+  playlistId: number;
   formGroup: FormGroup;
 
   constructor(
@@ -18,8 +19,9 @@ export class PlaylistDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<PlaylistDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.title = data;
-    
+    this.title = data.title;
+    this.playlistId = data.playlistId;
+
     this.formGroup = this.formBuilder.group({
       playlistName: [''],
     });
@@ -30,19 +32,23 @@ export class PlaylistDialogComponent implements OnInit {
   doAction() {
     console.log(this.formGroup.controls['playlistName'].value);
 
-    if(this.title == "NEW PLAYLIST"){
+    if (this.title == 'NEW PLAYLIST') {
       this.userController
-      .createNewPlaylist({
-        playlistName: this.formGroup.controls['playlistName'].value,
-      })
-      .subscribe((rs) => {
-        console.log('add success');
-        this.dialogRef.close();
-      });
-    }else{
-      
+        .createNewPlaylist({
+          playlistName: this.formGroup.controls['playlistName'].value,
+        })
+        .subscribe((rs) => {
+          console.log('add success');
+          this.dialogRef.close();
+        });
+    } else {
+      this.userController
+        .updatePlaylist(this.playlistId, {
+          playlistName: this.formGroup.controls['playlistName'].value,
+        })
+        .subscribe((rs) => {
+          this.dialogRef.close();
+        });
     }
-   
   }
-  
 }

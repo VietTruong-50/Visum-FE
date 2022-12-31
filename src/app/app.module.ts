@@ -55,6 +55,8 @@ import { SpinnerLoadingComponent } from './components/shared/spinner-loading/spi
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PlaylistDialogComponent } from './components/pages/playlist-page/playlist-dialog/playlist-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
+import { TimeFormatPipe } from './components/pipes/time-format.pipe';
+import { CommentPageDialogComponent } from './components/pages/comment-page-dialog/comment-page-dialog.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { MatSortModule } from '@angular/material/sort';
     TrendingPageComponent,
     SpinnerLoadingComponent,
     PlaylistDialogComponent,
+    TimeFormatPipe,
+    CommentPageDialogComponent,
   ],
   imports: [
     BrowserModule,

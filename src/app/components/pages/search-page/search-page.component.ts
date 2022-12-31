@@ -24,7 +24,7 @@ export class SearchPageComponent implements OnInit {
     private songControllerService: SongControllerService,
     private singerController: SingerControllerService,
     private userController: UserControllerService,
-    private _data: DataService,
+    private audioService: DataService,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private router: Router
@@ -108,5 +108,7 @@ export class SearchPageComponent implements OnInit {
       });
   }
 
-  playSong(song: any) {}
+  playSong(song: any) {
+    this.audioService.playStream(song, true)
+  }
 }

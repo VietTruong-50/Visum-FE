@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SingerControllerService } from 'src/app/api-svc';
 
 @Component({
   selector: 'app-right-side-nav',
@@ -8,12 +9,22 @@ import { Router } from '@angular/router';
 })
 export class RightSideNavComponent implements OnInit {
   title: string = '';
+  singerData: any;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private singerController: SingerControllerService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getTopSingerData()
+  }
 
   search(title: string) {
     this.router.navigate(['/search', title]);
+  }
+
+  getTopSingerData(){
+    this.singerController.getTopArtists().subscribe(rs => {
+      this.singerData = rs.result
+      console.log(this.singerData)
+    })
   }
 }

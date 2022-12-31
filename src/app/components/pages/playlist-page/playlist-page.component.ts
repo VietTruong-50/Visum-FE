@@ -26,7 +26,9 @@ export class PlaylistPageComponent implements OnInit {
     this.dialog
       .open(PlaylistDialogComponent, {
         width: '20vw',
-        data: "NEW PLAYLIST"
+        data: {
+          title: "NEW PLAYLIST"
+        }
       })
       .afterClosed()
       .subscribe((rs) => {

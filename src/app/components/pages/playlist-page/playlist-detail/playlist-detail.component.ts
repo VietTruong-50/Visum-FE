@@ -56,7 +56,10 @@ export class PlaylistDetailComponent implements OnInit {
     this.dialog
       .open(PlaylistDialogComponent, {
         width: '20vw',
-        data: "EDIT PLAYLIST"
+        data: {
+          playlistId: this.route.snapshot.params['playlistId'],
+          title: "EDIT PLAYLIST"
+        }
       })
       .afterClosed()
       .subscribe((rs) => {

@@ -51,7 +51,7 @@ routes = [
     component: SearchPageComponent,
   },
   {
-    path: 'artist-detail',
+    path: 'artist-detail/:id',
     component: ArtistDetailComponent,
   },
   {

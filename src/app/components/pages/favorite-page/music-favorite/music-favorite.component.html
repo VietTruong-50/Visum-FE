@@ -19,13 +19,10 @@
               height="50px"
               alt=""
             />
-            <button mat-mini-fab class="middle" (click)="playSong(element)">
+            <button mat-mini-fab class="middle" (click)="playPlaylist()">
               <mat-icon>play_arrow</mat-icon>
             </button>
           </div>
-          <button mat-mini-fab class="middle" (click)="playSong(element)">
-            <mat-icon>play_arrow</mat-icon>
-          </button>
         </div>
       </td>
     </ng-container>
@@ -48,7 +45,7 @@
     <ng-container matColumnDef="duration">
       <th mat-header-cell *matHeaderCellDef>Thời gian</th>
       <td mat-cell *matCellDef="let element">
-        {{ timeFormat(element.duration) }}
+        {{ element.duration | timeFormat }}
       </td>
     </ng-container>
 

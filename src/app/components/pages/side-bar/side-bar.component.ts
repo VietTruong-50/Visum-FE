@@ -23,7 +23,7 @@ export class SideBarComponent implements OnInit {
   ngOnInit(): void {}
 
   openUserProfile() {
-    if(this.cookieService.check(GlobalConstants.authToken)){
+    if(this.key){
       this.dialog.open(UserProfileComponent, {
         width: '65vw',
       });
@@ -36,8 +36,8 @@ export class SideBarComponent implements OnInit {
   }
 
   navigateTo(route: string) {
-    // if((route == '/favorite' || route == '/playlist') && !this.cookieService.check(GlobalConstants.authToken)) {
-    if(route == '/favorite' && !this.cookieService.check(GlobalConstants.authToken)) {
+    if((route == '/favorite' || route == '/playlist') && this.key) {
+    // if(route == '/favorite' && !this.cookieService.check(GlobalConstants.authToken)) {
       this.dialog.open(LogInComponent, {
         width: '45vw',
       });
