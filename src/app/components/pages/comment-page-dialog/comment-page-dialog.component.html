@@ -6,10 +6,18 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
+    <hr />
     <div>
       <p>{{ commentData ? commentData.length : 0 }} binh luan</p>
     </div>
-    <div fxLayout="column" fxLayoutGap="25px">
+    <div
+      class="empty-content"
+      fxLayout="column"
+      *ngIf="commentData.length == 0"
+    >
+      <i class="icon fa-solid fa-comment"></i>Chưa có bình luận nào
+    </div>
+    <div fxLayout="column" fxLayoutGap="25px" *ngIf="commentData.length > 0">
       <div
         fxLayout="row"
         fxLayoutGap="20px"
@@ -22,24 +30,59 @@
             class="user-avatar"
           />
         </div>
-        <div fxLayout="column" fxLayoutAlign="center">
-          <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center">
-            <div>{{ comment.username }}</div>
-            <div style="color: rgb(195, 196, 202)">{{ comment.createdAt }}</div>
+        <div fxLayout="column" fxLayoutAlign="center" class="w-100">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutGap="20px">
+              <div>{{ comment.username }}</div>
+              <div style="color: rgb(195, 196, 202)">
+                {{ comment.createdAt }}
+              </div>
+            </div>
+            <div (click)="deleteComment(comment.id)" *ngIf="key == true">
+              <i class="icon fa-solid fa-trash"></i>
+            </div>
           </div>
           <div>{{ comment.commentText }}</div>
         </div>
       </div>
     </div>
+    <hr />
 
-    <!-- <form action="">
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5px">
-        <input type="text" fxFlex="70" />
-        <button fxFlex="30" mat-raised-button>Binh luan</button>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="scenter center"
+      fxLayoutGap="15px"
+      *ngIf="key == true"
+    >
+      <mat-form-field fxFlex="80" (keyup.enter)="createComment()">
+        <input matInput type="text" placeholder="..." [(ngModel)]="value" />
+        <button
+          mat-button
+          *ngIf="value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="value = ''"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <div fxFlex="20">
+        <button mat-raised-button (click)="createComment()">Binh luan</button>
       </div>
-    </form> -->
-    <div fxLayout="row" fxLayoutAlign="center" class="login-notify" (click)="openLoginDialog()">
-      <p class="notify-text">Vui long dang nhap de binh luan</p>
+    </div>
+
+    <div
+      *ngIf="key == false"
+      fxLayout="row"
+      fxLayoutAlign="center"
+      class="login-notify"
+      (click)="openLoginDialog()"
+    >
+      <p class="notify-text">
+        <i class="fa-solid fa-circle-exclamation"></i>  Vui long dang nhap de binh
+        luan
+      </p>
     </div>
   </div>
 </div>

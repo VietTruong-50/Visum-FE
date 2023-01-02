@@ -100,6 +100,15 @@ export class DataService {
   }
 
   play() {
+    if(this.loadCurrentSong != null) {
+      // this.streamObserver(
+      //   '../assets/audio/' +
+      //     (song
+      //       ? song.songName
+      //       : this._listSong[this._listSong.length - 1].songName) +
+      //     '.mp3'
+      // ).subscribe((rs) => {});
+    }
     this.audio.play();
     console.log(this.state);
   }

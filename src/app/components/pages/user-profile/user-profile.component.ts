@@ -64,7 +64,7 @@ export class UserProfileComponent implements OnInit {
       userName: this.userData.userName,
       firstName: this.userData.firstName,
       lastName: this.userData.lastName,
-      gender: this.userData.gender,
+      gender: this.userData.genderEnum,
       birthOfDate: moment(new Date(this.userData.birthOfDate)).format(
         'yyyy-MM-DD'
       ),

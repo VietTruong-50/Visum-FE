@@ -13,7 +13,7 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 })
 export class SideBarComponent implements OnInit {
 
-  key: boolean;
+  key: boolean = false;
   constructor(private dialog: MatDialog, 
     private router: Router, 
     private cookieService: CookieService) {
@@ -23,7 +23,7 @@ export class SideBarComponent implements OnInit {
   ngOnInit(): void {}
 
   openUserProfile() {
-    if(this.key){
+    if(this.key == true){
       this.dialog.open(UserProfileComponent, {
         width: '65vw',
       });
@@ -36,7 +36,7 @@ export class SideBarComponent implements OnInit {
   }
 
   navigateTo(route: string) {
-    if((route == '/favorite' || route == '/playlist') && this.key) {
+    if((route == '/favorite' || route == '/playlist') && this.key != true) {
     // if(route == '/favorite' && !this.cookieService.check(GlobalConstants.authToken)) {
       this.dialog.open(LogInComponent, {
         width: '45vw',

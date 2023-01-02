@@ -15,5 +15,6 @@ export interface Singer {
     id?: number;
     singerName?: string;
     description?: string;
+    followers?: number;
 }
 

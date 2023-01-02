@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserControllerService } from 'src/app/api-svc';
+import { CloudService } from 'src/app/service/cloud.service';
 import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
 
 @Component({
@@ -15,7 +16,8 @@ export class PlaylistPageComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private userController: UserControllerService,
-    private router: Router
+    private router: Router,
+    private cloudService: CloudService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +41,7 @@ export class PlaylistPageComponent implements OnInit {
   getAllPlaylist() {
     this.userController.getAllPlaylistByUser().subscribe((rs) => {
       this.playlistData = rs.result;
+      console.log(this.playlistData)
     });
   }
 
@@ -50,5 +53,9 @@ export class PlaylistPageComponent implements OnInit {
 
   renderTo(playlistId: number){
     this.router.navigate(['playlist-details', playlistId])
+  }
+
+  playPlaylist(){
+
   }
 }

@@ -122,6 +122,16 @@ paths:
         schema:
           type: integer
           format: int64
+      - name: orderBy
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: sortType
+        in: query
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           description: OK
@@ -711,6 +721,9 @@ components:
           type: string
         description:
           type: string
+        followers:
+          type: integer
+          format: int64
     Song:
       type: object
       properties:
@@ -809,7 +822,6 @@ components:
       required:
       - commentText
       - songId
-      - userId
       type: object
       properties:
         id:
@@ -1023,11 +1035,11 @@ components:
           type: boolean
         last:
           type: boolean
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         empty:
           type: boolean
     PageableObject:
@@ -1129,11 +1141,11 @@ components:
           type: boolean
         last:
           type: boolean
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         empty:
           type: boolean
     ApiResponsePagePlaylistResponse:
@@ -1173,11 +1185,11 @@ components:
           type: boolean
         last:
           type: boolean
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         empty:
           type: boolean
     PlaylistResponse:
@@ -1257,11 +1269,11 @@ components:
           type: boolean
         last:
           type: boolean
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         empty:
           type: boolean
     ApiResponseListCategory:

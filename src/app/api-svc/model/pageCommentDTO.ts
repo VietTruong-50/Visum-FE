@@ -23,8 +23,8 @@ export interface PageCommentDTO {
     sort?: Sort;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
     pageable?: PageableObject;
+    numberOfElements?: number;
     empty?: boolean;
 }
 

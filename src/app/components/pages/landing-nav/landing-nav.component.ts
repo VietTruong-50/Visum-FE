@@ -8,8 +8,9 @@ import {
   SongControllerService,
   UserControllerService,
 } from 'src/app/api-svc';
-import { CloudService } from 'src/app/service/cloud.service';
+import * as _ from 'lodash';
 import { DataService } from 'src/app/service/data.service';
+import { FavoriteService } from 'src/app/service/favorite.service';
 import { GlobalConstants } from '../../shared/GlobalConstants';
 import { CommentPageDialogComponent } from '../comment-page-dialog/comment-page-dialog.component';
 
@@ -29,7 +30,8 @@ export class LandingNavComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private userController: UserControllerService,
     private dialog: MatDialog,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private favoriteService: FavoriteService
   ) {
     this.key = this.cookieService.check(GlobalConstants.authToken);
   }
@@ -39,8 +41,8 @@ export class LandingNavComponent implements OnInit {
     this.getAllPlaylist();
   }
 
-  getSongData() {
-    this.songControllerService
+  async getSongData() {
+    await this.songControllerService
       .getSong(0, 6, 'songName')
       .subscribe((result: ApiResponsePageSong) => {
         if (result.errorCode == null) {
@@ -61,17 +63,17 @@ export class LandingNavComponent implements OnInit {
       });
   }
 
+  playSong(song: Song) {
+    this.audioService.saveCurrentSong(song);
+    this.audioService.playStream(song, true);
+  }
+
   getAllPlaylist() {
     if (this.key) {
       this.userController.getAllPlaylistByUser().subscribe((rs) => {
         this.playlistData = rs.result;
       });
     }
-  }
-
-  playSong(song: Song) {
-    this.audioService.saveCurrentSong(song);
-    this.audioService.playStream(song, true);
   }
 
   addToPlaylist(playlistId: number, songId: number) {
@@ -83,7 +85,25 @@ export class LandingNavComponent implements OnInit {
   openCommentDialog(songId: number) {
     this.dialog.open(CommentPageDialogComponent, {
       width: '30vw',
-      data: songId
+      data: songId,
+    });
+  }
+
+  checkFavorite(song: Song): boolean {
+    return this.favoriteService.checkFavorite(song);
+  }
+
+  addToFavorite(songId: number) {
+    this.userController.addFavoriteSong(songId).subscribe((rs) => {
+      console.log('Add success');
+      this.favoriteService.getFavoriteData();
+    });
+  }
+
+  removeFromFavorite(songId: number) {
+    this.userController.deleteFavoriteSong(songId).subscribe((rs) => {
+      this.favoriteService.getFavoriteData();
+      console.log('Remove success');
     });
   }
 }

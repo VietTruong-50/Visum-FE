@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
 @import "swiper/css/bundle";
-@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 
 /* Context Menu target */
 
@@ -146,13 +146,14 @@ mat-form-field {
 figure {
   width: 100%;
   overflow: hidden;
+  border-radius: 5px;
+
   img {
     height: auto;
     width: 100%;
     border-radius: 5px;
   }
 }
-
 
 .opacity {
   width: 100%;
@@ -165,7 +166,8 @@ figure {
 }
 
 .zm-card-image:hover .opacity,
-.zm-card-image:hover .zm-actions {
+.zm-card-image:hover .zm-actions,
+.zm-card-image:hover figure {
   visibility: visible;
   transition: 0.5;
 }
@@ -236,16 +238,24 @@ figure {
   border-bottom-left-radius: 12px;
 }
 
-.mat-mini-fab.mat-accent:hover{
+.mat-mini-fab.mat-accent:hover {
   background-color: rgb(0 0 0 / 57%) !important;
 }
 
-.mat-mini-fab.mat-accent{
-  background-color: rgb(0 0 0 / 0%) ;
+.mat-mini-fab.mat-accent {
+  background-color: rgb(0 0 0 / 0%);
 }
 
-.mat-mini-fab.favorite:hover{
+.mat-mini-fab.favorite:hover {
   color: #fc1b15 !important;
+}
+
+.remove-favorite{
+  color: #fc1b15 !important;
+}
+
+.mat-mini-fab.remove-favorite:hover {
+  color: #fff !important;
 }
 
 /*Trending*/

@@ -2,14 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import {
   SongControllerService,
   ApiResponsePageSong,
   SingerControllerService,
   SingerDTO,
   UserControllerService,
+  Song,
 } from 'src/app/api-svc';
+import { CloudService } from 'src/app/service/cloud.service';
 import { DataService } from 'src/app/service/data.service';
+import { FavoriteService } from 'src/app/service/favorite.service';
+import { GlobalConstants } from '../../shared/GlobalConstants';
 import { CommentPageDialogComponent } from '../comment-page-dialog/comment-page-dialog.component';
 
 @Component({
@@ -20,6 +25,7 @@ import { CommentPageDialogComponent } from '../comment-page-dialog/comment-page-
 export class ArtistDetailComponent implements OnInit {
   singerData!: SingerDTO;
   playlistData: any;
+  key: boolean;
 
   constructor(
     private singerController: SingerControllerService,
@@ -27,22 +33,33 @@ export class ArtistDetailComponent implements OnInit {
     private audioService: DataService,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private cookieService: CookieService,
+    private cloudService: CloudService,
+    private favoriteService: FavoriteService
 
-  ngOnInit(): void {
-    this.getSongData();
+  ) {
+    this.key = this.cookieService.check(GlobalConstants.authToken);
   }
 
-  getSongData() {
+  ngOnInit(): void {
+    this.getSingerData();
+    this.getAllPlaylist();
+  }
+
+  getSingerData() {
     this.singerController
       .findSingerById(this.route.snapshot.params['id'])
       .subscribe((rs) => {
         this.singerData = rs.result!;
+        this.cloudService.setList(this.singerData.songList);
       });
   }
 
-  playSong(song: any) {}
+  playSong(song: Song) {
+    this.audioService.saveCurrentSong(song);
+    this.audioService.playStream(song, true);
+  }
 
   openCommentDialog() {
     this.dialog.open(CommentPageDialogComponent, {
@@ -57,8 +74,34 @@ export class ArtistDetailComponent implements OnInit {
   }
 
   getAllPlaylist() {
-    this.userController.getAllPlaylistByUser().subscribe((rs) => {
-      this.playlistData = rs.result;
+    if (this.key) {
+      this.userController.getAllPlaylistByUser().subscribe((rs) => {
+        this.playlistData = rs.result;
+      });
+    }
+  }
+
+  playPlaylist(isShuffle: boolean) {
+    this.cloudService
+      .getData()
+      .subscribe((rs) => this.audioService.playPlaylist(isShuffle, rs));
+  }
+
+  checkFavorite(song: Song): boolean {
+    return this.favoriteService.checkFavorite(song);
+  }
+
+  addToFavorite(songId: number) {
+    this.userController.addFavoriteSong(songId).subscribe((rs) => {
+      console.log('Add success');
+      this.favoriteService.getFavoriteData();
+    });
+  }
+
+  removeFromFavorite(songId: number) {
+    this.userController.deleteFavoriteSong(songId).subscribe((rs) => {
+      this.favoriteService.getFavoriteData();
+      console.log('Remove success');
     });
   }
 }

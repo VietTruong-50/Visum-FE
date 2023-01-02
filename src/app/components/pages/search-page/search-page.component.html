@@ -1,89 +1,169 @@
-<div>
-  <p class="content-title topic-title" style="font-size: 26px">Bài hát</p>
-</div>
-<div
-  fxLayout="row wrap"
-  fxLayoutAlign="center none"
-  style="width: 98%"
-  fxLayoutGap="20px grid"
->
-  <div fxLayout="row" *ngFor="let song of songData">
-    <img
-      width="80px"
-      height="80px"
-      class="popular-item-img"
-      src="../assets/images/song/{{
-        song.imageName != null ? song.imageName : 'songBg'
-      }}.jpg"
-      alt=""
-    />
-    <div
-      fxLayout="row"
-      class="popular-item-content"
-      fxLayoutAlign="space-between center"
-    >
-      <div fxLayout="column" fxLayoutAlign="center start">
-        <strong>{{ song.songName }}</strong>
-        <small>{{ song.songAuthor?.name }}</small>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
-        <button mat-mini-fab class="middle text-white favorite">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button (click)="playSong(song)" mat-mini-fab class="text-white">
-          <mat-icon>play_arrow</mat-icon>
-        </button>
+<div fxLayout="column" fxLayoutGap="10px">
+  <div>
+    <p class="content-title topic-title" style="font-size: 26px">Bài hát</p>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start start"
+    style="width: 92%"
+    class="align-self-center"
+  >
+    <div fxLayout="row wrap" fxLayoutGap="24px grid">
+      <div fxLayout="row" *ngFor="let song of songData">
+        <div class="image-container" fxLayout="row">
+          <img
+            width="80px"
+            height="80px"
+            class="popular-item-img"
+            src="../assets/images/song/{{
+              song.imageName != null ? song.imageName : 'songBg'
+            }}.jpg"
+            alt=""
+          />
+          <button mat-mini-fab class="middle" (click)="playSong(song)">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+        </div>
+
+        <div
+          fxLayout="row"
+          class="popular-item-content"
+          fxLayoutAlign="space-between center"
+        >
+          <div fxLayout="column" fxLayoutAlign="center start">
+            <strong>{{ song.songName }}</strong>
+            <small>{{ song.songAuthor?.name }}</small>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
+            <ng-container *ngIf="key == true">
+              <button
+                mat-mini-fab
+                class="text-white favorite"
+                *ngIf="!checkFavorite(song); else removeFavorite"
+                (click)="addToFavorite(song.id)"
+              >
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <ng-template #removeFavorite>
+                <button
+                  mat-mini-fab
+                  class="remove-favorite"
+                  (click)="removeFromFavorite(song.id)"
+                >
+                  <mat-icon>favorite</mat-icon>
+                </button>
+              </ng-template>
+            </ng-container>
+            
+            <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                [matMenuTriggerFor]="playlist"
+                *ngIf="key == true"
+              >
+                <mat-icon>add_circle_outline</mat-icon>
+                <span>Add to playlist</span>
+              </button>
+              <button mat-menu-item (click)="openCommentDialog(song.id)">
+                <mat-icon>comment</mat-icon>
+                <span>Comment</span>
+              </button>
+            </mat-menu>
+
+            <mat-menu #playlist="matMenu">
+              <button
+                mat-menu-item
+                *ngFor="let playlist of playlistData"
+                (click)="addToPlaylist(playlist.id, song.id)"
+              >
+                {{ playlist.playlistName }}
+              </button>
+            </mat-menu>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div>
-  <p class="content-title topic-title" style="font-size: 26px">Nghệ sĩ</p>
-</div>
-<div
-  fxLayout="row wrap"
-  fxLayoutAlign="center center"
-  style="width: 98%"
-  fxLayoutGap="20px grid"
-></div>
-<div>
-  <p class="content-title topic-title" style="font-size: 26px">Playlist</p>
-</div>
-<div
-  fxLayout="row wrap"
-  fxLayoutAlign="center center"
-  style="width: 98%"
-  fxLayoutGap="20px grid"
->
-  <div class="column is-fullhd-20" *ngFor="let playlist of playlistData">
-    <a href="">
-      <div class="zm-card-image">
-        <div
-          class="zm-box zm-actions playlist-actions"
-          fxLayout="row"
-          fxLayoutAlign="center center"
-          fxLayoutGap="10px"
-        >
-          <button class="zm-btn zm-tooltip-btn button">
-            <i class="icon fa-solid fa-house"></i></button
-          ><button class="zm-btn action-play button">
-            <i class="icon action-play fa-solid fa-play"></i></button
-          ><button class="zm-btn zm-tooltip-btn button">
-            <i class="icon fa-solid fa-house"></i>
-          </button>
-        </div>
-        <figure>
-          <img src="https://photo-zmp3.zmdcdn.me/album_default.png" />
-        </figure>
-        <div class="opacity"></div>
+  <div>
+    <p class="content-title topic-title" style="font-size: 26px">Nghệ sĩ</p>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start start"
+    style="width: 92%"
+    class="align-self-center"
+  >
+    <div fxLayout="row wrap" fxLayoutGap="24px grid">
+      <div
+        fxLayout="column"
+        fxLayoutGap="10px"
+        fxLayoutAlign="center center"
+        *ngFor="let singer of singerData"
+        class="singer-info"
+      >
+        <img
+          src="../assets/images/artists/{{
+            singerData != null ? singer.singerName : ''
+          }}.jpg"
+          width="150px"
+          height="150px"
+          style="border-radius: 50%; object-fit: cover"
+          alt=""
+        />
+        <a (click)="renderTo(singer.id, 'singer')">{{ singer.singerName }}</a>
       </div>
-    </a>
+    </div>
+  </div>
+  <div>
+    <p class="content-title topic-title" style="font-size: 26px">Playlist</p>
+  </div>
+  <div
+    fxLayout="row wrap"
+    fxLayoutAlign="center center"
+    style="width: 98%"
+    fxLayoutGap="20px grid"
+  >
+    <div class="column is-fullhd-20" *ngFor="let playlist of playlistData">
+      <a>
+        <div class="zm-card-image">
+          <div
+            class="zm-box zm-actions playlist-actions"
+            fxLayout="row"
+            fxLayoutAlign="center center"
+            fxLayoutGap="10px"
+          >
+            <button
+              class="zm-btn zm-tooltip-btn button"
+              (click)="deletePlaylist(playlist.id)"
+            >
+              <i class="icon fa-solid fa-x"></i></button
+            ><button
+              class="zm-btn action-play button"
+              (click)="playPlaylist(false, playlist.songList)"
+            >
+              <i class="icon action-play fa-solid fa-play"></i></button
+            ><button class="zm-btn zm-tooltip-btn button">
+              <i class="icon fa-solid fa-ellipsis"></i>
+            </button>
+          </div>
+          <figure>
+            <img src="https://photo-zmp3.zmdcdn.me/album_default.png" />
+          </figure>
+          <div class="opacity"></div>
+        </div>
+      </a>
 
-    <div fxLayout="column" fxLayoutGap="5px" class="zm-card-content">
-      <h4 class="title is-6">
-        <a href="">{{ playlist.playlistName }}</a>
-      </h4>
-      <h3 class="subtitle">{{ playlist.userName }}</h3>
+      <div fxLayout="column" fxLayoutGap="5px" class="zm-card-content">
+        <h4 class="title is-6">
+          <a (click)="renderTo(playlist.id, 'playlist')">{{
+            playlist.playlistName
+          }}</a>
+        </h4>
+        <h5 class="subtitle">{{ playlist.userName }}</h5>
+      </div>
     </div>
   </div>
 </div>

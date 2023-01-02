@@ -1,27 +1,35 @@
 <div fxLayout="column" fxLayoutAlign="center none">
   <div fxLayout="row" fxLayoutAlign="none center">
     <p class="content-title topic-title">
-      <a class="topic-title">{{ "Danh sách thể  loại / " | uppercase }}</a
+      <a class="topic-title" [routerLink]="['/genres']">{{
+        "Danh sách thể  loại / " | uppercase
+      }}</a
       >{{ title | uppercase }}
     </p>
   </div>
   <div
-    fxLayout="row wrap"
-    fxLayoutAlign="space-between"
+    fxLayout="row"
+    fxLayoutAlign="start start"
     style="width: 92%"
     class="align-self-center"
-    fxLayoutGap="15px grid"
   >
+  <div fxLayout="row wrap" fxLayoutGap="24px grid">
     <div fxLayout="row" *ngFor="let song of songData">
-      <img
-        width="80px"
-        height="80px"
-        class="popular-item-img"
-        src="../assets/images/song/{{
-          song.imageName != null ? song.imageName : 'songBg'
-        }}.jpg"
-        alt=""
-      />
+      <div class="image-container" fxLayout="row">
+        <img
+          width="80px"
+          height="80px"
+          class="popular-item-img"
+          src="../assets/images/song/{{
+            song.imageName != null ? song.imageName : 'songBg'
+          }}.jpg"
+          alt=""
+        />
+        <button mat-mini-fab class="middle" (click)="playSong(song)">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+
       <div
         fxLayout="row"
         class="popular-item-content"
@@ -32,15 +40,57 @@
           <small>{{ song.songAuthor?.name }}</small>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
-          <button mat-mini-fab class="middle text-white favorite">
-            <mat-icon>favorite</mat-icon>
+          <ng-container *ngIf="key == true">
+            <button
+              mat-mini-fab
+              class="text-white favorite"
+              *ngIf="!checkFavorite(song); else removeFavorite"
+              (click)="addToFavorite(song.id)"
+            >
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <ng-template #removeFavorite>
+              <button
+                mat-mini-fab
+                class="remove-favorite"
+                (click)="removeFromFavorite(song.id)"
+              >
+                <mat-icon>favorite</mat-icon>
+              </button>
+            </ng-template>
+          </ng-container>
+
+          <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
           </button>
-          <button (click)="playSong(song)" mat-mini-fab class="text-white">
-            <mat-icon>play_arrow</mat-icon>
-          </button>
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              [matMenuTriggerFor]="playlist"
+              *ngIf="playlistData"
+            >
+              <mat-icon>add_circle_outline</mat-icon>
+              <span>Add to playlist</span>
+            </button>
+            <button mat-menu-item (click)="openCommentDialog(song.id)">
+              <mat-icon>comment</mat-icon>
+              <span>Comment</span>
+            </button>
+          </mat-menu>
+
+          <mat-menu #playlist="matMenu">
+            <button
+              mat-menu-item
+              *ngFor="let playlist of playlistData"
+              (click)="addToPlaylist(playlist.id, song.id)"
+            >
+              {{ playlist.playlistName }}
+            </button>
+          </mat-menu>
         </div>
       </div>
     </div>
+  </div>
     <!-- <div fxLayout="row" *ngFor="let song of listSong">
       <img
         width="80px"

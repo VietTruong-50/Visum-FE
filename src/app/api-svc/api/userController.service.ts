@@ -960,15 +960,33 @@ export class UserControllerService {
 
     /**
      * @param id 
+     * @param orderBy 
+     * @param sortType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPlaylistById(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePlaylistResponse>;
-    public getPlaylistById(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePlaylistResponse>>;
-    public getPlaylistById(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePlaylistResponse>>;
-    public getPlaylistById(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getPlaylistById(id: number, orderBy: string, sortType: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ApiResponsePlaylistResponse>;
+    public getPlaylistById(id: number, orderBy: string, sortType: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ApiResponsePlaylistResponse>>;
+    public getPlaylistById(id: number, orderBy: string, sortType: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ApiResponsePlaylistResponse>>;
+    public getPlaylistById(id: number, orderBy: string, sortType: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getPlaylistById.');
+        }
+        if (orderBy === null || orderBy === undefined) {
+            throw new Error('Required parameter orderBy was null or undefined when calling getPlaylistById.');
+        }
+        if (sortType === null || sortType === undefined) {
+            throw new Error('Required parameter sortType was null or undefined when calling getPlaylistById.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (orderBy !== undefined && orderBy !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>orderBy, 'orderBy');
+        }
+        if (sortType !== undefined && sortType !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>sortType, 'sortType');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -1005,6 +1023,7 @@ export class UserControllerService {
         return this.httpClient.get<ApiResponsePlaylistResponse>(`${this.configuration.basePath}/visum/playlist/${encodeURIComponent(String(id))}`,
             {
                 context: localVarHttpContext,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

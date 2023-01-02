@@ -13,7 +13,7 @@
 
 export interface CommentDTO { 
     id?: number;
-    userId: number;
+    userId?: number;
     username?: string;
     userAvatar?: string;
     songId: number;
