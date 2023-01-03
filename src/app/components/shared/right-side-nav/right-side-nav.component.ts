@@ -27,4 +27,12 @@ export class RightSideNavComponent implements OnInit {
       console.log(this.singerData)
     })
   }
+
+  renderTo(id: number, type: string) {
+    if (type == 'playlist') {
+      this.router.navigate(['playlist-details', id]);
+    } else {
+      this.router.navigate(['artist-details', id]);
+    }
+  }
 }

@@ -97,10 +97,18 @@
               <i class="fa-solid fa-arrow-up-z-a"></i>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="sortBy('name', 'ASC')" *ngIf="sort == 'DSC'">
+              <button
+                mat-menu-item
+                (click)="sortBy('name', 'ASC')"
+                *ngIf="sort == 'DSC'"
+              >
                 <span>Sort by name (A-z)</span>
               </button>
-              <button mat-menu-item (click)="sortBy('name', 'DSC')" *ngIf="sort == 'ASC'">
+              <button
+                mat-menu-item
+                (click)="sortBy('name', 'DSC')"
+                *ngIf="sort == 'ASC'"
+              >
                 <span>Sort by name (z-A)</span>
               </button>
               <button mat-menu-item (click)="sortBy('duration', 'DSC')">
@@ -124,7 +132,7 @@
           <th mat-header-cell *matHeaderCellDef>Bài hát</th>
           <td mat-cell *matCellDef="let element">
             <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
-              <div class="image-container" fxLayout="row">
+              <div class="image-container image-playlist" fxLayout="row">
                 <img
                   src="../assets/images/song/{{
                     element.imageName != null ? element.imageName : 'songBg'
@@ -163,14 +171,163 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="deleteSongFromPlaylist(element.id)">
+                <mat-icon>remove</mat-icon>
+                <span>Remove from playlist</span>
+              </button>
+              <button mat-menu-item (click)="openCommentDialog(element.id)">
+                <mat-icon>comment</mat-icon>
+                <span>Comment</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
       <div fxLayout="column">
-        <p>Cac bai hat lien quan</p>
+        <p class="content-title topic-title">Bài Hát Gợi Ý</p>
         <div fxLayout="column">
+          <!-- <mat-list fxLayout="column" fxLayoutGap="25px">
+            <mat-list-item *ngFor="let song of listSong">
+              <div fxLayout="row" class="w-100">
+                <div class="image-container" fxLayout="row">
+                  <img
+                    width="60px"
+                    height="60px"
+                    class="popular-item-img"
+                    src="../assets/images/song/{{
+                      song.imageName != null ? song.imageName : 'songBg'
+                    }}.jpg"
+                    alt=""
+                  />
+                  <button mat-mini-fab class="middle" (click)="playSong(song)">
+                    <mat-icon>play_arrow</mat-icon>
+                  </button>
+                </div>
 
+                <div
+                  fxLayout="row"
+                  class="popular-item-content"
+                  fxLayoutAlign="space-between center"
+                >
+                  <div fxLayout="column" fxLayoutAlign="center start">
+                    <strong>{{ song.songName }}</strong>
+                    <small>{{ song.songAuthor?.name }}</small>
+                  </div>
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="space-between"
+                    fxLayoutGap="5px"
+                  ></div>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list> -->
+          <table
+            mat-table
+            [dataSource]="dataSource2"
+            class="mat-elevation-z8 w-100"
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Bài hát</th>
+              <td mat-cell *matCellDef="let element">
+                <div
+                  fxLayout="row"
+                  fxLayoutGap="20px"
+                  fxLayoutAlign="start center"
+                >
+                  <div class="image-container image-playlist" fxLayout="row">
+                    <img
+                      src="../assets/images/song/{{
+                        element.imageName != null ? element.imageName : 'songBg'
+                      }}.jpg"
+                      width="50px"
+                      height="50px"
+                      alt=""
+                    />
+                    <button
+                      mat-mini-fab
+                      class="middle"
+                      (click)="playPlaylist(false)"
+                    >
+                      <mat-icon>play_arrow</mat-icon>
+                    </button>
+                  </div>
+                  <div fxLayout="column" fxLayoutGap="5px">
+                    <span> {{ element.songName }}</span>
+                    <span> {{ element.singer.singerName }}</span>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Album Column -->
+            <ng-container matColumnDef="album">
+              <th mat-header-cell *matHeaderCellDef>Album</th>
+              <td mat-cell *matCellDef="let element">{{ element.songName }}</td>
+            </ng-container>
+
+            <!-- Duration Column -->
+            <ng-container matColumnDef="duration">
+              <th mat-header-cell *matHeaderCellDef>Thời gian</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.duration | timeFormat }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Action</th>
+              <td mat-cell *matCellDef="let element">
+                <div>
+                  <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
+                    <ng-container *ngIf="key == true">
+                      <button
+                        mat-mini-fab
+                        class="text-white favorite"
+                        *ngIf="!checkFavorite(element); else removeFavorite"
+                        (click)="addToFavorite(element.id)"
+                        title="Add to favorite"
+                      >
+                        <mat-icon>favorite</mat-icon>
+                      </button>
+                      <ng-template #removeFavorite>
+                        <button
+                          mat-mini-fab
+                          class="remove-favorite"
+                          (click)="removeFromFavorite(element.id)"
+                          title="Remove from favorite"
+                        >
+                          <mat-icon>favorite</mat-icon>
+                        </button>
+                      </ng-template>
+                    </ng-container>
+                    <button
+                      mat-mini-fab
+                      class="text-white"
+                      title="Add to playlist"
+                      (click)="addToPlaylist(element.id)"
+                    >
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+          </table>
         </div>
       </div>
     </div>

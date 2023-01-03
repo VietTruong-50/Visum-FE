@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject } from 'rxjs';
 import {
   Playlist,
@@ -9,8 +10,11 @@ import {
   Song,
   UserControllerService,
 } from 'src/app/api-svc';
+import { GlobalConstants } from 'src/app/components/shared/GlobalConstants';
 import { CloudService } from 'src/app/service/cloud.service';
 import { DataService } from 'src/app/service/data.service';
+import { FavoriteService } from 'src/app/service/favorite.service';
+import { CommentPageDialogComponent } from '../../comment-page-dialog/comment-page-dialog.component';
 import { PlaylistDialogComponent } from '../playlist-dialog/playlist-dialog.component';
 
 @Component({
@@ -20,26 +24,41 @@ import { PlaylistDialogComponent } from '../playlist-dialog/playlist-dialog.comp
 })
 export class PlaylistDetailComponent implements OnInit {
   sort: string = 'DSC';
+  listSong: any;
+  key: boolean;
 
   pageIndex: number = 0;
   pageSize: number = 5;
 
   playlistData!: PlaylistResponse;
 
-  displayedColumns: string[] = ['position', 'name', 'album', 'duration'];
+  displayedColumns: string[] = [
+    'position',
+    'name',
+    'album',
+    'duration',
+    'action',
+  ];
+  displayedColumns2: string[] = ['name', 'album', 'duration', 'action'];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any[]>();
+  dataSource2: MatTableDataSource<any> = new MatTableDataSource<any[]>();
 
   constructor(
     private userController: UserControllerService,
     private route: ActivatedRoute,
     private audioService: DataService,
     private dialog: MatDialog,
-    private cloudService: CloudService
-  ) {}
+    private cloudService: CloudService,
+    private favoriteService: FavoriteService,
+    private cookieService: CookieService
+  ) {
+    this.key = this.cookieService.check(GlobalConstants.authToken);
+  }
 
   ngOnInit(): void {
     this.getPlaylistData();
+    this.getSongsNotInPlaylist();
   }
 
   getPlaylistData(orderBy?: string, sortType?: string) {
@@ -83,5 +102,64 @@ export class PlaylistDetailComponent implements OnInit {
     this.cloudService.getData().subscribe((rs) => {
       this.audioService.playPlaylist(isShuffle, rs);
     });
+  }
+
+  getSongsNotInPlaylist() {
+    this.userController
+      .findSongsNotInPlaylist(this.route.snapshot.params['playlistId'], 0, 20)
+      .subscribe((rs) => {
+        this.listSong = rs.result?.content!;
+
+        this.dataSource2 = new MatTableDataSource<Song>(this.listSong);
+      });
+  }
+
+  playSong(song: Song) {
+    this.audioService.saveCurrentSong(song);
+    this.audioService.playStream(song, true);
+  }
+
+  addToPlaylist(songId: number) {
+    this.userController
+      .addSongToPlaylist(this.route.snapshot.params['playlistId'], [songId])
+      .subscribe((rs) => {
+        this.getPlaylistData();
+        this.getSongsNotInPlaylist();
+      });
+  }
+
+  checkFavorite(song: Song): boolean {
+    return this.favoriteService.checkFavorite(song);
+  }
+
+  addToFavorite(songId: number) {
+    this.userController.addFavoriteSong(songId).subscribe((rs) => {
+      console.log('Add success');
+      this.favoriteService.getFavoriteData();
+    });
+  }
+
+  removeFromFavorite(songId: number) {
+    this.userController.deleteFavoriteSong(songId).subscribe((rs) => {
+      this.favoriteService.getFavoriteData();
+      console.log('Remove success');
+    });
+  }
+
+  openCommentDialog(songId: number) {
+    this.dialog.open(CommentPageDialogComponent, {
+      width: '30vw',
+      data: songId,
+    });
+  }
+
+  deleteSongFromPlaylist(songId: number) {
+    console.log(songId)
+    this.userController
+      .deleteSongFromPlaylist(this.route.snapshot.params['playlistId'], songId)
+      .subscribe((rs) => {
+        this.getPlaylistData();
+        this.getSongsNotInPlaylist();
+      });
   }
 }

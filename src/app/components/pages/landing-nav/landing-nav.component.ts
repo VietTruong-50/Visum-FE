@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
@@ -13,16 +13,37 @@ import { DataService } from 'src/app/service/data.service';
 import { FavoriteService } from 'src/app/service/favorite.service';
 import { GlobalConstants } from '../../shared/GlobalConstants';
 import { CommentPageDialogComponent } from '../comment-page-dialog/comment-page-dialog.component';
+import Swiper, { SwiperOptions } from 'swiper';
+import { SwiperComponent } from 'swiper/angular';
 
 @Component({
   selector: 'app-landing-nav',
   templateUrl: './landing-nav.component.html',
   styleUrls: ['./landing-nav.component.scss'],
 })
-export class LandingNavComponent implements OnInit {
+export class LandingNavComponent implements OnInit, AfterViewInit {
   songData: any;
   playlistData: any;
   key: boolean;
+
+  @ViewChild('swiperSlideShow') swiperSlideShow!: SwiperComponent;
+  config: SwiperOptions = {};
+
+  ngAfterViewInit(): void {
+    this.config = {
+      autoHeight: true,
+      allowTouchMove: true,
+      navigation: false,
+      loop: true
+    };
+
+  }
+
+  setSwiperInstance(swiper: Swiper) {
+    setInterval(() => {
+      swiper.slideNext();
+    }, 8000);
+  }
 
   constructor(
     private songControllerService: SongControllerService,
@@ -43,7 +64,7 @@ export class LandingNavComponent implements OnInit {
 
   async getSongData() {
     await this.songControllerService
-      .getSong(0, 6, 'songName')
+      .getSong(0, 20, 'songName')
       .subscribe((result: ApiResponsePageSong) => {
         if (result.errorCode == null) {
           // result.result?.content?.forEach((item) => {

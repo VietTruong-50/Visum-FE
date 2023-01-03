@@ -118,6 +118,7 @@
                 class="text-white favorite"
                 *ngIf="!checkFavorite(song); else removeFavorite"
                 (click)="addToFavorite(song.id!)"
+                title="Add to favorite"
               >
                 <mat-icon>favorite</mat-icon>
               </button>
@@ -126,6 +127,7 @@
                   mat-mini-fab
                   class="remove-favorite"
                   (click)="removeFromFavorite(song.id!)"
+                  title="Remove from favorite"
                 >
                   <mat-icon>favorite</mat-icon>
                 </button>

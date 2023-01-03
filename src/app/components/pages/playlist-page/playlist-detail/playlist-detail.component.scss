@@ -61,8 +61,11 @@
 
 img {
   border-radius: 5px;
-  margin: 5px 0;
   object-fit: cover;
+}
+
+.image-playlist {
+  margin: 5px 0;
 }
 
 .middle {
@@ -82,4 +85,8 @@ img {
 
 .image-container:hover .middle {
   opacity: 1;
+} 
+
+.popular-item-content{
+  width: 100% !important;
 }

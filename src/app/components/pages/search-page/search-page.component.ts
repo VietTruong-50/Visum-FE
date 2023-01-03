@@ -61,7 +61,7 @@ export class SearchPageComponent implements OnInit {
     this.title[2] = this.route.snapshot.params['title'];
 
     this.songControllerService
-      .findSongsByTitle(this.title[2] ? this.title[2] : '', 0, 6)
+      .findSongsByTitle(this.title[2] ? this.title[2].trim() : '', 0, 6)
       .subscribe((rs) => {
         if (rs.errorCode == null) {
           // rs.result?.content?.forEach((item) => {
@@ -85,7 +85,7 @@ export class SearchPageComponent implements OnInit {
     this.title[1] = this.route.snapshot.params['title'];
 
     this.singerController
-      .findSingersByTitle(this.title[2] ? this.title[2] : '', 0, 4)
+      .findSingersByTitle(this.title[2] ? this.title[2].trim() : '', 0, 4)
       .subscribe((rs) => {
         this.singerData = rs.result?.content;
         console.log(this.singerData);
@@ -96,7 +96,7 @@ export class SearchPageComponent implements OnInit {
     this.title[1] = this.route.snapshot.params['title'];
 
     this.userController
-      .findPlaylistsByTitle(this.title[2] ? this.title[2] : '', 0, 4)
+      .findPlaylistsByTitle(this.title[2] ? this.title[2].trim() : '', 0, 4)
       .subscribe((rs) => {
         this.playlistData = rs.result?.content;
       });

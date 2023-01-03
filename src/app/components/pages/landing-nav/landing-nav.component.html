@@ -1,189 +1,174 @@
-<!-- <swiper
-  [loop]="true"
-  [autoHeight]="true"
-  [autoplay]="{ delay: 1000 }"
-  [pagination]="{ clickable: true }"
-  [navigation]="false"
-  style="width: 90%; height: 300px"
->
-  <ng-template data-swiper-autoplay="6000" swiperSlide>
-    <div style="width: 300px; height: 100%">
-      <img
-        src="../../../../../assets/images/artists/Stephen Sanchez.jpg"
-        alt=""
-      />
-    </div>
-  </ng-template>
-
-  <ng-template data-swiper-autoplay="10000" class="swiper-slide" swiperSlide>
-    <img
-      src="../../../../../assets/images/artists/Stephen Sanchez.jpg"
-      alt=""
-    />
-  </ng-template>
-
-  <ng-template data-swiper-autoplay="60000" swiperSlide> Slide 3 </ng-template>
-</swiper> -->
-<swiper [zoom]="true" [autoplay]="true">
-  <ng-template swiperSlide class="custom-class" [zoom]="true">
-    <div style="width: 80%; height: 350px">
-      <img
-        src="https://swiperjs.com/demos/images/nature-1.jpg"
-        style="width: 75%; max-height: 100%; object-fit: fill"
-      />
-    </div>
-  </ng-template>
-  <ng-template swiperSlide [zoom]="true">
-    <div style="width: 80%; height: 350px">
-      <img
-        src="https://swiperjs.com/demos/images/nature-1.jpg"
-        style="width: 75%; max-height: 100%; object-fit: fill"
-      />
-    </div>
-  </ng-template>
-  <ng-template swiperSlide [zoom]="true">
-    <div style="width: 80%; height: 350px">
-      <img
-        src="https://swiperjs.com/demos/images/nature-3.jpg"
-        style="width: 75%; max-height: 100%; object-fit: fill"
-      />
-    </div>
-  </ng-template>
-</swiper>
-<div fxLayout="column" fxLayoutAlign="center none">
-  <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
-  <div fxLayout="row" style="width: 90%" class="align-self-center" fxLayoutGap="15px">
-    <div
-      fxLayout="column"
-      class="recently-play-item"
-      fxLayoutGap="5px"
-      *ngFor="let song of songData"
-    >
-      <img
-        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
-        width="108px"
-        height="100px"
-        style="border-radius: 12px"
-      />
-      <div fxLayout="column">
-        <h5>{{ song.title }}</h5>
-        <small>{{ song.thumbnail }}</small>
-      </div>
-    </div>
-  </div> -->
-  <p class="content-title topic-title">MOST POPULAR</p>
-  <div
-    fxLayout="row"
-    fxLayoutAlign="start start"
-    style="width: 92%"
-    class="align-self-center"
-  >
-    <div fxLayout="row wrap" fxLayoutGap="24px grid">
-      <div fxLayout="row" *ngFor="let song of songData">
-        <div class="image-container" fxLayout="row">
+<div fxLayout="column">
+  <div style="margin-top: 30px">
+    <swiper [config]="config" (swiper)="setSwiperInstance($event)" >
+      <ng-template swiperSlide class="custom-class" [zoom]="true">
+        <div style="width: 80%; height: 350px">
           <img
-            width="80px"
-            height="80px"
-            class="popular-item-img"
-            src="../assets/images/song/{{
-              song.imageName != null ? song.imageName : 'songBg'
-            }}.jpg"
-            alt=""
+            src="../assets/images/edm_web_banner_by_stormclub_davc9t4-fullview.jpg"
+            style="width: 75%; max-height: 100%; object-fit: fill"
           />
-          <button mat-mini-fab class="middle" (click)="playSong(song)">
-            <mat-icon>play_arrow</mat-icon>
-          </button>
         </div>
+      </ng-template>
+      <ng-template swiperSlide [zoom]="true">
+        <div style="width: 80%; height: 350px">
+          <img
+            src="../assets/images/edm_web_banner_by_stormclub_davc9t4-fullview.jpg"
+            style="width: 75%; max-height: 100%; object-fit: fill"
+          />
+        </div>
+      </ng-template>
+      <ng-template swiperSlide [zoom]="true">
+        <div style="width: 80%; height: 350px">
+          <img
+            src="../assets/images/edm_web_banner_by_stormclub_davc9t4-fullview.jpg"
+            style="width: 75%; max-height: 100%; object-fit: fill"
+          />
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
 
+  <div fxLayout="column" fxLayoutAlign="center none">
+    <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
+    <div fxLayout="row" style="width: 90%" class="align-self-center" fxLayoutGap="15px">
+      <div
+        fxLayout="column"
+        class="recently-play-item"
+        fxLayoutGap="5px"
+        *ngFor="let song of songData"
+      >
+        <img
+          src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+          width="108px"
+          height="100px"
+          style="border-radius: 12px"
+        />
+        <div fxLayout="column">
+          <h5>{{ song.title }}</h5>
+          <small>{{ song.thumbnail }}</small>
+        </div>
+      </div>
+    </div> -->
+    <p class="content-title topic-title">MOST POPULAR</p>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      style="width: 92%"
+      class="align-self-center"
+    >
+      <div fxLayout="row wrap" fxLayoutGap="24px grid">
+        <div fxLayout="row" *ngFor="let song of songData">
+          <div class="image-container" fxLayout="row">
+            <img
+              width="80px"
+              height="80px"
+              class="popular-item-img"
+              src="../assets/images/song/{{
+                song.imageName != null ? song.imageName : 'songBg'
+              }}.jpg"
+              alt=""
+            />
+            <button mat-mini-fab class="middle" (click)="playSong(song)">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+          </div>
+
+          <div
+            fxLayout="row"
+            class="popular-item-content"
+            fxLayoutAlign="space-between center"
+          >
+            <div fxLayout="column" fxLayoutAlign="center start">
+              <strong>{{ song.songName }}</strong>
+              <small>{{ song.songAuthor?.name }}</small>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
+              <ng-container *ngIf="key == true">
+                <button
+                  mat-mini-fab
+                  class="text-white favorite"
+                  *ngIf="!checkFavorite(song); else removeFavorite"
+                  (click)="addToFavorite(song.id)"
+                  title="Add to favorite"
+                >
+                  <mat-icon>favorite</mat-icon>
+                </button>
+                <ng-template #removeFavorite>
+                  <button
+                    mat-mini-fab
+                    class="remove-favorite"
+                    (click)="removeFromFavorite(song.id)"
+                    title="Remove from favorite"
+                  >
+                    <mat-icon>favorite</mat-icon>
+                  </button>
+                </ng-template>
+              </ng-container>
+
+              <button
+                mat-mini-fab
+                class="text-white"
+                [matMenuTriggerFor]="menu"
+              >
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button
+                  mat-menu-item
+                  [matMenuTriggerFor]="playlist"
+                  *ngIf="playlistData"
+                >
+                  <mat-icon>add_circle_outline</mat-icon>
+                  <span>Add to playlist</span>
+                </button>
+                <button mat-menu-item (click)="openCommentDialog(song.id)">
+                  <mat-icon>comment</mat-icon>
+                  <span>Comment</span>
+                </button>
+              </mat-menu>
+
+              <mat-menu #playlist="matMenu">
+                <button
+                  mat-menu-item
+                  *ngFor="let playlist of playlistData"
+                  (click)="addToPlaylist(playlist.id, song.id)"
+                >
+                  {{ playlist.playlistName }}
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div fxLayout="row">
+        <img
+          width="80px"
+          height="80px"
+          class="popular-item-img"
+          src="../../../../../assets/images/artists/stephen-sanchez.jpg"
+          alt=""
+        />
         <div
           fxLayout="row"
           class="popular-item-content"
           fxLayoutAlign="space-between center"
         >
           <div fxLayout="column" fxLayoutAlign="center start">
-            <strong>{{ song.songName }}</strong>
-            <small>{{ song.songAuthor?.name }}</small>
+            <strong>Until I Found You</strong>
+            <small>This is some</small>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
-            <ng-container *ngIf="key == true">
-              <button
-                mat-mini-fab
-                class="text-white favorite"
-                *ngIf="!checkFavorite(song); else removeFavorite"
-                (click)="addToFavorite(song.id)"
-              >
-                <mat-icon>favorite</mat-icon>
-              </button>
-              <ng-template #removeFavorite>
-                <button
-                  mat-mini-fab
-                  class="remove-favorite"
-                  (click)="removeFromFavorite(song.id)"
-                >
-                  <mat-icon>favorite</mat-icon>
-                </button>
-              </ng-template>
-            </ng-container>
-
-            <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
-              <mat-icon>more_horiz</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button
-                mat-menu-item
-                [matMenuTriggerFor]="playlist"
-                *ngIf="playlistData"
-              >
-                <mat-icon>add_circle_outline</mat-icon>
-                <span>Add to playlist</span>
-              </button>
-              <button mat-menu-item (click)="openCommentDialog(song.id)">
-                <mat-icon>comment</mat-icon>
-                <span>Comment</span>
-              </button>
-            </mat-menu>
-
-            <mat-menu #playlist="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let playlist of playlistData"
-                (click)="addToPlaylist(playlist.id, song.id)"
-              >
-                {{ playlist.playlistName }}
-              </button>
-            </mat-menu>
-          </div>
+          <button
+            (click)="
+              playSong('UntilIFoundYou', 'UntilIFoundYou', 'Stephen Sanchez')
+            "
+            mat-mini-fab
+            class="text-white"
+          >
+            <mat-icon>play_arrow</mat-icon>
+          </button>
         </div>
-      </div>
+      </div> -->
     </div>
-
-    <!-- <div fxLayout="row">
-      <img
-        width="80px"
-        height="80px"
-        class="popular-item-img"
-        src="../../../../../assets/images/artists/stephen-sanchez.jpg"
-        alt=""
-      />
-      <div
-        fxLayout="row"
-        class="popular-item-content"
-        fxLayoutAlign="space-between center"
-      >
-        <div fxLayout="column" fxLayoutAlign="center start">
-          <strong>Until I Found You</strong>
-          <small>This is some</small>
-        </div>
-        <button
-          (click)="
-            playSong('UntilIFoundYou', 'UntilIFoundYou', 'Stephen Sanchez')
-          "
-          mat-mini-fab
-          class="text-white"
-        >
-          <mat-icon>play_arrow</mat-icon>
-        </button>
-      </div>
-    </div> -->
   </div>
 </div>

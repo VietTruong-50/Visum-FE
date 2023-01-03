@@ -169,7 +169,7 @@ paths:
     delete:
       tags:
       - user-controller
-      operationId: deleteSongFromPlaylist
+      operationId: deleteSongsFromPlaylist
       parameters:
       - name: id
         in: path
@@ -532,6 +532,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponseListPlaylistResponse'
+  /visum/playlists/{playlistId}/songs:
+    get:
+      tags:
+      - user-controller
+      operationId: findSongsNotInPlaylist
+      parameters:
+      - name: playlistId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageSong'
   /visum/favorite:
     get:
       tags:
@@ -634,6 +665,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponsePlaylist'
+  /visum/playlist/{id}/song/{songId}:
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteSongFromPlaylist
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: songId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseObject'
   /visum/comment/{id}:
     delete:
       tags:
@@ -1031,12 +1087,12 @@ components:
           format: int32
         sort:
           $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         first:
           type: boolean
         last:
           type: boolean
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
@@ -1137,12 +1193,12 @@ components:
           format: int32
         sort:
           $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         first:
           type: boolean
         last:
           type: boolean
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
@@ -1181,12 +1237,12 @@ components:
           format: int32
         sort:
           $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         first:
           type: boolean
         last:
           type: boolean
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
@@ -1265,12 +1321,12 @@ components:
           format: int32
         sort:
           $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         first:
           type: boolean
         last:
           type: boolean
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         numberOfElements:
           type: integer
           format: int32
