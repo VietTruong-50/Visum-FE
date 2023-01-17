@@ -54,11 +54,13 @@ export class SignUpComponent implements OnInit {
         })
         .subscribe((result) => {
           console.log(result.result);
-          if (result.errorCode == null) {
-            this.router.navigate(['/auth/log-in']);
-          } else {
-            alert('Error ' + result);
-          }
+          alert('Dang ky thanh cong')
+          this.dialogRef.close()
+          // if (result.errorCode == null) {
+            // this.router.navigate(['/auth/log-in']);
+          // } else {
+          //   alert('Error ' + result);
+          // }
         });
     }else{
       alert('Password and Cfpassword is incorrect');

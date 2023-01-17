@@ -38,7 +38,7 @@
                 {{ comment.createdAt }}
               </div>
             </div>
-            <div (click)="deleteComment(comment.id)" *ngIf="key == true">
+            <div (click)="deleteComment(comment.id)" *ngIf="key == true && checkUserComment(comment.userId)">
               <i class="icon fa-solid fa-trash"></i>
             </div>
           </div>
