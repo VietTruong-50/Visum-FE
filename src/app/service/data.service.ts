@@ -100,7 +100,7 @@ export class DataService {
   }
 
   play() {
-    if(this.loadCurrentSong != null) {
+    if (this.loadCurrentSong != null) {
       // this.streamObserver(
       //   '../assets/audio/' +
       //     (song
@@ -217,13 +217,8 @@ export class DataService {
   }
 
   loadCurrentSong() {
-    return (
-      JSON.parse(localStorage.getItem('currentSong')!) ?? {
-        songName: '',
-        duration: 0,
-        imageName: '',
-        singer: {},
-      }
+    return JSON.parse(
+      localStorage.getItem('currentSong') != 'undefined' ? localStorage.getItem('currentSong')! : '{}'
     );
   }
 
@@ -273,15 +268,6 @@ export class DataService {
 
   playPlaylist(isSuffle: boolean, list?: Song[]) {
     this._listSong = list!;
-
-    if (isSuffle == true) {
-      for (var i = this._listSong.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = this._listSong[i];
-        this._listSong[i] = this._listSong[j];
-        this._listSong[j] = temp;
-      }
-    }
 
     this.saveCurrentSong(this._listSong[0]);
     this.streamObserver(

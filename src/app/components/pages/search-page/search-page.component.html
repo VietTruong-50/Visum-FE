@@ -9,12 +9,20 @@
       style="width: 92%"
       class="align-self-center"
     >
-      <div fxLayout="row wrap" fxLayoutGap="24px grid">
+      <div
+        *ngIf="songData?.length == 0"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="w-100"
+      >
+        <span>Không có dữ liệu</span>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="15px grid">
         <div fxLayout="row" *ngFor="let song of songData">
           <div class="image-container" fxLayout="row">
             <img
-              width="80px"
-              height="80px"
+              width="71px"
+              height="75px"
               class="popular-item-img"
               src="../assets/images/song/{{
                 song.imageName != null ? song.imageName : 'songBg'
@@ -104,6 +112,14 @@
       style="width: 92%"
       class="align-self-center"
     >
+      <div
+        *ngIf="singerData?.length == 0"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="w-100"
+      >
+        <span>Không có dữ liệu</span>
+      </div>
       <div fxLayout="row wrap" fxLayoutGap="24px grid">
         <div
           fxLayout="column"
@@ -137,6 +153,14 @@
       style="width: 98%"
       fxLayoutGap="20px grid"
     >
+      <div
+        *ngIf="playlistData?.length == 0"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="w-100"
+      >
+        <span>Không có dữ liệu</span>
+      </div>
       <div class="column is-fullhd-20" *ngFor="let playlist of playlistData">
         <a>
           <div class="zm-card-image">

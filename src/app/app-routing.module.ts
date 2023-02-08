@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LogInComponent } from './components/auth/log-in-component/log-in.component';
 import { SignUpComponent } from './components/auth/sign-up-component/sign-up.component';
+import { AlbumDetailComponent } from './components/pages/artist-detail/album-detail/album-detail.component';
 import { ArtistDetailComponent } from './components/pages/artist-detail/artist-detail.component';
 import { FavoritePageComponent } from './components/pages/favorite-page/favorite-page.component';
 import { GenrePageComponent } from './components/pages/genre-page/genre-page.component';
@@ -53,6 +54,10 @@ routes = [
   {
     path: 'artist-details/:id',
     component: ArtistDetailComponent,
+  },
+  {
+    path: 'album/:id',
+    component: AlbumDetailComponent,
   },
   {
     path: 'trending',

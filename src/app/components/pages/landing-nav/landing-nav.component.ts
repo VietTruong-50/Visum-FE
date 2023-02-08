@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
 import {
+  AlbumControllerService,
   ApiResponsePageSong,
+  CategoryControllerService,
   Song,
   SongControllerService,
   UserControllerService,
@@ -15,6 +17,7 @@ import { GlobalConstants } from '../../shared/GlobalConstants';
 import { CommentPageDialogComponent } from '../comment-page-dialog/comment-page-dialog.component';
 import Swiper, { SwiperOptions } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
+import { CloudService } from 'src/app/service/cloud.service';
 
 @Component({
   selector: 'app-landing-nav',
@@ -25,6 +28,8 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
   songData: any;
   playlistData: any;
   key: boolean;
+  albumsData: any;
+  categoryData: any;
 
   @ViewChild('swiperSlideShow') swiperSlideShow!: SwiperComponent;
   config: SwiperOptions = {};
@@ -34,15 +39,14 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
       autoHeight: true,
       allowTouchMove: true,
       navigation: false,
-      loop: true
+      loop: true,
     };
-
   }
 
   setSwiperInstance(swiper: Swiper) {
     setInterval(() => {
       swiper.slideNext();
-    }, 8000);
+    }, 5000);
   }
 
   constructor(
@@ -52,14 +56,19 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
     private userController: UserControllerService,
     private dialog: MatDialog,
     private cookieService: CookieService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private albumController: AlbumControllerService,
+    private cloudService: CloudService,
+    private categoryController: CategoryControllerService
   ) {
     this.key = this.cookieService.check(GlobalConstants.authToken);
   }
 
   ngOnInit(): void {
-    this.getSongData();
+    // this.getSongData();
     this.getAllPlaylist();
+    this.getAlbumData();
+    this.getAllCategory();
   }
 
   async getSongData() {
@@ -125,6 +134,25 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
     this.userController.deleteFavoriteSong(songId).subscribe((rs) => {
       this.favoriteService.getFavoriteData();
       console.log('Remove success');
+    });
+  }
+
+  getAlbumData() {
+    this.albumController.getAllAlbum(0, 20, 'name').subscribe((rs) => {
+      this.albumsData = rs.result?.content;
+    });
+  }
+
+  playAlbumPlaylist(list: any) {
+    this.cloudService.setList(list);
+    this.cloudService.getData().subscribe((rs) => {
+      this.audioService.playPlaylist(false, rs);
+    });
+  }
+
+  getAllCategory() {
+    this.categoryController.getAllSongByCategory().subscribe((rs) => {
+      this.categoryData = rs.result;
     });
   }
 }

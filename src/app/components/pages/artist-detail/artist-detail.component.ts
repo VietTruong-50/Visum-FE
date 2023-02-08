@@ -10,6 +10,7 @@ import {
   SingerDTO,
   UserControllerService,
   Song,
+  AlbumControllerService,
 } from 'src/app/api-svc';
 import { CloudService } from 'src/app/service/cloud.service';
 import { DataService } from 'src/app/service/data.service';
@@ -25,6 +26,7 @@ import { CommentPageDialogComponent } from '../comment-page-dialog/comment-page-
 export class ArtistDetailComponent implements OnInit {
   singerData!: SingerDTO;
   playlistData: any;
+  albumsData: any;
   key: boolean;
 
   constructor(
@@ -36,24 +38,27 @@ export class ArtistDetailComponent implements OnInit {
     private dialog: MatDialog,
     private cookieService: CookieService,
     private cloudService: CloudService,
-    private favoriteService: FavoriteService
-
+    private favoriteService: FavoriteService,
+    private albumController: AlbumControllerService
   ) {
     this.key = this.cookieService.check(GlobalConstants.authToken);
+    this.route.paramMap.subscribe((res) => {
+      console.log(res.get('id'));
+
+      this.getSingerData(Number(res.get('id')));
+    });
   }
 
   ngOnInit(): void {
-    this.getSingerData();
     this.getAllPlaylist();
+    this.getSingerAlbums();
   }
 
-  getSingerData() {
-    this.singerController
-      .findSingerById(this.route.snapshot.params['id'])
-      .subscribe((rs) => {
-        this.singerData = rs.result!;
-        this.cloudService.setList(this.singerData.songList);
-      });
+  getSingerData(id?: number) {
+    this.singerController.findSingerById(id!).subscribe((rs) => {
+      this.singerData = rs.result!;
+      this.cloudService.setList(this.singerData.songList);
+    });
   }
 
   playSong(song: Song) {
@@ -82,6 +87,8 @@ export class ArtistDetailComponent implements OnInit {
   }
 
   playPlaylist(isShuffle: boolean) {
+    this.cloudService.setList(this.singerData.songList);
+
     this.cloudService
       .getData()
       .subscribe((rs) => this.audioService.playPlaylist(isShuffle, rs));
@@ -102,6 +109,22 @@ export class ArtistDetailComponent implements OnInit {
     this.userController.deleteFavoriteSong(songId).subscribe((rs) => {
       this.favoriteService.getFavoriteData();
       console.log('Remove success');
+    });
+  }
+
+  getSingerAlbums() {
+    this.albumController
+      .getAllAlbumBySinger(this.route.snapshot.params['id'], 0, 20, 'name')
+      .subscribe((rs) => {
+        this.albumsData = rs.result?.content;
+        console.log(this.albumsData);
+      });
+  }
+
+  playAlbumPlaylist(list: any) {
+    this.cloudService.setList(list);
+    this.cloudService.getData().subscribe((rs) => {
+      this.audioService.playPlaylist(false, rs);
     });
   }
 }

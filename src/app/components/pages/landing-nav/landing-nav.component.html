@@ -1,6 +1,6 @@
 <div fxLayout="column">
   <div style="margin-top: 30px">
-    <swiper [config]="config" (swiper)="setSwiperInstance($event)" >
+    <swiper [config]="config" (swiper)="setSwiperInstance($event)">
       <ng-template swiperSlide class="custom-class" [zoom]="true">
         <div style="width: 80%; height: 350px">
           <img
@@ -30,37 +30,20 @@
 
   <div fxLayout="column" fxLayoutAlign="center none">
     <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
-    <div fxLayout="row" style="width: 90%" class="align-self-center" fxLayoutGap="15px">
-      <div
-        fxLayout="column"
-        class="recently-play-item"
-        fxLayoutGap="5px"
-        *ngFor="let song of songData"
-      >
-        <img
-          src="../../../../../assets/images/artists/stephen-sanchez.jpg"
-          width="108px"
-          height="100px"
-          style="border-radius: 12px"
-        />
-        <div fxLayout="column">
-          <h5>{{ song.title }}</h5>
-          <small>{{ song.thumbnail }}</small>
-        </div>
-      </div>
-    </div> -->
-    <p class="content-title topic-title">MOST POPULAR</p>
-    <div
+
+    <p class="content-title topic-title">MOST POPULAR</p> -->
+
+    <!--<div
       fxLayout="row"
       fxLayoutAlign="start start"
       style="width: 92%"
       class="align-self-center"
     >
-      <div fxLayout="row wrap" fxLayoutGap="24px grid">
+      <div fxLayout="row wrap" fxLayoutGap="15px grid">
         <div fxLayout="row" *ngFor="let song of songData">
           <div class="image-container" fxLayout="row">
             <img
-              width="80px"
+              width="71px"
               height="80px"
               class="popular-item-img"
               src="../assets/images/song/{{
@@ -141,7 +124,8 @@
         </div>
       </div>
 
-      <!-- <div fxLayout="row">
+      ///////////////////
+      <div fxLayout="row">
         <img
           width="80px"
           height="80px"
@@ -168,7 +152,162 @@
             <mat-icon>play_arrow</mat-icon>
           </button>
         </div>
-      </div> -->
+      </div> 
+    </div> -->
+    <span *ngFor="let cate of categoryData">
+      <p class="content-title topic-title" *ngIf="cate?.songs.length > 0">
+        {{ cate?.category.categoryName | uppercase}}
+      </p>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start start"
+        style="width: 96%; margin-left: 25px;"
+        class="align-self-center"
+      >
+        <div fxLayout="row wrap" fxLayoutGap="15px grid">
+          <span *ngFor="let song of cate?.songs"
+            ><div fxLayout="row">
+              <div class="image-container" fxLayout="row">
+                <img
+                  width="71px"
+                  height="80px"
+                  class="popular-item-img"
+                  src="../assets/images/song/{{
+                    song.imageName != null ? song.imageName : 'songBg'
+                  }}.jpg"
+                  alt=""
+                />
+                <button mat-mini-fab class="middle" (click)="playSong(song)">
+                  <mat-icon>play_arrow</mat-icon>
+                </button>
+              </div>
+
+              <div
+                fxLayout="row"
+                class="popular-item-content"
+                fxLayoutAlign="space-between center"
+              >
+                <div fxLayout="column" fxLayoutAlign="center start">
+                  <strong>{{ song.songName }}</strong>
+                  <small>{{ song.songAuthor?.name }}</small>
+                </div>
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="space-between"
+                  fxLayoutGap="5px"
+                >
+                  <ng-container *ngIf="key == true">
+                    <button
+                      mat-mini-fab
+                      class="text-white favorite"
+                      *ngIf="!checkFavorite(song); else removeFavorite"
+                      (click)="addToFavorite(song.id)"
+                      title="Add to favorite"
+                    >
+                      <mat-icon>favorite</mat-icon>
+                    </button>
+                    <ng-template #removeFavorite>
+                      <button
+                        mat-mini-fab
+                        class="remove-favorite"
+                        (click)="removeFromFavorite(song.id)"
+                        title="Remove from favorite"
+                      >
+                        <mat-icon>favorite</mat-icon>
+                      </button>
+                    </ng-template>
+                  </ng-container>
+
+                  <button
+                    mat-mini-fab
+                    class="text-white"
+                    [matMenuTriggerFor]="menu"
+                  >
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button
+                      mat-menu-item
+                      [matMenuTriggerFor]="playlist"
+                      *ngIf="playlistData"
+                    >
+                      <mat-icon>add_circle_outline</mat-icon>
+                      <span>Add to playlist</span>
+                    </button>
+                    <button mat-menu-item (click)="openCommentDialog(song.id)">
+                      <mat-icon>comment</mat-icon>
+                      <span>Comment</span>
+                    </button>
+                  </mat-menu>
+
+                  <mat-menu #playlist="matMenu">
+                    <button
+                      mat-menu-item
+                      *ngFor="let playlist of playlistData"
+                      (click)="addToPlaylist(playlist.id, song.id)"
+                    >
+                      {{ playlist.playlistName }}
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+            </div></span
+          >
+        </div>
+      </div></span
+    >
+
+    <p class="content-title topic-title">ALBUM</p>
+    <div fxLayout="row" fxLayoutAlign="none center">
+      <app-gaps [width]="20"></app-gaps>
+
+      <div
+        class="media playlist-header sticky"
+        *ngFor="let album of albumsData"
+      >
+        <div class="media-left">
+          <div class="zm-card header-thumbnail">
+            <div class="zm-card-image">
+              <div
+                fxlayout="row"
+                fxlayoutalign="center center"
+                fxlayoutgap="10px"
+                class="zm-box zm-actions playlist-actions"
+                style="
+                  flex-direction: row;
+                  box-sizing: border-box;
+                  display: flex;
+                  place-content: center;
+                  align-items: center;
+                "
+              >
+                <button
+                  class="zm-btn action-play button"
+                  style="margin-right: 10px"
+                  (click)="playAlbumPlaylist(album?.songList)"
+                >
+                  <i class="icon action-play fa-solid fa-play"></i>
+                </button>
+              </div>
+              <div class="z-thumb">
+                <figure class="image is-48x48">
+                  <img
+                    src="../assets/images/album/{{
+                      album?.imageName != null ? album?.imageName : 'songBg'
+                    }}.jpg"
+                    alt=""
+                  />
+                </figure>
+                <div class="opacity"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5 [routerLink]="['/album', album?.id]">{{ album?.name }}</h5>
+          <p>{{ album?.singer.singerName }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

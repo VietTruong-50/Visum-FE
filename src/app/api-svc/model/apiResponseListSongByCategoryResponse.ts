@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Song } from './song';
+import { SongByCategoryResponse } from './songByCategoryResponse';
 
 
-export interface SingerDTO { 
-    singerName?: string;
-    description?: string;
-    followers?: number;
-    songList?: Array<Song>;
+export interface ApiResponseListSongByCategoryResponse { 
+    result?: Array<SongByCategoryResponse>;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 import { PageableObject } from './pageableObject';
-import { Song } from './song';
+import { Album } from './album';
 import { Sort } from './sort';
 
 
-export interface PageSong { 
+export interface PageAlbum { 
     totalPages?: number;
     totalElements?: number;
     size?: number;
-    content?: Array<Song>;
+    content?: Array<Album>;
     number?: number;
     sort?: Sort;
     first?: boolean;

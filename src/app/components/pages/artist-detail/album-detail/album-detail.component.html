@@ -1,0 +1,187 @@
+<div fxLayout="column" fxLayoutAlign="center none" style="margin-top: 22px">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start start"
+    style="width: 94%"
+    class="align-self-center"
+  >
+    <div fxLayout="column" fxFlex="30">
+      <div class="media playlist-header sticky">
+        <div class="media-left">
+          <div class="zm-card header-thumbnail">
+            <div class="zm-card-image">
+              <div class="z-thumb">
+                <figure class="image is-48x48">
+                  <img
+                    src="../assets/images/album/{{
+                      albumData?.imageName != null
+                        ? albumData?.imageName
+                        : 'songBg'
+                    }}.jpg"
+                    alt=""
+                  />
+                </figure>
+                <div class="opacity"></div>
+              </div>
+              <div class="zm-actions-container">
+                <div
+                  class="zm-box zm-actions playlist-actions"
+                  fxLayout="row"
+                  fxLayoutAlign="center"
+                >
+                  <button
+                    (click)="playPlaylist(false)"
+                    class="zm-btn action-play button"
+                  >
+                    <i class="fa-solid fa-play icon"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="media-content"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+        >
+          <div
+            class="content-top"
+            fxLayoutAlign="none center"
+            fxLayout="column"
+            fxLayoutGap="10px"
+          >
+            <div
+              class="user-playlist-title"
+              fxLayout="row"
+              fxLayoutAlign="center center"
+            >
+              <h3 class="title" fxLayout="row">{{albumData?.name}}</h3>
+            </div>
+          </div>
+          <!-- <div
+            class="level actions"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="10px"
+          >
+            <button
+              class="zm-btn btn-play-all is-outlined active is-medium is-upper button"
+              fxLayout="row"
+              fxLayoutGap="5px"
+            >
+              <i class="fa-solid fa-play icon"></i><span>Phát ngẫu nhiên</span>
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="70" fxLayoutGap="50px">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 w-100"
+        matSort
+        #matSort="matSort"
+      >
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef>
+            <!-- <button class="zm-btn button" [matMenuTriggerFor]="menu">
+              <i class="fa-solid fa-arrow-up-z-a"></i>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                (click)="sortBy('name', 'ASC')"
+                *ngIf="sort == 'DSC'"
+              >
+                <span>Sort by name (A-z)</span>
+              </button>
+              <button
+                mat-menu-item
+                (click)="sortBy('name', 'DSC')"
+                *ngIf="sort == 'ASC'"
+              >
+                <span>Sort by name (z-A)</span>
+              </button>
+              <button mat-menu-item (click)="sortBy('duration', 'DSC')">
+                <span>Sort by duration</span>
+              </button>
+            </mat-menu> -->
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <span class="number is-top-{{ i }} is-center mar-r-5">
+              {{
+                dataSource.filteredData.indexOf(element) +
+                  1 +
+                  pageIndex * pageSize
+              }}</span
+            >
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Bài hát</th>
+          <td mat-cell *matCellDef="let element">
+            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+              <div class="image-container image-playlist" fxLayout="row">
+                <img
+                  src="../assets/images/song/{{
+                    element.imageName != null ? element.imageName : 'songBg'
+                  }}.jpg"
+                  width="50px"
+                  height="50px"
+                  alt=""
+                />
+                <button
+                  mat-mini-fab
+                  class="middle"
+                  (click)="playPlaylist(false)"
+                >
+                  <mat-icon>play_arrow</mat-icon>
+                </button>
+              </div>
+              <div fxLayout="column" fxLayoutGap="5px">
+                <span> {{ element.songName }}</span>
+                <span> {{ element.singer.singerName }}</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Album Column -->
+        <ng-container matColumnDef="album">
+          <th mat-header-cell *matHeaderCellDef>Album</th>
+          <td mat-cell *matCellDef="let element">{{ element.songName }}</td>
+        </ng-container>
+
+        <!-- Duration Column -->
+        <ng-container matColumnDef="duration">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Thời gian</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.duration | timeFormat }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openCommentDialog(element.id)">
+                <mat-icon>comment</mat-icon>
+                <span>Comment</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+</div>

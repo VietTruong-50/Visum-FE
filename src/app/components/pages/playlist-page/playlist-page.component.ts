@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserControllerService } from 'src/app/api-svc';
 import { CloudService } from 'src/app/service/cloud.service';
+import { DataService } from 'src/app/service/data.service';
 import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
 
 @Component({
@@ -17,7 +18,8 @@ export class PlaylistPageComponent implements OnInit {
     private dialog: MatDialog,
     private userController: UserControllerService,
     private router: Router,
-    private cloudService: CloudService
+    private cloudService: CloudService,
+    private audioService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +57,29 @@ export class PlaylistPageComponent implements OnInit {
     this.router.navigate(['playlist-details', playlistId])
   }
 
-  playPlaylist(){
+  playPlaylist(playlistid: number){
+    this.getPlaylistData(playlistid)
 
+    this.cloudService.getData().subscribe((rs) => {
+      this.audioService.playPlaylist(false, rs);
+    });
   }
+
+  playlistDetails: any;
+
+  getPlaylistData(playlistId: number, orderBy?: string, sortType?: string) {
+    this.userController
+      .getPlaylistById(
+        playlistId,
+        orderBy ? orderBy : 'ASC',
+        sortType ? sortType : 'name'
+      )
+      .subscribe((rs) => {
+        this.playlistDetails = rs.result!;
+        console.log(this.playlistDetails);
+         
+        this.cloudService.setList(this.playlistDetails.songList!);
+      });
+  }
+
 }

@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Comment } from './comment';
 import { Composer } from './composer';
 import { Singer } from './singer';
 import { SubCategory } from './subCategory';
@@ -25,6 +24,5 @@ export interface Song {
     singer?: Singer;
     composer?: Composer;
     subCategory?: SubCategory;
-    comments?: Array<Comment>;
 }
 

@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
+import { AlbumControllerService } from './api/albumController.service';
 import { AuthControllerService } from './api/authController.service';
 import { CategoryControllerService } from './api/categoryController.service';
 import { SingerControllerService } from './api/singerController.service';

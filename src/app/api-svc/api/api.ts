@@ -1,3 +1,5 @@
+export * from './albumController.service';
+import { AlbumControllerService } from './albumController.service';
 export * from './authController.service';
 import { AuthControllerService } from './authController.service';
 export * from './categoryController.service';
@@ -8,4 +10,4 @@ export * from './songController.service';
 import { SongControllerService } from './songController.service';
 export * from './userController.service';
 import { UserControllerService } from './userController.service';
-export const APIS = [AuthControllerService, CategoryControllerService, SingerControllerService, SongControllerService, UserControllerService];
+export const APIS = [AlbumControllerService, AuthControllerService, CategoryControllerService, SingerControllerService, SongControllerService, UserControllerService];

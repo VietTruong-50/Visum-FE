@@ -12,7 +12,7 @@
         {{ getCurrentSong != null ? getCurrentSong.songName : "..." }}
       </p>
       <small>{{
-        getCurrentSong != null ? getCurrentSong.singer.singerName : "..."
+        getCurrentSong != null ? getCurrentSong.singer?.singerName : "..."
       }}</small>
     </div>
 

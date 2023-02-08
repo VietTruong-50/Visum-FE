@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationStart,
+  Router,
+} from '@angular/router';
+import { filter, map } from 'rxjs';
 import { SingerControllerService } from 'src/app/api-svc';
 
 @Component({
@@ -10,29 +16,34 @@ import { SingerControllerService } from 'src/app/api-svc';
 export class RightSideNavComponent implements OnInit {
   title: string = '';
   singerData: any;
+  singerId: number = 0;
 
-  constructor(private router: Router, private singerController: SingerControllerService) {}
+  constructor(
+    private router: Router,
+    private singerController: SingerControllerService
+  ) {}
 
   ngOnInit(): void {
-    this.getTopSingerData()
+    this.getTopSingerData();
   }
 
   search(title: string) {
     this.router.navigate(['/search', title]);
   }
 
-  getTopSingerData(){
-    this.singerController.getTopArtists().subscribe(rs => {
-      this.singerData = rs.result
-      console.log(this.singerData)
-    })
+  getTopSingerData() {
+    this.singerController.getTopArtists().subscribe((rs) => {
+      this.singerData = rs.result;
+      console.log(this.singerData);
+    });
   }
 
   renderTo(id: number, type: string) {
     if (type == 'playlist') {
       this.router.navigate(['playlist-details', id]);
     } else {
-      this.router.navigate(['artist-details', id]);
+      this.singerId = id;
+      this.router.navigate(['artist-details', this.singerId]);
     }
   }
 }

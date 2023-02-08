@@ -11,6 +11,10 @@
   line-height: 300px;
 }
 
+.topic-title{
+  font-size: 22px;
+}
+
 .image-container {
   position: relative;
 }
@@ -22,7 +26,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
   text-align: center;
 }
 
@@ -32,4 +35,31 @@
 
 .image-container:hover .middle {
   opacity: 1;
+}
+
+.playlist-header {
+  display: block;
+  width: 215px;
+  float: left;
+  padding: 0 0 30px;
+}
+
+.artist-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(1px);
+}
+
+.play-btn{
+  box-shadow: 1px 3px rgb(0 0 0 / 52%);
+  transition: 0.5ms ease;
+}
+
+.play-btn:hover{
+  background-color: crimson;
+}
+
+.play-btn:active{
+  box-shadow: none;
 }

@@ -8,8 +8,7 @@
     <div class="w-100 artist-image-bg" style="height: 300px">
       <img
         src="https://photo-zmp3.zmdcdn.me/album_default.png"
-        style="width: 100%; height: 100%; object-fit: cover; filter: blur(3px);"
-        alt=""
+        class="artist-avatar-img"
       />
     </div>
     <div
@@ -51,19 +50,18 @@
               <span>{{ singerData != null ? singerData.singerName : "" }}</span>
             </span>
           </h3>
-          <button mat-raised-button (click)="playPlaylist(false)">
+          <button mat-raised-button (click)="playPlaylist(false)" class="play-btn">
             <i class="fa-solid fa-play icon"></i>
           </button>
         </div>
         <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="none center">
-          <span class="follow" style="color: #6c757d">331.820 người quan tâm</span
+          <span class="follow" style="color: #6c757d"
+            >331.820 người quan tâm</span
           ><button
             class="zm-btn is-outlined active follow-btn button"
             fxLayout="row"
             fxLayoutGap="5px"
-            style="color: crimson;
-            border: 1px solid;
-            padding: 5px;"
+            style="color: crimson; border: 1px solid; padding: 5px"
           >
             <i class="fa-solid fa-heart-circle-plus"></i><span>Quan tâm</span>
           </button>
@@ -82,9 +80,9 @@
     <div
       fxLayout="row wrap"
       fxLayoutAlign="center center"
-      style="width: 98%"
       fxLayoutGap="20px grid"
       *ngIf="singerData != null"
+      class="w-100"
     >
       <div fxLayout="row" *ngFor="let song of singerData.songList">
         <div class="image-container" fxLayout="row">
@@ -137,7 +135,11 @@
               <mat-icon>more_horiz</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item [matMenuTriggerFor]="playlist" *ngIf="playlistData">
+              <button
+                mat-menu-item
+                [matMenuTriggerFor]="playlist"
+                *ngIf="playlistData"
+              >
                 <mat-icon>add_circle_outline</mat-icon>
                 <span>Add to playlist</span>
               </button>
@@ -157,6 +159,60 @@
               </button>
             </mat-menu>
           </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="albumsData?.length > 0">
+      <p class="content-title topic-title" style="font-size: 26px">Album</p>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="none center">
+      <app-gaps [width]="20"></app-gaps>
+
+      <div
+        class="media playlist-header sticky"
+        *ngFor="let album of albumsData"
+      >
+        <div class="media-left">
+          <div class="zm-card header-thumbnail">
+            <div class="zm-card-image">
+              <div
+                fxlayout="row"
+                fxlayoutalign="center center"
+                fxlayoutgap="10px"
+                class="zm-box zm-actions playlist-actions"
+                style="
+                  flex-direction: row;
+                  box-sizing: border-box;
+                  display: flex;
+                  place-content: center;
+                  align-items: center;
+                "
+              >
+                <button
+                  class="zm-btn action-play button"
+                  style="margin-right: 10px"
+                  (click)="playAlbumPlaylist(album?.songList)"
+                >
+                  <i class="icon action-play fa-solid fa-play"></i>
+                </button>
+              </div>
+              <div class="z-thumb">
+                <figure class="image is-48x48">
+                  <img
+                    src="../assets/images/album/{{
+                      album?.imageName != null ? album?.imageName : 'songBg'
+                    }}.jpg"
+                    alt=""
+                  />
+                </figure>
+                <div class="opacity"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5 [routerLink]="['/album', album?.id]">{{ album?.name }}</h5>
+          <p>{{ album?.singer.singerName }}</p>
         </div>
       </div>
     </div>

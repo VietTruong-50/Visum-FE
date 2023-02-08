@@ -57,6 +57,7 @@ import { PlaylistDialogComponent } from './components/pages/playlist-page/playli
 import { MatSortModule } from '@angular/material/sort';
 import { TimeFormatPipe } from './components/pipes/time-format.pipe';
 import { CommentPageDialogComponent } from './components/pages/comment-page-dialog/comment-page-dialog.component';
+import { AlbumDetailComponent } from './components/pages/artist-detail/album-detail/album-detail.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { CommentPageDialogComponent } from './components/pages/comment-page-dial
     PlaylistDialogComponent,
     TimeFormatPipe,
     CommentPageDialogComponent,
+    AlbumDetailComponent,
   ],
   imports: [
     BrowserModule,

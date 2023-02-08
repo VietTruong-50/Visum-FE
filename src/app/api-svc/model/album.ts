@@ -9,22 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PageableObject } from './pageableObject';
+import { Singer } from './singer';
 import { Song } from './song';
-import { Sort } from './sort';
 
 
-export interface PageSong { 
-    totalPages?: number;
-    totalElements?: number;
-    size?: number;
-    content?: Array<Song>;
-    number?: number;
-    sort?: Sort;
-    first?: boolean;
-    last?: boolean;
-    numberOfElements?: number;
-    pageable?: PageableObject;
-    empty?: boolean;
+export interface Album { 
+    id?: number;
+    name?: string;
+    imageName?: string;
+    imageByte?: Array<string>;
+    singer?: Singer;
+    songList?: Array<Song>;
 }
 

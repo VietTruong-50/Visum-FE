@@ -70,7 +70,7 @@ export class PlaylistDetailComponent implements OnInit {
       )
       .subscribe((rs) => {
         this.playlistData = rs.result!;
-        this.cloudService.setList(this.playlistData.songList!);
+
         this.dataSource = new MatTableDataSource<Song>(
           this.playlistData.songList
         );
@@ -99,7 +99,19 @@ export class PlaylistDetailComponent implements OnInit {
   }
 
   playPlaylist(isShuffle: boolean) {
+    if (this.playlistData.songList?.length! > 0) {
+      this.cloudService.setList(this.playlistData.songList!);
+    }
     this.cloudService.getData().subscribe((rs) => {
+      if (isShuffle == true) {
+        for (var i = rs.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = rs[i];
+          rs[i] = rs[j];
+          rs[j] = temp;
+        }
+      }
+      this.dataSource = new MatTableDataSource<Song>(rs);
       this.audioService.playPlaylist(isShuffle, rs);
     });
   }
@@ -154,7 +166,7 @@ export class PlaylistDetailComponent implements OnInit {
   }
 
   deleteSongFromPlaylist(songId: number) {
-    console.log(songId)
+    console.log(songId);
     this.userController
       .deleteSongFromPlaylist(this.route.snapshot.params['playlistId'], songId)
       .subscribe((rs) => {

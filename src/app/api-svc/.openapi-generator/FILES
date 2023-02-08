@@ -1,6 +1,7 @@
 .gitignore
 README.md
 api.module.ts
+api/albumController.service.ts
 api/api.ts
 api/authController.service.ts
 api/categoryController.service.ts
@@ -11,14 +12,18 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/album.ts
+model/apiResponseAlbum.ts
 model/apiResponseComment.ts
 model/apiResponseJwtResponse.ts
 model/apiResponseListCategory.ts
 model/apiResponseListPlaylistResponse.ts
 model/apiResponseListSinger.ts
 model/apiResponseListSong.ts
+model/apiResponseListSongByCategoryResponse.ts
 model/apiResponseObject.ts
 model/apiResponseOptionalSong.ts
+model/apiResponsePageAlbum.ts
 model/apiResponsePageCommentDTO.ts
 model/apiResponsePagePlaylistResponse.ts
 model/apiResponsePageSinger.ts
@@ -35,6 +40,7 @@ model/composer.ts
 model/jwtResponse.ts
 model/loginRequest.ts
 model/models.ts
+model/pageAlbum.ts
 model/pageCommentDTO.ts
 model/pagePlaylistResponse.ts
 model/pageSinger.ts
@@ -47,6 +53,7 @@ model/role.ts
 model/singer.ts
 model/singerDTO.ts
 model/song.ts
+model/songByCategoryResponse.ts
 model/songDTO.ts
 model/sort.ts
 model/subCategory.ts

@@ -15,6 +15,6 @@ import { SubCategory } from './subCategory';
 export interface Category { 
     id?: number;
     categoryName?: string;
-    subCategories?: Set<SubCategory>;
+    subCategories?: Array<SubCategory>;
 }
 
