@@ -94,6 +94,7 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
   }
 
   playSong(song: Song) {
+    this.songControllerService.increaseSongView(song.id!).subscribe((rs) => {});
     this.audioService.saveCurrentSong(song);
     this.audioService.playStream(song, true);
   }

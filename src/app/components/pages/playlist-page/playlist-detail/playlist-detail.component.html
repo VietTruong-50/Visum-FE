@@ -117,7 +117,7 @@
             </mat-menu>
           </th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <span class="number is-top-{{ i }} is-center mar-r-5">
+            <span class="number is-top-{{ i + 1 }} is-center mar-r-5">
               {{
                 dataSource.filteredData.indexOf(element) +
                   1 +

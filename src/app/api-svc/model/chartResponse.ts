@@ -12,11 +12,10 @@
 import { Song } from './song';
 
 
-export interface Trending { 
-    id?: number;
-    week?: number;
-    day?: number;
-    viewsDay?: number;
-    song?: Song;
+export interface ChartResponse { 
+    top1?: Array<number>;
+    top2?: Array<number>;
+    top3?: Array<number>;
+    songs?: Array<Song>;
 }
 

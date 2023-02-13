@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
@@ -9,6 +10,8 @@ import {
   UserControllerService,
 } from 'src/app/api-svc';
 import { DataService } from 'src/app/service/data.service';
+import { FavoriteService } from 'src/app/service/favorite.service';
+import { CommentPageDialogComponent } from '../../comment-page-dialog/comment-page-dialog.component';
 
 interface MusicData {
   position: number;
@@ -37,16 +40,16 @@ const ELEMENT_DATA: MusicData[] = [
   styleUrls: ['./music-favorite.component.scss'],
 })
 export class MusicFavoriteComponent implements OnInit {
-
   listSong: BehaviorSubject<Song[]> = new BehaviorSubject<Song[]>([]);
 
-  displayedColumns: string[] = ['position', 'name', 'album', 'duration'];
+  displayedColumns: string[] = ['position', 'name', 'album', 'duration', 'action'];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any[]>();
 
   constructor(
-    private userController: UserControllerService,
-    private audioService: DataService
+    private audioService: DataService,
+    private favoriteService: FavoriteService,
+    private dialog: MatDialog
   ) {
     this.getFavoriteData();
   }
@@ -54,13 +57,10 @@ export class MusicFavoriteComponent implements OnInit {
   ngOnInit(): void {}
 
   getFavoriteData() {
-    this.userController
-      .getListFavorites(0, 4, 'views')
-      .subscribe((result) => {
-        let data = result.result?.content ? result.result?.content : [];
-        this.listSong.next(data!);
-        this.dataSource = new MatTableDataSource<SongDTO>(data);
-      });
+    this.favoriteService.favoriteSongs.subscribe((rs) => {
+      this.listSong.next(rs!);
+      this.dataSource = new MatTableDataSource<SongDTO>(rs);
+    });
   }
 
   playPlaylist() {
@@ -73,5 +73,12 @@ export class MusicFavoriteComponent implements OnInit {
 
   sortData($event: any) {
     throw new Error('Method not implemented.');
+  }
+
+  openCommentDialog(songId: number) {
+    this.dialog.open(CommentPageDialogComponent, {
+      width: '30vw',
+      data: songId,
+    });
   }
 }

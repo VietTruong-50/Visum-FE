@@ -57,7 +57,6 @@ export class ArtistDetailComponent implements OnInit {
   getSingerData(id?: number) {
     this.singerController.findSingerById(id!).subscribe((rs) => {
       this.singerData = rs.result!;
-      this.cloudService.setList(this.singerData.songList);
     });
   }
 

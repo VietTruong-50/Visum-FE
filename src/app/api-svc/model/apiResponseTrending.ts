@@ -9,14 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Song } from './song';
+import { Trending } from './trending';
 
 
-export interface Trending { 
-    id?: number;
-    week?: number;
-    day?: number;
-    viewsDay?: number;
-    song?: Song;
+export interface ApiResponseTrending { 
+    result?: Trending;
+    errorCode?: string;
+    message?: object;
+    responseCode?: number;
 }
 

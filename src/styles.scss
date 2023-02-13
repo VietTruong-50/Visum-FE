@@ -287,3 +287,12 @@ figure {
   -webkit-text-stroke: 1px #e35050;
   opacity: 1;
 }
+
+.album-name{
+  margin-bottom: 0.2rem;
+}
+
+.album-name:hover{
+  color: #0d5cd2;
+  cursor: pointer;
+}
