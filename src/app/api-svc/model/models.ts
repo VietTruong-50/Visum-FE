@@ -34,6 +34,7 @@ export * from './pagePlaylistResponse';
 export * from './pageSinger';
 export * from './pageSong';
 export * from './pageableObject';
+export * from './passwordDTO';
 export * from './playlist';
 export * from './playlistDTO';
 export * from './playlistResponse';

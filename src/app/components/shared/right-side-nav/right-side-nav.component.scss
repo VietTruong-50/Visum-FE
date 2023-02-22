@@ -55,7 +55,18 @@ audio {
   border-radius: 45px;
 }
 
+.artist-name {
+  font-size: 15px;
+  color: #fff;
+}
+
 .artist-name:hover {
   color: #0d5cd2;
   cursor: pointer;
+}
+
+.artist-follower {
+  color: hsla(0, 0%, 100%, 0.653);
+  font-size: 12px;
+  line-height: 1.75;
 }

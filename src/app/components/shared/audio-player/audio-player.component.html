@@ -8,9 +8,12 @@
   />
   <div class="container-audio w-100" fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="column">
-      <p style="margin: 0">
-        {{ getCurrentSong != null ? getCurrentSong.songName : "..." }}
-      </p>
+      <marquee behavior="" direction="left"
+        ><p style="margin: 0">
+          {{ getCurrentSong != null ? getCurrentSong.songName : "..." }}
+        </p></marquee
+      >
+
       <small>{{
         getCurrentSong != null ? getCurrentSong.singer?.singerName : "..."
       }}</small>
@@ -24,7 +27,7 @@
         <input
           type="range"
           min="0"
-          max="{{ state.duration ? state.duration : 0 }}"
+          max="{{ state ? state.duration : 0 }}"
           [value]="state.currentTime"
           (input)="setSeekTo($event)"
           style="width: 40%"
@@ -32,7 +35,7 @@
         <span>{{
           state.readableDuration
             ? state.readableDuration
-            : (getCurrentSong.duration | timeFormat)
+            : (getCurrentSong?.duration | timeFormat)
         }}</span>
       </div>
       <div fxLayout="row" style="position: relative">

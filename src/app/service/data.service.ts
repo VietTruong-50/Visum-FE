@@ -1,7 +1,7 @@
 import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
-import { Song } from '../api-svc';
+import { Song, SongControllerService } from '../api-svc';
 import { ApiResponseSongDTO } from '../api-svc/model/apiResponseSongDTO';
 import { StreamState } from '../components/interface/StreamState';
 import { CloudService } from './cloud.service';
@@ -31,6 +31,8 @@ export class DataService {
     canplay: false,
     error: false,
     volume: undefined,
+    songId: undefined,
+    currentDuration: undefined
   };
 
   private stateChange: BehaviorSubject<StreamState> = new BehaviorSubject(
@@ -51,7 +53,10 @@ export class DataService {
     'loadstart',
   ];
 
-  constructor(private cloudService: CloudService) {
+  constructor(
+    private cloudService: CloudService,
+    private songController: SongControllerService
+  ) {
     this.audio = new Audio();
   }
 
@@ -167,7 +172,11 @@ export class DataService {
           this.audio.currentTime
         );
         this.state.volume = this.audio.volume;
-        console.log(this.state);
+        
+        let cr = this.loadCurrentSong()
+
+        this.state.songId = cr?.id
+        this.state.currentDuration = cr?.duration
 
         break;
       case 'playing':
@@ -183,6 +192,8 @@ export class DataService {
         );
         break;
       case 'ended':
+        this.songController.increaseSongView(this.state.songId!).subscribe((rs) => {});
+
         this.playNext();
 
         break;
@@ -205,6 +216,8 @@ export class DataService {
       canplay: false,
       error: false,
       volume: undefined,
+      songId: undefined,
+      currentDuration: undefined
     };
   }
 
@@ -218,7 +231,9 @@ export class DataService {
 
   loadCurrentSong() {
     return JSON.parse(
-      localStorage.getItem('currentSong') != 'undefined' ? localStorage.getItem('currentSong')! : '{}'
+      localStorage.getItem('currentSong') != 'undefined'
+        ? localStorage.getItem('currentSong')!
+        : '{ }'
     );
   }
 

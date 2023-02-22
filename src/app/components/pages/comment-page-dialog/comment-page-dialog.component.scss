@@ -21,14 +21,18 @@
 }
 
 .empty-content {
-    padding: 30px 0;
-    text-align: center;
-    color: hsla(0, 0, 100%, 0.5);
+  padding: 30px 0;
+  text-align: center;
+  color: hsla(0, 0, 100%, 0.5);
 }
 
 .empty-content .icon {
   display: block;
   font-size: 54px;
   margin-bottom: 15px;
-  
+}
+
+.comment-text{
+  font-size: 14px;
+  color: bisque;
 }

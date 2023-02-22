@@ -7,4 +7,6 @@ export interface StreamState {
   canplay: boolean;
   error: boolean;
   volume: number | undefined;
+  songId: number | undefined;
+  currentDuration:  number | undefined;
 }

@@ -8,7 +8,7 @@
   >
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>No.</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element; let i = index">
         <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
           <div class="image-container" fxLayout="row">
             <img
@@ -19,7 +19,11 @@
               height="50px"
               alt=""
             />
-            <button mat-mini-fab class="middle" (click)="playPlaylist()">
+            <button
+              mat-mini-fab
+              class="middle"
+              (click)="playPlaylist(i, element)"
+            >
               <mat-icon>play_arrow</mat-icon>
             </button>
           </div>
@@ -36,9 +40,11 @@
     </ng-container>
 
     <!-- Album Column -->
-    <ng-container matColumnDef="album">
-      <th mat-header-cell *matHeaderCellDef>Album</th>
-      <td mat-cell *matCellDef="let element">{{ element.songName }}</td>
+    <ng-container matColumnDef="singer">
+      <th mat-header-cell *matHeaderCellDef>Nghệ sỹ</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.singer?.singerName }}
+      </td>
     </ng-container>
 
     <!-- Duration Column -->
@@ -56,9 +62,31 @@
           <mat-icon>more_horiz</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+          <button
+            mat-menu-item
+            [matMenuTriggerFor]="playlist"
+            *ngIf="playlistData"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+            <span>Add to playlist</span>
+          </button>
           <button mat-menu-item (click)="openCommentDialog(element.id)">
             <mat-icon>comment</mat-icon>
             <span>Comment</span>
+          </button>
+          <button mat-menu-item (click)="removeFromFavorite(element.id)">
+            <mat-icon>remove</mat-icon>
+            <span>Remove from favorite</span>
+          </button>
+        </mat-menu>
+
+        <mat-menu #playlist="matMenu">
+          <button
+            mat-menu-item
+            *ngFor="let playlist of playlistData"
+            (click)="addToPlaylist(playlist.id, element.id)"
+          >
+            {{ playlist.playlistName }}
           </button>
         </mat-menu>
       </td>

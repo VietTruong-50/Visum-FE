@@ -58,6 +58,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { TimeFormatPipe } from './components/pipes/time-format.pipe';
 import { CommentPageDialogComponent } from './components/pages/comment-page-dialog/comment-page-dialog.component';
 import { AlbumDetailComponent } from './components/pages/artist-detail/album-detail/album-detail.component';
+import { TruncateTextPipe } from './components/pipes/truncate-text.pipe';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { AlbumDetailComponent } from './components/pages/artist-detail/album-det
     TimeFormatPipe,
     CommentPageDialogComponent,
     AlbumDetailComponent,
+    TruncateTextPipe,
   ],
   imports: [
     BrowserModule,
@@ -112,7 +114,7 @@ import { AlbumDetailComponent } from './components/pages/artist-detail/album-det
     ChartModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatSortModule
+    MatSortModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true },

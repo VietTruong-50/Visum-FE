@@ -27,6 +27,7 @@ export class SearchPageComponent implements OnInit {
   playlistData: any;
   title: string[] = [];
   key: boolean;
+  playlistList: any;
 
   constructor(
     private songControllerService: SongControllerService,
@@ -41,7 +42,6 @@ export class SearchPageComponent implements OnInit {
     private favoriteService: FavoriteService,
     private cookieService: CookieService
   ) {
-
     this.key = this.cookieService.check(GlobalConstants.authToken);
 
     this.router.events.subscribe((val) => {
@@ -55,7 +55,9 @@ export class SearchPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllPlaylist()
+  }
 
   getSongData() {
     this.title[2] = this.route.snapshot.params['title'];
@@ -102,13 +104,21 @@ export class SearchPageComponent implements OnInit {
       });
   }
 
+  getAllPlaylist() {
+    if (this.key) {
+      this.userController.getAllPlaylistByUser().subscribe((rs) => {
+        this.playlistList = rs.result;
+      });
+    }
+  }
+
   playSong(song: any) {
     this.audioService.saveCurrentSong(song);
     this.audioService.playStream(song, true);
   }
 
   playPlaylist(isShuffle: boolean, songList: any) {
-    this.cloudService.setList(songList)
+    this.cloudService.setList(songList);
     this.cloudService.getData().subscribe((rs) => {
       this.audioService.playPlaylist(isShuffle, rs);
     });
@@ -142,7 +152,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   checkFavorite(song: Song): boolean {
-    return this.favoriteService.checkFavorite(song)
+    return this.favoriteService.checkFavorite(song);
   }
 
   addToFavorite(songId: number) {

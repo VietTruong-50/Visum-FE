@@ -13,7 +13,7 @@
               <div class="z-thumb">
                 <figure class="image is-48x48">
                   <img
-                    src="https://photo-zmp3.zmdcdn.me/album_default.png"
+                    src="../assets/images/album/album_default.jpg"
                     alt=""
                   />
                 </figure>
@@ -41,18 +41,23 @@
           fxLayout="column"
           fxLayoutAlign="center center"
         >
-          <div class="content-top" fxLayoutAlign="none center" fxLayout="column" fxLayoutGap="10px">
+          <div
+            class="content-top"
+            fxLayoutAlign="none center"
+            fxLayout="column"
+            fxLayoutGap="5px"
+          >
             <div
               class="user-playlist-title"
               fxLayout="row"
               fxLayoutAlign="center center"
             >
-              <h3 class="title" fxLayout="row">
+              <h3 class="playlist-name" fxLayout="row">
                 {{ playlistData != null ? playlistData.playlistName : "" }}
               </h3>
               <button
                 class="zm-btn button"
-                style="margin-left: 15px; margin-bottom: 1rem"
+                style="margin-left: 6px; font-size: 15px"
                 (click)="openPlaylistDialog()"
               >
                 <i class="fa-solid fa-pen-to-square icon"></i>
@@ -141,17 +146,13 @@
                   height="50px"
                   alt=""
                 />
-                <button
-                  mat-mini-fab
-                  class="middle"
-                  (click)="playSong(element)"
-                >
+                <button mat-mini-fab class="middle" (click)="playSong(element)">
                   <mat-icon>play_arrow</mat-icon>
                 </button>
               </div>
               <div fxLayout="column" fxLayoutGap="5px">
                 <span> {{ element.songName }}</span>
-                <span> {{ element.singer.singerName }}</span>
+                <small> {{ element.singer.singerName }}</small>
               </div>
             </div>
           </td>
@@ -160,7 +161,7 @@
         <!-- Album Column -->
         <ng-container matColumnDef="album">
           <th mat-header-cell *matHeaderCellDef>Album</th>
-          <td mat-cell *matCellDef="let element">{{ element.songName }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.songName | truncateText: 22}}</td>
         </ng-container>
 
         <!-- Duration Column -->
@@ -178,7 +179,10 @@
               <mat-icon>more_horiz</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="deleteSongFromPlaylist(element.id)">
+              <button
+                mat-menu-item
+                (click)="deleteSongFromPlaylist(element.id)"
+              >
                 <mat-icon>remove</mat-icon>
                 <span>Remove from playlist</span>
               </button>
@@ -290,7 +294,7 @@
               <th mat-header-cell *matHeaderCellDef>Action</th>
               <td mat-cell *matCellDef="let element">
                 <div>
-                  <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
+                  <div fxLayout="row" fxLayoutAlign="center none" fxLayoutGap="12px">
                     <ng-container *ngIf="key == true">
                       <button
                         mat-mini-fab

@@ -15,8 +15,8 @@ import { Sort } from './sort';
 
 
 export interface PageAlbum { 
-    totalPages?: number;
     totalElements?: number;
+    totalPages?: number;
     size?: number;
     content?: Array<Album>;
     number?: number;

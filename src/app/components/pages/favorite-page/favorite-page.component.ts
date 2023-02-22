@@ -30,10 +30,10 @@ export class FavoritePageComponent implements OnInit {
   ngOnInit(): void {
     this.recommendSongNotInFavorite();
     this.getFavoriteData();
+    this.getAllPlaylist()
   }
 
   playSong(song: Song) {
-    this.songControllerService.increaseSongView(song.id!).subscribe((rs) => {});
     this.audioService.saveCurrentSong(song);
     this.audioService.playStream(song, true);
   }

@@ -1,12 +1,17 @@
 <div>
-  <p class="content-title topic-title">Bảng xếp hạng</p>
+  <div fxlayout="row" fxLayoutAlign="none center">
+    <p class="content-title topic-title">Bảng xếp hạng</p>
+    <button mat-mini-fab class="play-trend-list" (click)="playPlaylist(false)">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+  </div>
 
   <div fxLayout="column" fxLayoutAlign="center center">
     <div fxLayout="column" style="width: 98%">
       <div fxFlex="60" style="margin: 30px">
         <canvas id="lineChart"></canvas>
       </div>
-      
+
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -21,7 +26,6 @@
           </td>
         </ng-container>
 
-      
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Bài hát</th>
           <td mat-cell *matCellDef="let element">
@@ -47,17 +51,48 @@
           </td>
         </ng-container>
 
-       
         <ng-container matColumnDef="album">
           <th mat-header-cell *matHeaderCellDef>Album</th>
-          <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.songName }}</td>
         </ng-container>
 
-        
         <ng-container matColumnDef="duration">
           <th mat-header-cell *matHeaderCellDef>Thời gian</th>
           <td mat-cell *matCellDef="let element">
             {{ timeFormat(element.duration) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                [matMenuTriggerFor]="playlist"
+                *ngIf="playlistData"
+              >
+                <mat-icon>add_circle_outline</mat-icon>
+                <span>Add to playlist</span>
+              </button>
+              <button mat-menu-item (click)="openCommentDialog(element.id)">
+                <mat-icon>comment</mat-icon>
+                <span>Comment</span>
+              </button>
+            </mat-menu>
+
+            <mat-menu #playlist="matMenu">
+              <button
+                mat-menu-item
+                *ngFor="let playlist of playlistData"
+                (click)="addToPlaylist(playlist.id, element.id)"
+              >
+                {{ playlist.playlistName }}
+              </button>
+            </mat-menu>
           </td>
         </ng-container>
 

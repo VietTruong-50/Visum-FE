@@ -7,7 +7,9 @@
   >
     <div class="w-100 artist-image-bg" style="height: 300px">
       <img
-        src="https://photo-zmp3.zmdcdn.me/album_default.png"
+        src="../assets/images/artists/{{
+          singerData != null ? singerData.singerName : ''
+        }}.jpg"
         class="artist-avatar-img"
       />
     </div>
@@ -24,14 +26,10 @@
       fxLayoutGap="15px"
     >
       <img
+        class="artist-avatar"
         src="../assets/images/artists/{{
           singerData != null ? singerData.singerName : ''
         }}.jpg"
-        style="
-          border-radius: 50%;
-          box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2),
-            0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        "
         width="120px"
         height="120px"
         alt=""
@@ -42,7 +40,7 @@
             class="artist-name title"
             style="
               width: fit-content;
-              font-size: 60px;
+              font-size: 54px;
               font-family: 'Times New Roman', Times, serif;
             "
           >
@@ -50,7 +48,11 @@
               <span>{{ singerData != null ? singerData.singerName : "" }}</span>
             </span>
           </h3>
-          <button mat-raised-button (click)="playPlaylist(false)" class="play-btn">
+          <button
+            mat-raised-button
+            (click)="playPlaylist(false)"
+            class="play-btn"
+          >
             <i class="fa-solid fa-play icon"></i>
           </button>
         </div>
@@ -61,7 +63,7 @@
             class="zm-btn is-outlined active follow-btn button"
             fxLayout="row"
             fxLayoutGap="5px"
-            style="color: crimson; border: 1px solid; padding: 5px"
+            style="color: crimson; border: 1px solid; padding: 5px; background-color: transparent;"
           >
             <i class="fa-solid fa-heart-circle-plus"></i><span>Quan tâm</span>
           </button>
@@ -69,6 +71,7 @@
       </div>
     </div>
   </div>
+  <div class="line"></div>
   <div fxFlex="70">
     <!-- <div>
       <p class="content-title topic-title" style="font-size: 26px">Description</p>
@@ -78,88 +81,108 @@
       <p class="content-title topic-title" style="font-size: 26px">Bài hát</p>
     </div>
     <div
-      fxLayout="row wrap"
-      fxLayoutAlign="center center"
-      fxLayoutGap="20px grid"
-      *ngIf="singerData != null"
-      class="w-100"
+      fxLayout="row"
+      fxLayoutAlign="start start"
+      style="width: 98%; margin-left: 25px"
+      class="align-self-center"
     >
-      <div fxLayout="row" *ngFor="let song of singerData.songList">
-        <div class="image-container" fxLayout="row">
-          <img
-            width="80px"
-            height="80px"
-            class="popular-item-img"
-            src="../assets/images/song/{{
-              song.imageName != null ? song.imageName : 'songBg'
-            }}.jpg"
-            alt=""
-          />
-          <button mat-mini-fab class="middle" (click)="playSong(song)">
-            <mat-icon>play_arrow</mat-icon>
-          </button>
-        </div>
+      <div fxLayout="row wrap" fxLayoutGap="15px grid">
+        <span *ngFor="let song of singerData?.songList"
+          ><div fxLayout="row">
+            <div class="image-container" fxLayout="row">
+              <img
+                width="71px"
+                height="80px"
+                class="popular-item-img"
+                src="../assets/images/song/{{
+                  song.imageName != null ? song.imageName : 'songBg'
+                }}.jpg"
+                alt=""
+              />
+              <button mat-mini-fab class="middle" (click)="playSong(song)">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+            </div>
 
-        <div
-          fxLayout="row"
-          class="popular-item-content"
-          fxLayoutAlign="space-between center"
+            <div
+              fxLayout="row"
+              class="popular-item-content"
+              fxLayoutAlign="space-between center"
+            >
+              <div fxLayout="column" class="w-100">
+                <strong>{{ song.songName! | truncateText : 22 }}</strong>
+
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <small>{{
+                    song.singer?.singerName! | truncateText : 15
+                  }}</small>
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="space-between"
+                    fxLayoutGap="5px"
+                  >
+                    <ng-container *ngIf="key == true">
+                      <button
+                        mat-mini-fab
+                        class="text-white favorite"
+                        *ngIf="!checkFavorite(song); else removeFavorite"
+                        (click)="addToFavorite(song.id!)"
+                        title="Add to favorite"
+                      >
+                        <mat-icon>favorite</mat-icon>
+                      </button>
+                      <ng-template #removeFavorite>
+                        <button
+                          mat-mini-fab
+                          class="remove-favorite"
+                          (click)="removeFromFavorite(song.id!)"
+                          title="Remove from favorite"
+                        >
+                          <mat-icon>favorite</mat-icon>
+                        </button>
+                      </ng-template>
+                    </ng-container>
+
+                    <button
+                      mat-mini-fab
+                      class="text-white"
+                      [matMenuTriggerFor]="menu"
+                    >
+                      <mat-icon>more_horiz</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button
+                        mat-menu-item
+                        [matMenuTriggerFor]="playlist"
+                        *ngIf="playlistData"
+                      >
+                        <mat-icon>add_circle_outline</mat-icon>
+                        <span>Add to playlist</span>
+                      </button>
+                      <button
+                        mat-menu-item
+                        (click)="openCommentDialog(song.id!)"
+                      >
+                        <mat-icon>comment</mat-icon>
+                        <span>Comment</span>
+                      </button>
+                    </mat-menu>
+
+                    <mat-menu #playlist="matMenu">
+                      <button
+                        mat-menu-item
+                        *ngFor="let playlist of playlistData"
+                        (click)="addToPlaylist(playlist.id, song.id!)"
+                      >
+                        {{ playlist.playlistName }}
+                      </button>
+                    </mat-menu>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div></span
         >
-          <div fxLayout="column" fxLayoutAlign="center start">
-            <strong>{{ song.songName }}</strong>
-            <small>{{ song.composer?.composerName }}</small>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
-            <ng-container *ngIf="key == true">
-              <button
-                mat-mini-fab
-                class="text-white favorite"
-                *ngIf="!checkFavorite(song); else removeFavorite"
-                (click)="addToFavorite(song.id!)"
-                title="Add to favorite"
-              >
-                <mat-icon>favorite</mat-icon>
-              </button>
-              <ng-template #removeFavorite>
-                <button
-                  mat-mini-fab
-                  class="remove-favorite"
-                  (click)="removeFromFavorite(song.id!)"
-                  title="Remove from favorite"
-                >
-                  <mat-icon>favorite</mat-icon>
-                </button>
-              </ng-template>
-            </ng-container>
-            <button mat-mini-fab class="text-white" [matMenuTriggerFor]="menu">
-              <mat-icon>more_horiz</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button
-                mat-menu-item
-                [matMenuTriggerFor]="playlist"
-                *ngIf="playlistData"
-              >
-                <mat-icon>add_circle_outline</mat-icon>
-                <span>Add to playlist</span>
-              </button>
-              <button mat-menu-item (click)="openCommentDialog()">
-                <mat-icon>comment</mat-icon>
-                <span>Comment</span>
-              </button>
-            </mat-menu>
-
-            <mat-menu #playlist="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let playlist of playlistData"
-                (click)="addToPlaylist(playlist.id, song.id!)"
-              >
-                {{ playlist.playlistName }}
-              </button>
-            </mat-menu>
-          </div>
-        </div>
       </div>
     </div>
     <div *ngIf="albumsData?.length > 0">
@@ -211,7 +234,9 @@
           </div>
         </div>
         <div>
-          <h5 class="album-name" [routerLink]="['/album', album?.id]">{{ album?.name }}</h5>
+          <h5 class="album-name" [routerLink]="['/album', album?.id]">
+            {{ album?.name }}
+          </h5>
           <p>{{ album?.singer.singerName }}</p>
         </div>
       </div>

@@ -18,12 +18,17 @@
   font-weight: 500;
   text-align: left;
   margin: 8px 0 4px;
+  color: #fff !important;
 }
 
-figure{
+.zm-card-content .title a:hover{
+  color: #7573ed !important;
+}
+
+figure {
   margin: 0 !important;
 }
 
-.button:hover{
+.button:hover {
   opacity: 0.8;
 }

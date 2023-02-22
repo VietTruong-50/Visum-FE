@@ -94,7 +94,6 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
   }
 
   playSong(song: Song) {
-    this.songControllerService.increaseSongView(song.id!).subscribe((rs) => {});
     this.audioService.saveCurrentSong(song);
     this.audioService.playStream(song, true);
   }
@@ -154,6 +153,7 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
   getAllCategory() {
     this.categoryController.getAllSongByCategory().subscribe((rs) => {
       this.categoryData = rs.result;
+      console.log(this.categoryData);
     });
   }
 }

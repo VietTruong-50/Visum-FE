@@ -65,9 +65,10 @@ export class ArtistDetailComponent implements OnInit {
     this.audioService.playStream(song, true);
   }
 
-  openCommentDialog() {
+  openCommentDialog(songId: number) {
     this.dialog.open(CommentPageDialogComponent, {
       width: '30vw',
+      data: songId,
     });
   }
 

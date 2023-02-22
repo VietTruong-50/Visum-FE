@@ -49,6 +49,7 @@ model/pagePlaylistResponse.ts
 model/pageSinger.ts
 model/pageSong.ts
 model/pageableObject.ts
+model/passwordDTO.ts
 model/playlist.ts
 model/playlistDTO.ts
 model/playlistResponse.ts

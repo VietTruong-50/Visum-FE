@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import {
-  UserControllerService,
-} from 'src/app/api-svc';
+import { UserControllerService } from 'src/app/api-svc';
 
 interface GENDER {
   value: string;
@@ -37,7 +35,7 @@ export class UserProfileComponent implements OnInit {
       userName: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      gender: [' ', Validators.required],
+      gender: [],
       birthOfDate: ['', Validators.required],
       mobile: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -71,6 +69,8 @@ export class UserProfileComponent implements OnInit {
       mobile: this.userData.mobile,
       email: this.userData.email,
     });
+    console.log(this.formGroup.getRawValue());
+    
   }
 
   changePasswordForm(value: string) {
@@ -93,41 +93,42 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateUser(formValue: any) {
-    // this.userController
-    //   .updateUser(this.userData.id, {
-    //     userName: formValue.userName,
-    //     password: '',
-    //     gender: formValue.gender,
-    //     email: formValue.email,
-    //     mobile: formValue.mobile,
-    //     birthOfDate: moment(formValue.birthOfDate).toISOString(),
-    //     firstName: formValue.firstName,
-    //     lastName: formValue.lastName,
-    //   })
-    //   .subscribe((result) => {
-    //     if (result.errorCode == null) {
-    //       localStorage.setItem('userProfile', JSON.stringify(formValue));
-    //       alert('Change profile success');
-    //     } else alert('error');
-    //   });
+    this.userController
+      .updateProfile({
+        userName: formValue.userName,
+        password: '',
+        gender: formValue.gender,
+        email: formValue.email,
+        mobile: formValue.mobile,
+        birthOfDate: moment(formValue.birthOfDate).toISOString(),
+        firstName: formValue.firstName,
+        lastName: formValue.lastName,
+      })
+      .subscribe((result) => {
+        if (result.errorCode == null) {
+          localStorage.setItem('userProfile', JSON.stringify(formValue));
+          this.getUserData()
+          alert('Change profile success');
+        } else alert('error');
+      });
   }
 
   changePassword(formValue: any) {
-    // if (formValue.newPassword == formValue.cf_password) {
-    //   this.userController
-    //     .changePassword(this.userData.id, {
-    //       currentPassword: formValue.currentPassword,
-    //       newPassword: formValue.newPassword,
-    //       cf_password: formValue.cf_password,
-    //     })
-    //     .subscribe((result) => {
-    //       if (result.errorCode == null) {
-    //         alert('Change password success');
-    //         this.pwFormGroup.reset();
-    //       } else alert('error');
-    //     });
-    // } else {
-    //   alert('Error pw');
-    // }
+    if (formValue.newPassword == formValue.cf_password) {
+      this.userController
+        .changePassword({
+          currentPassword: formValue.currentPassword,
+          newPassword: formValue.newPassword,
+          cf_password: formValue.cf_password,
+        })
+        .subscribe((result) => {
+          if (result.errorCode == null) {
+            alert('Change password success');
+            this.pwFormGroup.reset();
+          } else alert('error');
+        });
+    } else {
+      alert('Error pw');
+    }
   }
 }

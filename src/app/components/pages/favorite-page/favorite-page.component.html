@@ -3,7 +3,7 @@
   <div
     fxLayout="row"
     fxLayoutAlign="start start"
-    style="width: 96%; margin-left: 25px"
+    style="width: 98%; margin-left: 25px"
     class="align-self-center"
   >
     <div fxLayout="row wrap" fxLayoutGap="15px grid">
@@ -30,7 +30,7 @@
             fxLayoutAlign="space-between center"
           >
             <div fxLayout="column" fxLayoutAlign="center start">
-              <strong>{{ song.songName }}</strong>
+              <strong>{{ song.songName | truncateText : 22 }}</strong>
               <small>{{ song.songAuthor?.name }}</small>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">

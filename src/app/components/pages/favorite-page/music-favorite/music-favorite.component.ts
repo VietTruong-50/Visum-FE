@@ -40,13 +40,22 @@ const ELEMENT_DATA: MusicData[] = [
   styleUrls: ['./music-favorite.component.scss'],
 })
 export class MusicFavoriteComponent implements OnInit {
+  playlistData: any;
+
   listSong: BehaviorSubject<Song[]> = new BehaviorSubject<Song[]>([]);
 
-  displayedColumns: string[] = ['position', 'name', 'album', 'duration', 'action'];
+  displayedColumns: string[] = [
+    'position',
+    'name',
+    'singer',
+    'duration',
+    'action',
+  ];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any[]>();
 
   constructor(
+    private userController: UserControllerService,
     private audioService: DataService,
     private favoriteService: FavoriteService,
     private dialog: MatDialog
@@ -54,7 +63,9 @@ export class MusicFavoriteComponent implements OnInit {
     this.getFavoriteData();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllPlaylist()
+  }
 
   getFavoriteData() {
     this.favoriteService.favoriteSongs.subscribe((rs) => {
@@ -63,10 +74,19 @@ export class MusicFavoriteComponent implements OnInit {
     });
   }
 
-  playPlaylist() {
-    this.listSong.subscribe((rs) => {
-      this.audioService.playPlaylist(false, rs);
-    });
+  playSong(song: Song) {
+    this.audioService.saveCurrentSong(song);
+    this.audioService.playStream(song, true);
+  }
+
+  playPlaylist(index: number, song: Song) {
+    if (index == 0) {
+      this.listSong.subscribe((rs) => {
+        this.audioService.playPlaylist(false, rs);
+      });
+    } else {
+      this.playSong(song);
+    }
   }
 
   stop(song: any) {}
@@ -81,4 +101,25 @@ export class MusicFavoriteComponent implements OnInit {
       data: songId,
     });
   }
+
+  removeFromFavorite(songId: number){
+    this.userController.deleteFavoriteSong(songId).subscribe(rs =>{
+      // let data = rs.result?.content ? rs.result?.content : [];
+      // this.favoriteService.setList(data);
+      this.getFavoriteData()
+    })
+  }
+
+  getAllPlaylist() {
+    this.userController.getAllPlaylistByUser().subscribe((rs) => {
+      this.playlistData = rs.result;
+    });
+  }
+
+  addToPlaylist(playlistId: number, songId: number) {
+    this.userController
+      .addSongToPlaylist(playlistId, [songId])
+      .subscribe((rs) => {});
+  }
+
 }
