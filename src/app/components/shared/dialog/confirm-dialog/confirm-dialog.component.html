@@ -1,0 +1,14 @@
+<div>
+  <h1 mat-dialog-title>
+    {{ title }}
+  </h1>
+
+  <div mat-dialog-content>
+    <p>{{ message }}</p>
+  </div>
+
+  <div mat-dialog-actions fxLayoutAlign="end none">
+    <button mat-button (click)="onDelete()">Không</button>
+    <button mat-raised-button (click)="onCommand()">Có</button>
+  </div>
+</div>

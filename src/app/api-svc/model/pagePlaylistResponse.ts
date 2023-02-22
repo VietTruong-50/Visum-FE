@@ -15,8 +15,8 @@ import { PlaylistResponse } from './playlistResponse';
 
 
 export interface PagePlaylistResponse { 
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<PlaylistResponse>;
     number?: number;

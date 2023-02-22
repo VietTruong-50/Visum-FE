@@ -59,6 +59,7 @@ import { TimeFormatPipe } from './components/pipes/time-format.pipe';
 import { CommentPageDialogComponent } from './components/pages/comment-page-dialog/comment-page-dialog.component';
 import { AlbumDetailComponent } from './components/pages/artist-detail/album-detail/album-detail.component';
 import { TruncateTextPipe } from './components/pipes/truncate-text.pipe';
+import { ConfirmDialogComponent } from './components/shared/dialog/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { TruncateTextPipe } from './components/pipes/truncate-text.pipe';
     CommentPageDialogComponent,
     AlbumDetailComponent,
     TruncateTextPipe,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

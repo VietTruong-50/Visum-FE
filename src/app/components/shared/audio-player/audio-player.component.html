@@ -22,19 +22,19 @@
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       <div fxLayout="row" fxLayoutAlign="space-evenly center">
         <span>{{
-          state.readableCurrentTime ? state.readableCurrentTime : currentTime
+          getState.readableCurrentTime ? getState.readableCurrentTime : currentTime
         }}</span>
         <input
           type="range"
           min="0"
-          max="{{ state ? state.duration : 0 }}"
-          [value]="state.currentTime"
+          max="{{ state ? getState.duration : 0 }}"
+          [value]="getState.currentTime"
           (input)="setSeekTo($event)"
           style="width: 40%"
         />
         <span>{{
-          state.readableDuration
-            ? state.readableDuration
+          getState.readableDuration
+            ? getState.readableDuration
             : (getCurrentSong?.duration | timeFormat)
         }}</span>
       </div>

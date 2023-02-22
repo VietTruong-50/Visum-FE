@@ -15,8 +15,8 @@ import { Sort } from './sort';
 
 
 export interface PageSong { 
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<Song>;
     number?: number;

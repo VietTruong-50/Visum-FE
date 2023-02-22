@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 import { StreamState } from '../../interface/StreamState';
 
-
 @Component({
   selector: 'app-audio-player',
   templateUrl: './audio-player.component.html',
   styleUrls: ['./audio-player.component.scss'],
 })
 export class AudioPlayerComponent implements OnInit {
-
   state!: StreamState;
   currentFile: any = {};
 
@@ -29,8 +27,12 @@ export class AudioPlayerComponent implements OnInit {
     });
   }
 
-  get getCurrentSong(){
-    return this.audioService.loadCurrentSong()
+  get getCurrentSong() {
+    return this.audioService.loadCurrentSong();
+  }
+
+  get getState() {
+    return this.audioService.loadCurrentState();
   }
 
   playStream(url?: any) {
@@ -58,11 +60,11 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   playNext() {
-    this.audioService.playNext()
+    this.audioService.playNext();
   }
 
   playPrevious() {
-    this.audioService.playPrevious()
+    this.audioService.playPrevious();
   }
 
   setSeekTo(change: Event) {

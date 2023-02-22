@@ -30,6 +30,7 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
   key: boolean;
   albumsData: any;
   categoryData: any;
+  recentlySongs: any;
 
   @ViewChild('swiperSlideShow') swiperSlideShow!: SwiperComponent;
   config: SwiperOptions = {};
@@ -69,6 +70,7 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
     this.getAllPlaylist();
     this.getAlbumData();
     this.getAllCategory();
+    this.getRecentlySongs();
   }
 
   async getSongData() {
@@ -154,6 +156,13 @@ export class LandingNavComponent implements OnInit, AfterViewInit {
     this.categoryController.getAllSongByCategory().subscribe((rs) => {
       this.categoryData = rs.result;
       console.log(this.categoryData);
+    });
+  }
+
+  getRecentlySongs() {
+    this.songControllerService.getRecentlySongs().subscribe((rs) => {
+      this.recentlySongs = rs.result;
+      console.log(this.recentlySongs);
     });
   }
 }

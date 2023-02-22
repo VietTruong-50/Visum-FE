@@ -29,10 +29,116 @@
   </div>
 
   <div fxLayout="column" fxLayoutAlign="center none">
-    <!-- <p class="content-title topic-title">RECENTLY PLAYED</p>
+    <div>
+      <p class="content-title topic-title" *ngIf="recentlySongs.length > 0">
+        Các bài nhạc nghe gần đây
+      </p>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start start"
+        style="width: 98%; margin-left: 25px"
+        class="align-self-center"
+      >
+        <div fxLayout="row wrap" fxLayoutGap="15px grid">
+          <span *ngFor="let song of recentlySongs"
+            ><div fxLayout="row">
+              <div class="image-container" fxLayout="row">
+                <img
+                  width="71px"
+                  height="80px"
+                  class="popular-item-img"
+                  src="../assets/images/song/{{
+                    song.imageName != null ? song.imageName : 'songBg'
+                  }}.jpg"
+                  alt=""
+                />
+                <button mat-mini-fab class="middle" (click)="playSong(song)">
+                  <mat-icon>play_arrow</mat-icon>
+                </button>
+              </div>
 
-    <p class="content-title topic-title">MOST POPULAR</p> -->
+              <div
+                fxLayout="row"
+                class="popular-item-content"
+                fxLayoutAlign="space-between center"
+              >
+                <div fxLayout="column" class="w-100">
+                  <strong>{{ song.songName | truncateText : 22 }}</strong>
 
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <small class="artist-name">{{
+                      song.singer?.singerName | truncateText : 15
+                    }}</small>
+                    <div
+                      fxLayout="row"
+                      fxLayoutAlign="space-between"
+                      fxLayoutGap="5px"
+                    >
+                      <ng-container *ngIf="key == true">
+                        <button
+                          mat-mini-fab
+                          class="text-white favorite"
+                          *ngIf="!checkFavorite(song); else removeFavorite"
+                          (click)="addToFavorite(song.id)"
+                          title="Add to favorite"
+                        >
+                          <mat-icon>favorite</mat-icon>
+                        </button>
+                        <ng-template #removeFavorite>
+                          <button
+                            mat-mini-fab
+                            class="remove-favorite"
+                            (click)="removeFromFavorite(song.id)"
+                            title="Remove from favorite"
+                          >
+                            <mat-icon>favorite</mat-icon>
+                          </button>
+                        </ng-template>
+                      </ng-container>
+
+                      <button
+                        mat-mini-fab
+                        class="text-white"
+                        [matMenuTriggerFor]="menu"
+                      >
+                        <mat-icon>more_horiz</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button
+                          mat-menu-item
+                          [matMenuTriggerFor]="playlist"
+                          *ngIf="playlistData"
+                        >
+                          <mat-icon>add_circle_outline</mat-icon>
+                          <span>Add to playlist</span>
+                        </button>
+                        <button
+                          mat-menu-item
+                          (click)="openCommentDialog(song.id)"
+                        >
+                          <mat-icon>comment</mat-icon>
+                          <span>Comment</span>
+                        </button>
+                      </mat-menu>
+
+                      <mat-menu #playlist="matMenu">
+                        <button
+                          mat-menu-item
+                          *ngFor="let playlist of playlistData"
+                          (click)="addToPlaylist(playlist.id, song.id)"
+                        >
+                          {{ playlist.playlistName }}
+                        </button>
+                      </mat-menu>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></span
+          >
+        </div>
+      </div>
+    </div>
     <span *ngFor="let cate of categoryData">
       <p class="content-title topic-title" *ngIf="cate?.songs.length > 0">
         {{ cate?.category.categoryName | uppercase }}

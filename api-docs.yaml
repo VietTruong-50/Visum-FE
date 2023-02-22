@@ -605,6 +605,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponsePagePlaylistResponse'
+  /visum/recently:
+    get:
+      tags:
+      - song-controller
+      operationId: getRecentlySongs
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListSong'
   /visum/playlists:
     get:
       tags:
@@ -1310,12 +1322,12 @@ components:
     PageSong:
       type: object
       properties:
-        totalElements:
-          type: integer
-          format: int64
         totalPages:
           type: integer
           format: int32
+        totalElements:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int32
@@ -1453,12 +1465,12 @@ components:
     PageSinger:
       type: object
       properties:
-        totalElements:
-          type: integer
-          format: int64
         totalPages:
           type: integer
           format: int32
+        totalElements:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int32
@@ -1497,12 +1509,12 @@ components:
     PagePlaylistResponse:
       type: object
       properties:
-        totalElements:
-          type: integer
-          format: int64
         totalPages:
           type: integer
           format: int32
+        totalElements:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int32
@@ -1581,12 +1593,12 @@ components:
     PageCommentDTO:
       type: object
       properties:
-        totalElements:
-          type: integer
-          format: int64
         totalPages:
           type: integer
           format: int32
+        totalElements:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int32
@@ -1695,12 +1707,12 @@ components:
     PageAlbum:
       type: object
       properties:
-        totalElements:
-          type: integer
-          format: int64
         totalPages:
           type: integer
           format: int32
+        totalElements:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int32

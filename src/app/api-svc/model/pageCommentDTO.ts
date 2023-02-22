@@ -15,8 +15,8 @@ import { Sort } from './sort';
 
 
 export interface PageCommentDTO { 
-    totalElements?: number;
     totalPages?: number;
+    totalElements?: number;
     size?: number;
     content?: Array<CommentDTO>;
     number?: number;

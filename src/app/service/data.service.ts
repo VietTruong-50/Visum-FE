@@ -32,7 +32,7 @@ export class DataService {
     error: false,
     volume: undefined,
     songId: undefined,
-    currentDuration: undefined
+    currentDuration: undefined,
   };
 
   private stateChange: BehaviorSubject<StreamState> = new BehaviorSubject(
@@ -72,8 +72,6 @@ export class DataService {
         this.updateStateEvents(event);
         observer.next(event);
       };
-
-      //4278.731356, 163.079646, 177.786332
 
       this.addEvent(this.audio, handler);
 
@@ -172,11 +170,11 @@ export class DataService {
           this.audio.currentTime
         );
         this.state.volume = this.audio.volume;
-        
-        let cr = this.loadCurrentSong()
 
-        this.state.songId = cr?.id
-        this.state.currentDuration = cr?.duration
+        let cr = this.loadCurrentSong();
+
+        this.state.songId = cr?.id;
+        this.state.currentDuration = cr?.duration;
 
         break;
       case 'playing':
@@ -190,9 +188,13 @@ export class DataService {
         this.state.readableCurrentTime = this.timeFormat(
           this.state.currentTime
         );
+        localStorage.setItem('state', JSON.stringify(this.state));
+
         break;
       case 'ended':
-        this.songController.increaseSongView(this.state.songId!).subscribe((rs) => {});
+        this.songController
+          .increaseSongView(this.state.songId!)
+          .subscribe((rs) => {});
 
         this.playNext();
 
@@ -217,7 +219,7 @@ export class DataService {
       error: false,
       volume: undefined,
       songId: undefined,
-      currentDuration: undefined
+      currentDuration: undefined,
     };
   }
 
@@ -233,6 +235,14 @@ export class DataService {
     return JSON.parse(
       localStorage.getItem('currentSong') != 'undefined'
         ? localStorage.getItem('currentSong')!
+        : '{ }'
+    );
+  }
+
+  loadCurrentState() {
+    return JSON.parse(
+      localStorage.getItem('state') != 'undefined'
+        ? localStorage.getItem('state')!
         : '{ }'
     );
   }
