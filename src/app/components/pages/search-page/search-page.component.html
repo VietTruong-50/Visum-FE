@@ -35,7 +35,9 @@
               <strong>{{ song.songName }}</strong>
 
               <div fxLayout="row" fxLayoutAlign="space-between center">
-                <small class="artist-name">{{ song.singer?.singerName | truncateText : 15 }}</small>
+                <small class="artist-name">{{
+                  song.singer?.singerName | truncateText : 15
+                }}</small>
                 <div
                   fxLayout="row"
                   fxLayoutAlign="space-between"
@@ -100,6 +102,14 @@
           </div>
         </div>
       </div>
+    </div>
+    <div
+      *ngIf="songData?.length == 0"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      class="w-100"
+    >
+      <span>Không có dữ liệu</span>
     </div>
   </div>
 
@@ -186,7 +196,7 @@
               </button>
             </div>
             <figure>
-              <img src="https://photo-zmp3.zmdcdn.me/album_default.png" />
+              <img src="../assets/images/album/album_default.jpg" />
             </figure>
             <div class="opacity"></div>
           </div>
